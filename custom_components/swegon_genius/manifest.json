@@ -1,0 +1,12 @@
+{
+  "domain": "swegon_genius",
+  "name": "Integration blueprint",
+  "codeowners": [
+    "@Cvennn"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/Cvennn/swegon_genius",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/Cvennn/swegon_genius/issues",
+  "version": "0.1.0"
+}
