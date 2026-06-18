@@ -1,0 +1,16 @@
+{
+  "domain": "swegon_genius",
+  "name": "Casa Genius",
+  "codeowners": [
+    "@Cvennn"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/Cvennn/HACasaGenius",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/Cvennn/HACasaGenius/issues",
+  "version": "0.1.0",
+  "dependencies": [
+    "modbus"
+  ],
+  "requirements": []
+}
