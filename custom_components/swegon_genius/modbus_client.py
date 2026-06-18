@@ -1,5 +1,7 @@
 import logging
 from typing import Any
+
+from audioop import add
 from pymodbus.client import AsyncModbusSerialClient
 from pymodbus.exceptions import ModbusException
 
@@ -25,9 +27,9 @@ class CasaGeniusModbusClient:
     async def connect(self) -> bool:
         connected = await self._client.connect()
         if connected:
-            _LOGGER.debug("Modbus connected %s (slave %s)", self.port, self._slave)
+            _LOGGER.debug("Modbus connected port: %s slave: %s", self.port, self._slave)
         else:
-            _LOGGER.debug("Modbus connection fail %s", self.port)
+            _LOGGER.debug("Modbus connection fail port: %s", self.port)
         return connected
 
 
@@ -35,15 +37,17 @@ class CasaGeniusModbusClient:
         self._client.close()
         _LOGGER.debug("Modbus connection closed")
 
+
     @property
     def connectef(self) -> bool:
         return self._client.connected
+
 
     async def read_input_register(self, address: int, count: int 1) -> list[int] | None:
         try:
             result = await self._client.read_input_registers(address = address, count = count, slave = self._slave)
             if result.isError():
-                _LOGGER.warning("Error reading input register %s count=%s %s", address, count, result)
+                _LOGGER.warning("Error reading input register %s count:%s %s", address, count, result)
                 return None
             return result.registers
         except ModbusException as err:
@@ -51,12 +55,35 @@ class CasaGeniusModbusClient:
             return None
 
 
-    # async def read_holding_register
+    async def read_holding_register(self, address: int, count: int=1) -> list[int] | None:
+        try:
+            result = await self._client.read_holding_register(address = address, count = count, slave = self._slave)
+            if result.isError():
+                _LOGGER.warning("Error reading holding register %s count: %s %s", address, count, result)
+                return None
+            return result.registers
+        except ModbusException as err:
+            _LOGGER.error("Modbus exception reading register %s: %s", address, err)
+            return None
 
 
-    # async def write_holding_register
+    async def write_holding_register(self, address: int, value: int) -> bool:
+        try:
+            result = await self._client.write_holding_register(address = address, value = value, slave = self._slave)
+            if result.isError():
+                _LOGGER.warning("Error writing holding register %s: %s: %s", address, value, result)
+                return False
+            _LOGGER.debug("Wrote register %s = %s", address, value)
+            return True
+        except ModbusException as err:
+            _LOGGER.error("Modbus exception writing holding register %s: %s", address, err)
+            return False
 
 
-    # async def read_single_input
+    async def read_single_input(self, address: int) -> int | None:
+        result = await self.read_input_registers(address, count = 1)
+        return result[0] if result is not None else None
 
-    # async def read_single_holding
+    async def read_single_holding(self, address: int) -> int | None:
+        result = await self.read_holding_registers(address, count = 1)
+        return result[0] if result is not None else None
