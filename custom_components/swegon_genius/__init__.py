@@ -1,78 +1,82 @@
-"""
-Custom integration to integrate swegon_genius with Home Assistant.
+"""Swegon GENIUS Home Assistant integration."""
 
-For more details about this integration, please refer to
-https://github.com/Cvennn/HACasaGenius
-"""
+from __future__ import annotations  # noqa: I001
 
-from __future__ import annotations
+import logging
 
-from datetime import timedelta
-from typing import TYPE_CHECKING
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import Platform
+from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryNotReady
 
-from homeassistant.const import CONF_PASSWORD, CONF_USERNAME, Platform
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.loader import async_get_loaded_integration
+from .const import CONF_BAUDRATE, CONF_PORT, CONF_SCAN_INTERVAL, CONF_SLAVE, DEFAULT_SCAN_INTERVAL, DOMAIN, DEFAULT_BAUDRATE
+from .coordinator import SwegonGeniusCoordinator
+from .modbus_client import SwegonGeniusModbusClient
 
-from .api import IntegrationBlueprintApiClient
-from .const import DOMAIN, LOGGER
-from .coordinator import BlueprintDataUpdateCoordinator
-from .data import IntegrationBlueprintData
-
-if TYPE_CHECKING:
-    from homeassistant.core import HomeAssistant
-
-    from .data import IntegrationBlueprintConfigEntry
+LOGGER = logging.getLogger(__name__)
+_LOGGER = LOGGER
 
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
     Platform.BINARY_SENSOR,
+    Platform.SELECT,
+    Platform.NUMBER,
     Platform.SWITCH,
 ]
 
 
-# https://developers.home-assistant.io/docs/config_entries_index/#setting-up-an-entry
-async def async_setup_entry(
-    hass: HomeAssistant,
-    entry: IntegrationBlueprintConfigEntry,
-) -> bool:
-    """Set up this integration using UI."""
-    coordinator = BlueprintDataUpdateCoordinator(
-        hass=hass,
-        logger=LOGGER,
-        name=DOMAIN,
-        update_interval=timedelta(hours=1),
-    )
-    entry.runtime_data = IntegrationBlueprintData(
-        client=IntegrationBlueprintApiClient(
-            username=entry.data[CONF_USERNAME],
-            password=entry.data[CONF_PASSWORD],
-            session=async_get_clientsession(hass),
-        ),
-        integration=async_get_loaded_integration(hass, entry.domain),
-        coordinator=coordinator,
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Set up Swegon GENIUS from a config entry."""
+    # if CONF_PORT not in entry.data or CONF_SLAVE not in entry.data:
+    #     LOGGER.error(
+    #         "Config entry %s is missing required data and will be removed",
+    #         entry.entry_id,
+    #     )
+    #     await hass.config_entries.async_remove(entry.entry_id)
+    #     return False
+
+    client = SwegonGeniusModbusClient(
+        port=entry.data[CONF_PORT],
+        slave=entry.data[CONF_SLAVE],
+        baudrate=entry.data.get(CONF_BAUDRATE, DEFAULT_BAUDRATE),
     )
 
-    # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
-    await coordinator.async_config_entry_first_refresh()
+    connected = await client.connect()
+
+    coordinator = SwegonGeniusCoordinator(
+        hass=hass,
+        client=client,
+        scan_interval=entry.data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
+    )
+
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
+
+    if connected:
+        try:
+            await coordinator.async_config_entry_first_refresh()
+        except ConfigEntryNotReady:
+            _LOGGER.warning(
+                "Connection to Swegon GENIUS on %s failed during initial refresh",
+                entry.data[CONF_PORT],
+            )
+    else:
+        _LOGGER.warning(
+            "Swegon GENIUS not reachable on %s; entities will remain unavailable until the device is present",
+            entry.data[CONF_PORT],
+        )
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-    entry.async_on_unload(entry.add_update_listener(async_reload_entry))
 
     return True
 
 
-async def async_unload_entry(
-    hass: HomeAssistant,
-    entry: IntegrationBlueprintConfigEntry,
-) -> bool:
-    """Handle removal of an entry."""
-    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Unload Swegon GENIUS config entry."""
 
+    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
-async def async_reload_entry(
-    hass: HomeAssistant,
-    entry: IntegrationBlueprintConfigEntry,
-) -> None:
-    """Reload config entry."""
-    await hass.config_entries.async_reload(entry.entry_id)
+    if unload_ok:
+        coordinator: SwegonGeniusCoordinator = hass.data[DOMAIN].pop(entry.entry_id)
+        await coordinator.client.close()
+
+    return unload_ok
