@@ -9,7 +9,15 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 
-from .const import CONF_BAUDRATE, CONF_PORT, CONF_SCAN_INTERVAL, CONF_SLAVE, DEFAULT_SCAN_INTERVAL, DOMAIN, DEFAULT_BAUDRATE
+from .const import (
+    CONF_BAUDRATE,
+    CONF_PORT,
+    CONF_SCAN_INTERVAL,
+    CONF_SLAVE,
+    DEFAULT_SCAN_INTERVAL,
+    DOMAIN,
+    DEFAULT_BAUDRATE,
+)
 from .coordinator import SwegonGeniusCoordinator
 from .modbus_client import SwegonGeniusModbusClient
 
@@ -19,7 +27,7 @@ _LOGGER = LOGGER
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
     Platform.BINARY_SENSOR,
-    Platform.SELECT,
+    # Platform.SELECT,
     Platform.NUMBER,
     Platform.SWITCH,
 ]
