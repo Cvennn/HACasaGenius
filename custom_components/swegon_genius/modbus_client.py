@@ -48,9 +48,14 @@ class SwegonGeniusModbusClient:
         self, address: int, count: int = 1
     ) -> list[int] | None:
         """Read input registers (3x). Returns list of raw integer values or None on error."""
+        _LOGGER.debug(
+            "Reading input register %s using device_id=%s",
+            address,
+            self._slave,
+        )
         try:
             result = await self._client.read_input_registers(
-                address=address, count=count, slave=self._slave
+                address=address, count=count, device_id=self._slave
             )
             if result.isError():
                 _LOGGER.warning(
@@ -72,7 +77,7 @@ class SwegonGeniusModbusClient:
     ) -> list[int] | None:
         try:
             result = await self._client.read_holding_registers(
-                address=address, count=count, slave=self._slave
+                address=address, count=count, device_id=self._slave
             )
             if result.isError():
                 _LOGGER.warning(
@@ -92,7 +97,7 @@ class SwegonGeniusModbusClient:
     async def write_holding_register(self, address: int, value: int) -> bool:
         try:
             result = await self._client.write_register(
-                address=address, value=value, slave=self._slave
+                address=address, value=value, device_id=self._slave
             )
             if result.isError():
                 _LOGGER.warning(

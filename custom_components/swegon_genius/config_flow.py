@@ -1,7 +1,7 @@
 """Adds config flow for Blueprint."""
 
 from __future__ import annotations
-
+import logging
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
@@ -16,7 +16,10 @@ from .api import (
     IntegrationBlueprintApiClientCommunicationError,
     IntegrationBlueprintApiClientError,
 )
-from .const import DOMAIN, LOGGER
+from .const import DOMAIN
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
