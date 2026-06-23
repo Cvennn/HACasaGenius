@@ -4,26 +4,24 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
-from typing import Any
+from typing import TYPE_CHECKING
 
 from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
     BinarySensorEntity,
     BinarySensorEntityDescription,
 )
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from sqlalchemy import desc
 
-from custom_components.swegon_genius.sensor import SwegonGeniusSensor
+if TYPE_CHECKING:
+    from homeassistant.config_entries import ConfigEntry
+    from homeassistant.core import HomeAssistant
+    from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
 from .coordinator import SwegonGeniusCoordinator
 from .registers_genius import ALARM_REGISTERS, STATUS_BINARY_REGISTERS
-from custom_components.swegon_genius import coordinator
 
 _LOGGER = logging.getLogger(__name__)
 RESERVED_CODE = ["RSVD"]
@@ -92,6 +90,8 @@ async def async_setup_entry(
 class SwegonGeniusBinarySensor(
     CoordinatorEntity[SwegonGeniusCoordinator], BinarySensorEntity
 ):
+    """Representation of a Swegon GENIUS binary sensor."""
+
     entity_description: SwegonBinarySensorDescription
     _attr_has_entity_name = True
 
@@ -101,6 +101,14 @@ class SwegonGeniusBinarySensor(
         entry: ConfigEntry,
         description: SwegonBinarySensorDescription,
     ) -> None:
+        """
+        Initialize the Swegon GENIUS binary sensor entity.
+
+        Args :
+            coordinator: The integration data coordinator.
+            entry: The config entry for this integration instance.
+            description: The binary sensor entity description.
+        """
         super().__init__(coordinator)
         self.entity_description = description
         self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{description.key}"
@@ -112,6 +120,7 @@ class SwegonGeniusBinarySensor(
 
     @property
     def is_on(self) -> bool | None:
+        """Return True if the binary sensor is on, False if off, or None if state is unknown."""
         if self.coordinator.data is None:
             return None
 
