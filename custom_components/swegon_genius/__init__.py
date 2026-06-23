@@ -26,8 +26,8 @@ _LOGGER = LOGGER
 
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
-    # Platform.BINARY_SENSOR,
-    # Platform.SELECT,
+    Platform.BINARY_SENSOR,
+    Platform.SELECT,
     # Platform.NUMBER,
     # Platform.SWITCH,
 ]
