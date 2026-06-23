@@ -62,7 +62,8 @@ class SwegonGeniusCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     async def _read_sensor_registers(self, data: dict[str, Any]) -> None:
         for key, reg in SENSOR_REGISTERS.items():
-            raw = await self.client.read_single_input(reg["address"])
+            address = self.modbus_addr(reg["address"])
+            raw = await self.client.read_single_input(address)
             if raw is None:
                 _LOGGER.warning(
                     "No data for sensor register %s (%s)", key, reg["address"]
@@ -80,7 +81,8 @@ class SwegonGeniusCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     async def _read_alarm_registers(self, data: dict[str, Any]) -> None:
         for key, reg in ALARM_REGISTERS.items():
-            raw = await self.client.read_single_input(reg["address"])
+            address = self.modbus_addr(reg["address"])
+            raw = await self.client.read_single_input(address)
             if raw is None:
                 data[key] = {}
                 continue
@@ -96,7 +98,7 @@ class SwegonGeniusCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     async def _read_select_registers(self, data: dict[str, Any]) -> None:
         for key, reg in SELECT_REGISTERS.items():
             read_type = reg["read_type"]
-            address = reg["read_address"]
+            address = self.modbus_addr(reg["read_address"])
 
             if read_type == "input":
                 raw = await self.client.read_single_input(address)
@@ -109,7 +111,8 @@ class SwegonGeniusCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     async def _read_number_registers(self, data: dict[str, Any]) -> None:
         for key, reg in NUMBER_REGISTERS.items():
-            raw = await self.client.read_single_holding(reg["address"])
+            address = self.modbus_addr(reg["address"])
+            raw = await self.client.read_single_holding(address)
             if raw is None:
                 data[key] = None
                 continue
@@ -120,7 +123,8 @@ class SwegonGeniusCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     async def _read_switch_registers(self, data: dict[str, Any]) -> None:
         for key, reg in SWITCH_REGISTERS.items():
-            raw = await self.client.read_single_holding(reg["address"])
+            address = self.modbus_addr(reg["address"])
+            raw = await self.client.read_single_holding(address)
             data[key] = bool(raw) if raw is not None else None
 
         _LOGGER.debug("Switch data: %s", {k: data[k] for k in SWITCH_REGISTERS})
@@ -128,14 +132,16 @@ class SwegonGeniusCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     async def async_write_operation_mode(self, mode_int: int) -> None:
         """Write operation mode to 4x5001."""
         reg = SELECT_REGISTERS["operation_mode"]
-        ok = await self.client.write_holding_register(reg["write_address"], mode_int)
+        address = self.modbus_addr(reg["write_address"])
+        ok = await self.client.write_holding_register(address, mode_int)
         if ok:
             await self.async_request_refresh()
 
     async def async_write_rh_level(self, level_int: int) -> None:
         """Write RH automation level to 4x5010."""
         reg = SELECT_REGISTERS["rh_automation"]
-        ok = await self.client.write_holding_register(reg["write_address"], level_int)
+        address = self.modbus_addr(reg["write_address"])
+        ok = await self.client.write_holding_register(address, level_int)
         if ok:
             await self.async_request_refresh()
 
@@ -143,13 +149,19 @@ class SwegonGeniusCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         """Write room temp setpoint to 4x5101. Raw value = temp × 10."""
         reg = NUMBER_REGISTERS["room_temp_setpoint_write"]
         raw = int(round(temp_celsius * reg["write_scale"]))
-        ok = await self.client.write_holding_register(reg["address"], raw)
+        address = self.modbus_addr(reg["address"])
+        ok = await self.client.write_holding_register(address, raw)
         if ok:
             await self.async_request_refresh()
 
     async def async_write_switch(self, key: str, state: bool) -> None:
         """Write a switch register (CO2 automation or emergency stop)."""
         reg = SWITCH_REGISTERS[key]
-        ok = await self.client.write_holding_register(reg["address"], int(state))
+        address = self.modbus_addr(reg["address"])
+        ok = await self.client.write_holding_register(address, int(state))
         if ok:
             await self.async_request_refresh()
+
+    def modbus_addr(self, register: int) -> int:
+        """Convert address to modbus 0-based address."""
+        return register - 1
