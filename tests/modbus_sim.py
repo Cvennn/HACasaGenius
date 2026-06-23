@@ -12,7 +12,7 @@ Supports two transports:
                  or a real adapter for loopback testing)
 
 Usage:
-    python3 modbus_sim.py --mode tcp
+    socat -d -d pty,raw,echo=0,link=/tmp/ttyV0 pty,raw,echo=0,link=/tmp/ttyV1
     python3 tests/modbus_sim.py --mode rtu --port /tmp/ttyV1 --baudrate 38400
 
 Then point your HA integration's config flow at:
@@ -34,6 +34,7 @@ from pymodbus.datastore import (
     ModbusSequentialDataBlock,
     ModbusServerContext,
 )
+from pymodbus.exceptions import ModbusIOException
 from pymodbus.server import StartAsyncSerialServer, StartAsyncTcpServer
 
 try:
@@ -63,7 +64,6 @@ def to_unsigned16(value: int) -> int:
 # ---------------------------------------------------------------------------
 # Initial fake values — keyed by REGISTER NUMBER (matches registers_genius.py)
 # ---------------------------------------------------------------------------
-
 INITIAL_INPUT_REGISTERS: dict[int, int] = {
     # --- Device info ---
     6001: 4,  # firmware major
@@ -99,7 +99,7 @@ INITIAL_INPUT_REGISTERS: dict[int, int] = {
     6308: 0,  # boost_time_left min
     6310: 5,  # co2_automation_pct
     6311: 12,  # rh_automation_pct
-    6434: 3,  # ventilation_speed_state (Genius) = Home
+    6434: 2,  # ventilation_speed_state (Genius) = Home
     # --- Alarms (all clear by default) ---
     6132: 0,  # active_alarms_flag
     6195: 0,  # critical_alarms_flag
@@ -127,7 +127,7 @@ def pack_ascii(text: str, num_registers: int) -> list[int]:
     return regs
 
 
-def build_datastore() -> ModbusServerContext:
+def build_datastore() -> tuple[ModbusServerContext, ModbusDeviceContext]:
     """Build the simulated Modbus datastore with fake Swegon register values."""
 
     input_block = [0] * ADDRESS_BLOCK_SIZE
@@ -187,13 +187,49 @@ async def drift_values(store: ModbusDeviceContext, interval: float = 5.0) -> Non
     while True:
         await asyncio.sleep(interval)
         for addr, (lo, hi, step) in DRIFT_REGISTERS.items():
-            current = store.getValues(4, addr, count=1)[0]  # fc=4 -> input registers
+            current_values = store.getValues(
+                4, addr, count=1
+            )  # fc=4 -> input registers
+            if not isinstance(current_values, (list, tuple)) or not current_values:
+                continue
+            current = current_values[0]
             # unsigned -> signed for temps that can be negative
             signed = current - 65536 if current > 32767 else current
             delta = random.choice([-step, 0, step])
             new_val = max(lo, min(hi, signed + delta))
             store.setValues(4, addr, [to_unsigned16(new_val)])
         _LOGGER.debug("Drifted simulated sensor values")
+
+
+MODE_READ_MAP = {
+    0: 0,
+    1: 2,
+    2: 3,
+    3: 5,
+    4: 1,
+    5: 4,
+}
+
+async def operation_mode_reg(store: ModbusDeviceContext, interval: float = 1.0) -> None:
+    """Mirror operation mode from holding register 5001 to input register 6434."""
+    while True:
+        await asyncio.sleep(interval)
+        try:
+            mode_values = store.getValues(3, 5001, count=1)  # fc=3 -> holding registers
+            if not isinstance(mode_values, (list, tuple)) or not mode_values:
+                continue
+            mode = mode_values[0]
+            mapped_mode = MODE_READ_MAP.get(mode)
+            if mapped_mode is None:
+                _LOGGER.debug("Unsupported operation mode write value: %s", mode)
+                continue
+            store.setValues(
+                4, 6434, [to_unsigned16(mapped_mode)]
+            )  # fc=4 -> input registers
+        except ModbusIOException as exc:
+            _LOGGER.debug(
+                "Transient Modbus error while mirroring operation mode: %s", exc
+            )
 
 
 # ---------------------------------------------------------------------------
@@ -221,6 +257,7 @@ async def run_tcp(host: str, port: int) -> None:
     context, store = build_datastore()
     identity = build_identity()
     asyncio.create_task(drift_values(store))
+    asyncio.create_task(operation_mode_reg(store))
     _LOGGER.info(
         "Starting Swegon GENIUS Modbus TCP simulator on %s:%s (slave id=%s)",
         host,
@@ -234,6 +271,7 @@ async def run_rtu(serial_port: str, baudrate: int) -> None:
     context, store = build_datastore()
     identity = build_identity()
     asyncio.create_task(drift_values(store))
+    asyncio.create_task(operation_mode_reg(store))
     _LOGGER.info(
         "Starting Swegon GENIUS Modbus RTU simulator on %s @ %s baud (slave id=%s)",
         serial_port,
@@ -253,6 +291,7 @@ async def run_rtu(serial_port: str, baudrate: int) -> None:
         )
     except Exception as exc:
         import traceback
+
         traceback.print_exc()
         print(exc)
         raise
@@ -271,7 +310,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    logging.getLogger("pymodbus").setLevel(logging.DEBUG)
+    # logging.getLogger("pymodbus").setLevel(logging.DEBUG)
 
     if args.mode == "tcp":
         asyncio.run(run_tcp(args.host, args.tcp_port))
