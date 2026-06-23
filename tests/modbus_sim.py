@@ -50,15 +50,20 @@ ADDRESS_BLOCK_SIZE = 10000  # registers 0..9999 covers all 3x/4x ranges we need
 
 # ---------------------------------------------------------------------------
 # Helpers: pymodbus datastore is 0-indexed and addresses passed to
-# read_input_registers(address=N) map directly to this index N (no -1 offset
-# needed here, since modbus_client.py in the integration already uses the
-# register number as the address — keep both sides consistent).
+# read_input_registers(address=N) are raw Modbus addresses. Real register
+# numbers like 4x5001 and 3x6201 are offset by -1 in Modbus transport, so
+# convert between register numbers and datastore addresses.
 # ---------------------------------------------------------------------------
 
 
 def to_unsigned16(value: int) -> int:
     """Convert a signed int to unsigned 16-bit representation for Modbus."""
     return value & 0xFFFF
+
+
+def register_to_modbus_address(register: int) -> int:
+    """Convert a real register number to a zero-based Modbus datastore address."""
+    return register - 1
 
 
 # ---------------------------------------------------------------------------
@@ -134,26 +139,26 @@ def build_datastore() -> tuple[ModbusServerContext, ModbusDeviceContext]:
     holding_block = [0] * ADDRESS_BLOCK_SIZE
 
     for addr, value in INITIAL_INPUT_REGISTERS.items():
-        input_block[addr] = to_unsigned16(value)
+        input_block[register_to_modbus_address(addr)] = to_unsigned16(value)
 
     for addr, value in INITIAL_HOLDING_REGISTERS.items():
-        holding_block[addr] = to_unsigned16(value)
+        holding_block[register_to_modbus_address(addr)] = to_unsigned16(value)
 
     # Model name (3x6008, 15 registers) -> "W5 500W A"
     model_regs = pack_ascii("W5 500W A", 15)
     for i, val in enumerate(model_regs):
-        input_block[6008 + i] = val
+        input_block[register_to_modbus_address(6008 + i)] = val
 
     # Serial number (3x6024, 24 registers) -> fake serial
     serial_regs = pack_ascii("SIM-2026-000123456789", 24)
     for i, val in enumerate(serial_regs):
-        input_block[6024 + i] = val
+        input_block[register_to_modbus_address(6024 + i)] = val
 
     # pymodbus uses 0-based addressing: ModbusSequentialDataBlock(0, values) means
     # values[0] is read by client read_*_registers(address=0). Since modbus_client.py
-    # passes the raw SCB 4.1 register number directly as the address, our datastore
-    # arrays are pre-sized to ADDRESS_BLOCK_SIZE and indexed by that same register
-    # number — no offset needed on either side.
+    # passes raw Modbus transport addresses (= register number - 1), our datastore
+    # arrays are pre-sized to ADDRESS_BLOCK_SIZE and indexed by that zero-based
+    # address.
     store = ModbusDeviceContext(
         di=ModbusSequentialDataBlock(0, [0] * ADDRESS_BLOCK_SIZE),
         co=ModbusSequentialDataBlock(0, [0] * ADDRESS_BLOCK_SIZE),
@@ -188,7 +193,7 @@ async def drift_values(store: ModbusDeviceContext, interval: float = 5.0) -> Non
         await asyncio.sleep(interval)
         for addr, (lo, hi, step) in DRIFT_REGISTERS.items():
             current_values = store.getValues(
-                4, addr, count=1
+                4, register_to_modbus_address(addr), count=1
             )  # fc=4 -> input registers
             if not isinstance(current_values, (list, tuple)) or not current_values:
                 continue
@@ -197,7 +202,9 @@ async def drift_values(store: ModbusDeviceContext, interval: float = 5.0) -> Non
             signed = current - 65536 if current > 32767 else current
             delta = random.choice([-step, 0, step])
             new_val = max(lo, min(hi, signed + delta))
-            store.setValues(4, addr, [to_unsigned16(new_val)])
+            store.setValues(
+                4, register_to_modbus_address(addr), [to_unsigned16(new_val)]
+            )
         _LOGGER.debug("Drifted simulated sensor values")
 
 
@@ -210,12 +217,15 @@ MODE_READ_MAP = {
     5: 4,
 }
 
+
 async def operation_mode_reg(store: ModbusDeviceContext, interval: float = 1.0) -> None:
     """Mirror operation mode from holding register 5001 to input register 6434."""
     while True:
         await asyncio.sleep(interval)
         try:
-            mode_values = store.getValues(3, 5001, count=1)  # fc=3 -> holding registers
+            mode_values = store.getValues(
+                3, register_to_modbus_address(5001), count=1
+            )  # fc=3 -> holding registers
             if not isinstance(mode_values, (list, tuple)) or not mode_values:
                 continue
             mode = mode_values[0]
@@ -224,7 +234,7 @@ async def operation_mode_reg(store: ModbusDeviceContext, interval: float = 1.0) 
                 _LOGGER.debug("Unsupported operation mode write value: %s", mode)
                 continue
             store.setValues(
-                4, 6434, [to_unsigned16(mapped_mode)]
+                4, register_to_modbus_address(6434), [to_unsigned16(mapped_mode)]
             )  # fc=4 -> input registers
         except ModbusIOException as exc:
             _LOGGER.debug(
