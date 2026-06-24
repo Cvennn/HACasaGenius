@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import voluptuous as vol
-
+import logging
 from homeassistant import config_entries
 from homeassistant.data_entry_flow import FlowResult
+from homeassistant.core import callback
 
 from .const import (
     CONF_BAUDRATE,
@@ -17,6 +18,8 @@ from .const import (
     DOMAIN,
 )
 from .modbus_client import SwegonGeniusModbusClient
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class SwegonGeniusConfigFlow(
@@ -46,7 +49,11 @@ class SwegonGeniusConfigFlow(
                 else:
                     # Read a register that should always exist
                     firmware_major = await client.read_single_input(6001)
-
+                    firmware_minor = await client.read_single_input(6002)
+                    firmware_build = await client.read_single_input(6003)
+                    _LOGGER.debug("Firmware major: %s", firmware_major)
+                    _LOGGER.debug("Firmware minor: %s", firmware_minor)
+                    _LOGGER.debug("Firmware build: %s", firmware_build)
                     if firmware_major is None:
                         errors["base"] = "invalid_device"
                     else:

@@ -21,8 +21,7 @@ from .const import (
 from .coordinator import SwegonGeniusCoordinator
 from .modbus_client import SwegonGeniusModbusClient
 
-LOGGER = logging.getLogger(__name__)
-_LOGGER = LOGGER
+_LOGGER = logging.getLogger(__name__)
 
 PLATFORMS: list[Platform] = [
     Platform.SENSOR,
@@ -36,7 +35,7 @@ PLATFORMS: list[Platform] = [
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Swegon GENIUS from a config entry."""
     if CONF_PORT not in entry.data or CONF_SLAVE not in entry.data:
-        LOGGER.error(
+        _LOGGER.error(
             "Config entry %s is missing required data and will be removed",
             entry.entry_id,
         )
@@ -80,7 +79,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload Swegon GENIUS config entry."""
-
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     if unload_ok:
