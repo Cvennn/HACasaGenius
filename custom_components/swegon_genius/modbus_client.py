@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
 
 from pymodbus.client import AsyncModbusSerialClient
 from pymodbus.exceptions import ModbusException
@@ -48,9 +47,15 @@ class SwegonGeniusModbusClient:
         self, address: int, count: int = 1
     ) -> list[int] | None:
         """Read input registers (3x). Returns list of raw integer values or None on error."""
+        _LOGGER.debug(
+            "Reading input register %s using device_id=%s",
+            address,
+            self._slave,
+        )
+        address = self.modbus_addr(address)
         try:
             result = await self._client.read_input_registers(
-                address=address, count=count, slave=self._slave
+                address=address, count=count, device_id=self._slave
             )
             if result.isError():
                 _LOGGER.warning(
@@ -70,9 +75,10 @@ class SwegonGeniusModbusClient:
     async def read_holding_registers(
         self, address: int, count: int = 1
     ) -> list[int] | None:
+        address = self.modbus_addr(address)
         try:
             result = await self._client.read_holding_registers(
-                address=address, count=count, slave=self._slave
+                address=address, count=count, device_id=self._slave
             )
             if result.isError():
                 _LOGGER.warning(
@@ -90,9 +96,10 @@ class SwegonGeniusModbusClient:
             return None
 
     async def write_holding_register(self, address: int, value: int) -> bool:
+        address = self.modbus_addr(address)
         try:
             result = await self._client.write_register(
-                address=address, value=value, slave=self._slave
+                address=address, value=value, device_id=self._slave
             )
             if result.isError():
                 _LOGGER.warning(
@@ -111,9 +118,15 @@ class SwegonGeniusModbusClient:
             return False
 
     async def read_single_input(self, address: int) -> int | None:
+        address = self.modbus_addr(address)
         regs = await self.read_input_registers(address, count=1)
         return regs[0] if regs is not None else None
 
     async def read_single_holding(self, address: int) -> int | None:
+        address = self.modbus_addr(address)
         regs = await self.read_holding_registers(address, count=1)
         return regs[0] if regs is not None else None
+
+    def modbus_addr(self, address: int) -> int:
+        """Adjust address for modbus operation."""
+        return address - 1

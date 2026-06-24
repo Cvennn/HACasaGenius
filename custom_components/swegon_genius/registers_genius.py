@@ -421,7 +421,7 @@ NUMBER_REGISTERS: dict[str, dict] = {
         "max": 25.0,
         "step": 0.5,
         "scale": 0.1,
-        "write_multiplier": 10,
+        "write_scale": 10,
         "raw_min": 130,
         "raw_max": 250,
     },

@@ -1,21 +1,9 @@
 {
     "config": {
-        "step": {
-            "user": {
-                "description": "If you need help with the configuration have a look here: {documentation_url}",
-                "data": {
-                    "username": "Username",
-                    "password": "Password"
-                }
-            }
-        },
         "error": {
-            "auth": "Username/Password is wrong.",
-            "connection": "Unable to connect to the server.",
-            "unknown": "Unknown error occurred."
-        },
-        "abort": {
-            "already_configured": "This entry is already configured."
+            "cannot_connect": "Failed to connect to the device",
+            "invalid_device": "Connected device is not a Swegon GENIUS unit",
+            "unknown": "Unexpected error"
         }
     }
 }

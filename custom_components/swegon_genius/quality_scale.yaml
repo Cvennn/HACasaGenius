@@ -1,0 +1,124 @@
+# Integration Quality Scale — Swegon CASA Genius
+# Target: Silver
+# Source: https://developers.home-assistant.io/docs/core/integration-quality-scale/
+# Rules fetched from: homeassistant/core/dev/script/hassfest/quality_scale.py
+
+rules:
+
+  # BRONZE — required for HACS default list
+  action-setup:
+    status: exempt
+    comment:
+      Integration does not register any custom HA actions/services.
+      Device control is handled through standard entity platforms
+      (select, number, switch).
+
+  appropriate-polling:
+    status: done
+    comment:
+     integration uses local_polling
+
+  brands:
+    status: todo
+
+  common-modules:
+    status: done
+
+  config-flow:
+    status: done
+
+  config-flow-tests:
+    # pytest-homeassistant-custom-component tests for config flow required.
+    # Tests cover: successful setup, connection failure, duplicate entry.
+    status: todo
+
+  dependency-transparency:
+    status: done
+
+  docs-actions:
+    status: exempt
+    comment:
+      No custom HA actions registered. Standard entity services
+      (select.select_option, number.set_value, switch.turn_on/off)
+      are documented by HA core.
+
+  docs-high-level-description:
+    # README.md
+    status: todo
+
+  docs-installation-instructions:
+    # README.md installation section: HACS install, USB adapter setup,
+    # /dev/ttyUSB0 passthrough to HA Yellow.
+    status: todo
+
+  docs-removal-instructions:
+    # README.md removal section: delete integration from HA UI,
+    status: todo
+
+  entity-event-setup:
+    status: exempt
+    comment:
+      Integration uses DataUpdateCoordinator polling exclusively.
+      No push events or subscriptions are used.
+
+  entity-unique-id:
+    status: done
+
+  has-entity-name:
+    status: done
+
+  runtime-data:
+    status: done
+
+  test-before-configure:
+    status: done
+
+  test-before-setup:
+    status: done
+
+  unique-config-entry:
+    # Config flow checks for duplicate port+slave combination.
+    # Returns errors["base"] = "already_configured" if duplicate found.
+    status: todo
+
+  # SILVER — target level
+  action-exceptions:
+    status: exempt
+    comment:
+     No custom actions registered. Not applicable.
+
+  config-entry-unloading:
+    status: done
+
+  docs-configuration-parameters:
+    # README.md documents all config flow parameters:
+    # port, slave, baudrate, scan_interval.
+    status: todo
+
+  docs-installation-parameters:
+    # README.md documents physical setup:
+    # USB-RS485 adapter, /dev/ttyUSB0, HA Yellow passthrough.
+    status: todo
+
+  entity-unavailable:
+    status: done
+
+  integration-owner:
+    status: todo
+
+  log-when-unavailable:
+    status: done
+
+  parallel-updates:
+    # PARALLEL_UPDATES = 1 set in each platform module.
+    # Modbus RTU is a serial bus — only one request at a time.
+    status: todo
+
+  reauthentication-flow:
+    status: exempt
+    comment:
+      Modbus RTU protocol has no authentication, credentials, or tokens.
+      The physical serial connection either works or it does not.
+
+  test-coverage:
+    status: todo
