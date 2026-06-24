@@ -1,7 +1,6 @@
 """Constants for Swegon GENIUS integration."""
 
 DOMAIN = "swegon_genius"
-ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
 
 # Config entry keys
 CONF_PORT = "port"
