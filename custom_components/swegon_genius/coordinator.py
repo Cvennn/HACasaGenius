@@ -147,8 +147,8 @@ class SwegonGeniusCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     async def async_write_temp_setpoint(self, temp_celsius: float) -> None:
         """Write room temp setpoint to 4x5101. Raw value = temp × 10."""
-        reg = NUMBER_REGISTERS["room_temp_setpoint_write"]
-        raw = int(round(temp_celsius * reg["write_scale"]))
+        reg = NUMBER_REGISTERS["temperature_setpoint"]
+        raw = round(temp_celsius * reg["write_scale"])
         address = self.modbus_addr(reg["address"])
         ok = await self.client.write_holding_register(address, raw)
         if ok:

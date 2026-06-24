@@ -28,20 +28,20 @@ PLATFORMS: list[Platform] = [
     Platform.SENSOR,
     Platform.BINARY_SENSOR,
     Platform.SELECT,
-    # Platform.NUMBER,
-    # Platform.SWITCH,
+    Platform.NUMBER,
+    Platform.SWITCH,
 ]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Swegon GENIUS from a config entry."""
-    # if CONF_PORT not in entry.data or CONF_SLAVE not in entry.data:
-    #     LOGGER.error(
-    #         "Config entry %s is missing required data and will be removed",
-    #         entry.entry_id,
-    #     )
-    #     await hass.config_entries.async_remove(entry.entry_id)
-    #     return False
+    if CONF_PORT not in entry.data or CONF_SLAVE not in entry.data:
+        LOGGER.error(
+            "Config entry %s is missing required data and will be removed",
+            entry.entry_id,
+        )
+        await hass.config_entries.async_remove(entry.entry_id)
+        return False
 
     client = SwegonGeniusModbusClient(
         port=entry.data[CONF_PORT],

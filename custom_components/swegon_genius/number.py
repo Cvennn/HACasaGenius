@@ -12,7 +12,7 @@ SCB 4.1 register 4x5101:
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import TYPE_CHECKING
 
 from homeassistant.components.number import (
     NumberDeviceClass,
@@ -20,17 +20,18 @@ from homeassistant.components.number import (
     NumberEntityDescription,
     NumberMode,
 )
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTemperature
-from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 from .coordinator import SwegonGeniusCoordinator
 from .registers_genius import NUMBER_REGISTERS
-from custom_components.swegon_genius import coordinator
+
+if TYPE_CHECKING:
+    from homeassistant.config_entries import ConfigEntry
+    from homeassistant.core import HomeAssistant
+    from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,9 +49,7 @@ NUMBER_DESCRIPTION = NumberEntityDescription(
 
 
 async def async_setup_entry(
-        hass: HomeAssistant,
-        entry: ConfigEntry,
-        async_add_entities: AddEntitiesCallback
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     """Set up number entity from a config entry."""
     coordinator: SwegonGeniusCoordinator = hass.data[DOMAIN][entry.entry_id]
@@ -64,26 +63,26 @@ class SwegonGeniusNumber(CoordinatorEntity[SwegonGeniusCoordinator], NumberEntit
     entity_description = NUMBER_DESCRIPTION
 
     def __init__(
-            self,
-            coordinator: SwegonGeniusCoordinator,
-            entry: ConfigEntry
-            ) -> None:
+        self, coordinator: SwegonGeniusCoordinator, entry: ConfigEntry
+    ) -> None:
         super().__init__(coordinator)
         self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_temperature_setpoint"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.entry_id)},
             name="Swegon CASA Genius",
-            model="CASA Genius"
-       )
+            model="CASA Genius",
+        )
 
     @property
     def native_value(self) -> float | None:
-        """"Return current setpoint in celcius."""
+        """Return current setpoint in celcius."""
         if self.coordinator.data is None:
             return None
         return self.coordinator.data.get("temperature_setpoint")
 
     async def async_set_native_value(self, value: float) -> None:
-        """"Write new setpoint to the device."""
-        _LOGGER.debug("Setting temperature setpoint to %.1f °C (raw: %d)", value, int(value * 10))
+        """Write new setpoint to the device."""
+        _LOGGER.debug(
+            "Setting temperature setpoint to %.1f °C (raw: %d)", value, int(value * 10)
+        )
         await self.coordinator.async_write_temp_setpoint(value)
