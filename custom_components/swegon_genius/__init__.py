@@ -17,9 +17,9 @@ from .modbus_client import SwegonModbusClient
 _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS: list[Platform] = [
-    # Platform.SENSOR,
+    Platform.SENSOR,
     # Platform.BINARY_SENSOR,
-    # Platform.SELECT,
+    Platform.SELECT,
     # Platform.NUMBER,
     # Platform.SWITCH,
 ]

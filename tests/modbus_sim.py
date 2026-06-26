@@ -63,7 +63,7 @@ def to_unsigned16(value: int) -> int:
 
 def register_to_modbus_address(register: int) -> int:
     """Convert a real register number to a zero-based Modbus datastore address."""
-    return register - 1
+    return register
 
 
 # ---------------------------------------------------------------------------
@@ -111,6 +111,56 @@ INITIAL_INPUT_REGISTERS: dict[int, int] = {
     6136: 0,  # active_alarms_word1 bitmask
     6191: 0,  # active_alarms_word2 bitmask
     6193: 0,  # active_alarms_word3 bitmask
+    6129: 0,
+    6133: 0,
+    6215: 210,
+    6216: 210,
+    6234: 210,
+    6237: 210,
+    6238: 210,
+    6263: 210,
+    6275: 210,
+    6277: 210,
+    6287: 210,
+    6288: 210,
+    6289: 210,
+    6290: 210,
+    6291: 210,
+    6302: 0,
+    6307: 0,
+    6309: 0,
+    6312: 0,
+    6313: 0,
+    6314: 0,
+    6315: 0,
+    6317: 0,
+    6318: 0,
+    6319: 0,
+    6321: 0,
+    6322: 0,
+    6323: 0,
+    6325: 0,
+    6332: 0,
+    6335: 0,
+    6336: 0,
+    6337: 0,
+    6343: 0,
+    6344: 0,
+    6345: 0,
+    6348: 0,
+    6349: 0,
+    6350: 0,
+    6351: 0,
+    6352: 0,
+    6353: 0,
+    6354: 0,
+    6355: 0,
+    6356: 0,
+    6357: 0,
+    6358: 0,
+    6370: 0,
+    6382: 0,
+
 }
 
 INITIAL_HOLDING_REGISTERS: dict[int, int] = {
@@ -119,6 +169,30 @@ INITIAL_HOLDING_REGISTERS: dict[int, int] = {
     5010: 2,  # rh_automation level = Normal
     5018: 0,  # emergency_stop = disabled
     5101: 180,  # temperature_setpoint raw = 18.0 °C (x10 per PDF: 130-250 = 13.0-25.0°C)
+    5002: 0,
+    5005: 0,
+    5011: 0,
+    5020: 0,
+    5102: 0,
+    5104: 0,
+    5105: 0,
+    5108: 0,
+    5114: 0,
+    5115: 0,
+    5116: 0,
+    5168: 0,
+    5169: 0,
+    5171: 0,
+    5184: 0,
+    5185: 0,
+    5187: 0,
+    5302: 0,
+    5303: 0,
+    5304: 0,
+    5305: 0,
+    5306: 0,
+    5307: 0,
+
 }
 
 
@@ -277,7 +351,13 @@ async def run_tcp(host: str, port: int) -> None:
     await StartAsyncTcpServer(context=context, identity=identity, address=(host, port))
 
 
-async def run_rtu(serial_port: str, baudrate: int) -> None:
+async def run_rtu(
+    serial_port: str,
+    baudrate: int,
+    bytesize: int = 8,
+    parity: str = "N",
+    stopbits: int = 1,
+) -> None:
     context, store = build_datastore()
     identity = build_identity()
     asyncio.create_task(drift_values(store))
@@ -294,10 +374,10 @@ async def run_rtu(serial_port: str, baudrate: int) -> None:
             identity=identity,
             port=serial_port,
             baudrate=baudrate,
-            bytesize=8,
-            parity="N",
-            stopbits=1,
-            timeout=1,
+            bytesize=bytesize,
+            parity=parity,
+            stopbits=stopbits,
+            timeout=5,
         )
     except Exception as exc:
         import traceback
@@ -320,7 +400,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    # logging.getLogger("pymodbus").setLevel(logging.DEBUG)
+    logging.getLogger("pymodbus").setLevel(logging.DEBUG)
 
     if args.mode == "tcp":
         asyncio.run(run_tcp(args.host, args.tcp_port))
