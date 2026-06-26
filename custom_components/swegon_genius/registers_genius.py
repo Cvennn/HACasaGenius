@@ -18,7 +18,7 @@ DEVICE_INFO = {
 }
 
 # === Mittaussensorit (3x input registers, vain luku) ===
-SENSORS = [
+SENSOR_REGISTERS = [
     # Lampotilat
     {"key": "outdoor_temp",          "name": "Ulkoilman lampotila (T1)",       "address": 6200, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
     {"key": "supply_before_hx_temp", "name": "Tuloilma ennen lammitinta (T2)", "address": 6201, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
