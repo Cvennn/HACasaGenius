@@ -9,6 +9,10 @@ from pymodbus.exceptions import ModbusException
 
 _LOGGER = logging.getLogger(__name__)
 
+def _to_signed16(value):
+    if value >= 0x8000:
+        return value - 0x10000
+    return value
 
 class SwegonModbusClient:
     def __init__(self, port, slave, baudrate=38400, stopbits=1, parity="N", bytesize=8, timeout=5):
