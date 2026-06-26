@@ -1,0 +1,23 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Swegon CASA Genius -yhteys",
+        "description": "Syötä Modbus RTU -yhteysasetukset. Tehdasasetukset on esitäytetty valmiiksi.",
+        "data": {
+          "port":     "Sarjaportti",
+          "slave":    "Slave-osoite",
+          "baudrate": "Baud rate",
+          "stopbits": "Stop bits",
+          "parity":   "Pariteetti"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Yhteys epäonnistui — tarkista kaapeli, slave-osoite ja sarjaportti"
+    },
+    "abort": {
+      "already_configured": "Tämä laite on jo lisätty"
+    }
+  }
+}
