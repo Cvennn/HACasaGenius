@@ -8,6 +8,7 @@ CONF_SLAVE = "slave"
 CONF_BAUDRATE = "baudrate"
 CONF_SCAN_INTERVAL = "scan_interval"
 CONF_PARITY = "parity"
+CONF_STOPBITS = "stopbits"
 
 # Defaults
 DEFAULT_SLAVE = 1
@@ -17,6 +18,7 @@ DEFAULT_PORT = "/dev/ttyUSB0"
 DEFAULT_PARITY = "N"
 DEFAULT_BYTESIZE = 8
 DEFAULT_TIMEOUT = 5
+DEFAULT_STOPBITS = 1
 
 # Modbus register types
 REG_INPUT = "input"  # 3x — read only (input registers)
