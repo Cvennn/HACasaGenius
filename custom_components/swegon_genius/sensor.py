@@ -1,14 +1,20 @@
+"""Sensor platform for Swegon CASA Genius."""  # noqa: EXE002
+
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, Any
+
 from homeassistant.components.sensor import SensorEntity
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 from .registers_genius import ENUM_SENSORS, SENSOR_REGISTERS
+
+if TYPE_CHECKING:
+    from homeassistant.config_entries import ConfigEntry
+    from homeassistant.core import HomeAssistant
+    from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 
 async def async_setup_entry(
@@ -24,7 +30,15 @@ async def async_setup_entry(
 
 
 class SwegonSensor(CoordinatorEntity, SensorEntity):
-    def __init__(self, coordinator, entry, sensor_def):
+    """Representation of a Swegon Genius sensor."""
+
+    def __init__(
+        self,
+        coordinator: Any,
+        entry: ConfigEntry,
+        sensor_def: dict[str, Any],
+    ) -> None:
+        """Initialize a Swegon Genius sensor."""
         super().__init__(coordinator)
         self._def = sensor_def
         self._attr_unique_id = f"{entry.entry_id}_{sensor_def['key']}"
@@ -43,14 +57,21 @@ class SwegonSensor(CoordinatorEntity, SensorEntity):
         )
 
     @property
-    def native_value(self):
+    def native_value(self) -> Any:
+        """Return the native value of the sensor."""
         return self.coordinator.data.get(self._def["key"])
 
 
 class SwegonEnumSensor(CoordinatorEntity, SensorEntity):
     """Tekstimuotoinen tilasensori (esim. Yksikon tila, Lammitystila)."""
 
-    def __init__(self, coordinator, entry, sensor_def):
+    def __init__(
+        self,
+        coordinator: Any,
+        entry: ConfigEntry,
+        sensor_def: dict[str, Any],
+    ) -> None:
+        """Initialize a Swegon Genius enum sensor."""
         super().__init__(coordinator)
         self._def = sensor_def
         self._attr_unique_id = f"{entry.entry_id}_{sensor_def['key']}_text"
@@ -64,5 +85,6 @@ class SwegonEnumSensor(CoordinatorEntity, SensorEntity):
         )
 
     @property
-    def native_value(self):
+    def native_value(self) -> Any:
+        """Return the native text value of the sensor."""
         return self.coordinator.data.get(self._def["key"] + "_text")

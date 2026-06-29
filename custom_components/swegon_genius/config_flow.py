@@ -1,4 +1,4 @@
-"""Config flow for Swegon GENIUS."""
+"""Config flow for Swegon GENIUS."""  # noqa: EXE002
 
 from __future__ import annotations
 
@@ -55,7 +55,7 @@ async def _test_connection(data: dict[str, Any]) -> str | None:
         if not connected:
             return "cannot_connect"
     except Exception as e:
-        _LOGGER.exception("Yhteystesti epäonnistui: %s", e)
+        _LOGGER.exception("Yhteystesti epäonnistui: %s", e)  # noqa: TRY401
         return "cannot_connect"
     finally:
         await client.disconnect()

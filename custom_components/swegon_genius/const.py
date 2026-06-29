@@ -1,4 +1,4 @@
-"""Constants for Swegon GENIUS integration."""
+"""Constants for Swegon GENIUS integration."""  # noqa: EXE002
 
 DOMAIN = "swegon_genius"
 
