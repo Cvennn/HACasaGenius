@@ -28,9 +28,7 @@ rules:
     status: done
 
   config-flow-tests:
-    # pytest-homeassistant-custom-component tests for config flow required.
-    # Tests cover: successful setup, connection failure, duplicate entry.
-    status: todo
+    status: done
 
   dependency-transparency:
     status: done
@@ -43,13 +41,10 @@ rules:
       are documented by HA core.
 
   docs-high-level-description:
-    # README.md
-    status: todo
+    status: done
 
   docs-installation-instructions:
-    # README.md installation section: HACS install, USB adapter setup,
-    # /dev/ttyUSB0 passthrough to HA Yellow.
-    status: todo
+    status: done
 
   docs-removal-instructions:
     # README.md removal section: delete integration from HA UI,
@@ -77,9 +72,7 @@ rules:
     status: done
 
   unique-config-entry:
-    # Config flow checks for duplicate port+slave combination.
-    # Returns errors["base"] = "already_configured" if duplicate found.
-    status: todo
+    status: done
 
   # SILVER — target level
   action-exceptions:
@@ -91,14 +84,10 @@ rules:
     status: done
 
   docs-configuration-parameters:
-    # README.md documents all config flow parameters:
-    # port, slave, baudrate, scan_interval.
-    status: todo
+    status: done
 
   docs-installation-parameters:
-    # README.md documents physical setup:
-    # USB-RS485 adapter, /dev/ttyUSB0, HA Yellow passthrough.
-    status: todo
+    status: done
 
   entity-unavailable:
     status: done
