@@ -32,8 +32,7 @@ USER_INPUT = {
 async def test_show_form(hass: HomeAssistant) -> None:
     """Test initial form."""
     result = await hass.config_entries.flow.async_init(
-        DOMAIN,
-        context={"source": config_entries.SOURCE_USER}
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     assert result["type"] == "form"
@@ -103,16 +102,14 @@ async def test_connection_exception(hass: HomeAssistant) -> None:
         instance.disconnect = AsyncMock()
 
         result = await hass.config_entries.flow.async_init(
-            DOMAIN,
-            context={"source": config_entries.SOURCE_USER}
+            DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
         result = await hass.config_entries.flow.async_configure(
-            result["flow_id"],
-            user_input=USER_INPUT
+            result["flow_id"], user_input=USER_INPUT
         )
 
         assert result["type"] == "form"
-        assert result["errors"] ==  {"base": "cannot_connect"}
+        assert result["errors"] == {"base": "cannot_connect"}
 
         instance.disconnect.assert_awaited_once()
 
@@ -149,23 +146,19 @@ async def test_duplicate_configuration(hass: HomeAssistant) -> None:
 
 
 @pytest.mark.parametrize(
-        ("baudrate", "stopbits", "parity"),
-        [
-            (9600, 1, "N"),
-            (19200, 2, "E"),
-            (38400, 1, "O"),
-            (57600, 2, "N"),
-            (115200, 1, "E"),
-        ],
+    ("baudrate", "stopbits", "parity"),
+    [
+        (9600, 1, "N"),
+        (19200, 2, "E"),
+        (38400, 1, "O"),
+        (57600, 2, "N"),
+        (115200, 1, "E"),
+    ],
 )
-
 @pytest.mark.asyncio
 async def test_serial_settings(
-    hass: HomeAssistant,
-    baudrate: int,
-    stopbits: int,
-    parity: str
-    ) -> None:
+    hass: HomeAssistant, baudrate: int, stopbits: int, parity: str
+) -> None:
     """Supported serial settings are accepted."""
     with patch(
         "custom_components.swegon_genius.config_flow.SwegonModbusClient"
@@ -175,8 +168,7 @@ async def test_serial_settings(
         instance.disconnect = AsyncMock()
 
         result = await hass.config_entries.flow.async_init(
-            DOMAIN,
-            context={"source": config_entries.SOURCE_USER}
+            DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
 
         user_input = dict(USER_INPUT)
@@ -186,8 +178,7 @@ async def test_serial_settings(
         user_input[CONF_PORT] = f"/dev/ttyUSB{baudrate}"
 
         result = await hass.config_entries.flow.async_configure(
-            result["flow_id"],
-            user_input=user_input
+            result["flow_id"], user_input=user_input
         )
 
     assert result["type"] == "create_entry"
