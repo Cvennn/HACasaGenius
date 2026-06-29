@@ -1,25 +1,18 @@
 """Swegon GENIUS Home Assistant integration."""
 
-from __future__ import annotations  # noqa: I001
+from __future__ import annotations
 
 import logging
+from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import Platform
+from homeassistant.const import CONF_PORT, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 
-from .const import (
-    CONF_BAUDRATE,
-    CONF_PORT,
-    CONF_SCAN_INTERVAL,
-    CONF_SLAVE,
-    DEFAULT_SCAN_INTERVAL,
-    DOMAIN,
-    DEFAULT_BAUDRATE,
-)
-from .coordinator import SwegonGeniusCoordinator
-from .modbus_client import SwegonGeniusModbusClient
+from .const import CONF_BAUDRATE, CONF_PARITY, CONF_SLAVE, CONF_STOPBITS, DOMAIN
+from .coordinator import SwegonCoordinator
+from .modbus_client import SwegonModbusClient
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -42,38 +35,35 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await hass.config_entries.async_remove(entry.entry_id)
         return False
 
-    client = SwegonGeniusModbusClient(
+    client = SwegonModbusClient(
         port=entry.data[CONF_PORT],
         slave=entry.data[CONF_SLAVE],
-        baudrate=entry.data.get(CONF_BAUDRATE, DEFAULT_BAUDRATE),
+        baudrate=entry.data[CONF_BAUDRATE],
+        stopbits=entry.data[CONF_STOPBITS],
+        parity=entry.data[CONF_PARITY],
     )
 
     connected = await client.connect()
+    if not connected:
+        raise ConfigEntryNotReady(
+            f"Ei saada yhteyttä Swegon CASA Genius -laitteeseen portissa {entry.data[CONF_PORT]}"
+        )
 
-    coordinator = SwegonGeniusCoordinator(
-        hass=hass,
-        client=client,
-        scan_interval=entry.data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
+    device_info = await client.read_device_info()
+    _LOGGER.info(
+        "Yhdistetty Swegon CASA Genius: %s, firmware %s, sarjanumero %s",
+        device_info.get("model"),
+        device_info.get("firmware"),
+        device_info.get("serial_number"),
     )
+
+    coordinator = SwegonCoordinator(hass, client, device_info)
+
+    await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
 
-    if connected:
-        try:
-            await coordinator.async_config_entry_first_refresh()
-        except ConfigEntryNotReady:
-            _LOGGER.warning(
-                "Connection to Swegon GENIUS on %s failed during initial refresh",
-                entry.data[CONF_PORT],
-            )
-    else:
-        _LOGGER.warning(
-            "Swegon GENIUS not reachable on %s; entities will remain unavailable until the device is present",
-            entry.data[CONF_PORT],
-        )
-
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-
     return True
 
 
@@ -82,7 +72,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     if unload_ok:
-        coordinator: SwegonGeniusCoordinator = hass.data[DOMAIN].pop(entry.entry_id)
-        await coordinator.client.close()
+        coordinator: SwegonCoordinator = hass.data[DOMAIN].pop(entry.entry_id)
+        await coordinator.client.disconnect()
 
     return unload_ok

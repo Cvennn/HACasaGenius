@@ -1,9 +1,23 @@
 {
-    "config": {
-        "error": {
-            "cannot_connect": "Failed to connect to the device",
-            "invalid_device": "Connected device is not a Swegon GENIUS unit",
-            "unknown": "Unexpected error"
+  "config": {
+    "step": {
+      "user": {
+        "title": "Swegon CASA Genius Connection",
+        "description": "Enter Modbus RTU connection settings. Factory defaults are pre-filled.",
+        "data": {
+          "port":     "Serial port",
+          "slave":    "Slave address",
+          "baudrate": "Baud rate",
+          "stopbits": "Stop bits",
+          "parity":   "Parity"
         }
+      }
+    },
+    "error": {
+      "cannot_connect": "Connection failed — check cable, slave address and serial port"
+    },
+    "abort": {
+      "already_configured": "This device is already configured"
     }
+  }
 }

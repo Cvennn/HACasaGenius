@@ -1,540 +1,220 @@
-"""Swegon CASA Genius SCB 4.1 Modbus register definitions."""
+"""
+Swegon CASA Genius — Taydellinen Modbus-rekisterikartta.
 
-from __future__ import annotations
+Lahde: CASA Genius Modbus Register SCB 4.2, SW 4.0+ (paivitetty 250106).
+Osoitteet 0-indeksoituja pymodbus-osoitteita:
+  rekisterinumero - 1 = pymodbus-osoite
+  Esim. 3x6201 -> address 6200,  4x5001 -> address 5000
+scale: arvo * scale = naytettava arvo (lampotilat 0.1).
+"""
 
-from .const import REG_HOLDING, REG_INPUT
-
-# DEVICE INFORMATION — 3x6001–3x6024 (read on setup, not polled every cycle)
-DEVICE_INFO_REGISTERS: dict[str, dict] = {
-    "firmware_major": {
-        "address": 6001,
-        "type": REG_INPUT,
-        "name": "Firmware Version Major",
-    },
-    "firmware_minor": {
-        "address": 6002,
-        "type": REG_INPUT,
-        "name": "Firmware Version Minor",
-    },
-    "firmware_build": {
-        "address": 6003,
-        "type": REG_INPUT,
-        "name": "Firmware Build",
-    },
-    # Model name: 15 registers ASCII (3x6008–3x6022), read as block
-    "model_name_start": {
-        "address": 6008,
-        "type": REG_INPUT,
-        "count": 15,  # read 15 registers at once
-        "name": "Model Name",
-    },
-    # Serial number: 24 registers ASCII (3x6024–3x6047), read as block
-    "serial_number_start": {
-        "address": 6024,
-        "type": REG_INPUT,
-        "count": 24,
-        "name": "Unit Serial Number",
-    },
+# === Laitetiedot (luetaan kerran alustuksessa) ===
+DEVICE_INFO = {
+    "firmware_major":      {"address": 6000, "type": "input"},
+    "firmware_minor":      {"address": 6001, "type": "input"},
+    "firmware_build":      {"address": 6002, "type": "input"},
+    "model_name_start":    {"address": 6007, "count": 15, "type": "input"},
+    "serial_number_start": {"address": 6023, "count": 24, "type": "input"},
 }
 
-# SENSOR registers — 3x input registers, Diagnostics-Measurements section
-# Scale applied in coordinator. Temperatures: ×0.1°C, signed 16-bit.
-SENSOR_REGISTERS: dict[str, dict] = {
-    # --- Air temperatures (Diagnostics - Measurements, page 6) ---
-    "fresh_air_temp": {
-        "address": 6201,
-        "type": REG_INPUT,
-        "scale": 0.1,
-        "unit": "°C",
-        "device_class": "temperature",
-        "state_class": "measurement",
-        "name": "Fresh Air Temperature",
-    },
-    "supply_air_before_reheater_temp": {
-        "address": 6202,
-        "type": REG_INPUT,
-        "scale": 0.1,
-        "unit": "°C",
-        "device_class": "temperature",
-        "state_class": "measurement",
-        "name": "Supply Air Before Re-heater Temperature",
-    },
-    "supply_air_temp": {
-        "address": 6203,
-        "type": REG_INPUT,
-        "scale": 0.1,
-        "unit": "°C",
-        "device_class": "temperature",
-        "state_class": "measurement",
-        "name": "Supply Air Temperature",
-    },
-    "extract_air_temp": {
-        "address": 6204,
-        "type": REG_INPUT,
-        "scale": 0.1,
-        "unit": "°C",
-        "device_class": "temperature",
-        "state_class": "measurement",
-        "name": "Extract Air Temperature",
-    },
-    "exhaust_air_temp": {
-        "address": 6205,
-        "type": REG_INPUT,
-        "scale": 0.1,
-        "unit": "°C",
-        "device_class": "temperature",
-        "state_class": "measurement",
-        "name": "Exhaust Air Temperature",
-    },
-    "water_radiator_temp": {
-        "address": 6209,
-        "type": REG_INPUT,
-        "scale": 0.1,
-        "unit": "°C",
-        "device_class": "temperature",
-        "state_class": "measurement",
-        "name": "Water Radiator Temperature",
-    },
-    "external_outside_air_temp": {
-        "address": 6211,
-        "type": REG_INPUT,
-        "scale": 0.1,
-        "unit": "°C",
-        "device_class": "temperature",
-        "state_class": "measurement",
-        "name": "External Outside Air Temperature",
-    },
-    "room_air_temp": {
-        "address": 6206,
-        "type": REG_INPUT,
-        "scale": 0.1,
-        "unit": "°C",
-        "device_class": "temperature",
-        "state_class": "measurement",
-        "name": "Room Air Temperature",
-   },
-    # --- CO2 ---
-    "room_air_co2": {
-        "address": 6213,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "ppm",
-        "device_class": "carbon_dioxide",
-        "state_class": "measurement",
-        "name": "Room Air CO2",
-    },
-    # --- Humidity ---
-    "room_air_rh": {
-        "address": 6214,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "%",
-        "device_class": "humidity",
-        "state_class": "measurement",
-        "name": "Room Air Relative Humidity",
-    },
-    # --- VOC ---
-    "room_air_voc": {
-        "address": 6217,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "ppm",
-        "device_class": None,
-        "state_class": "measurement",
-        "name": "Room Air VOC",
-    },
-    # --- Airflow / Pressure ---
-    "supply_duct_pressure": {
-        "address": 6218,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "Pa",
-        "device_class": "pressure",
-        "state_class": "measurement",
-        "name": "Supply Duct Pressure",
-    },
-    "exhaust_duct_pressure": {
-        "address": 6219,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "Pa",
-        "device_class": "pressure",
-        "state_class": "measurement",
-        "name": "Exhaust Duct Pressure",
-    },
-    "supply_air_flow": {
-        "address": 6220,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "l/s",
-        "device_class": None,
-        "state_class": "measurement",
-        "name": "Supply Air Flow",
-    },
-    "exhaust_air_flow": {
-        "address": 6221,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "l/s",
-        "device_class": None,
-        "state_class": "measurement",
-        "name": "Exhaust Air Flow",
-    },
-    # --- Unit Status / Fan (Diagnostics - Unit Status, page 7) ---
-    "supply_fan_control": {
-        "address": 6303,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "%",
-        "device_class": None,
-        "state_class": "measurement",
-        "name": "Supply Fan Control",
-    },
-    "exhaust_fan_control": {
-        "address": 6304,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "%",
-        "device_class": None,
-        "state_class": "measurement",
-        "name": "Exhaust Fan Control",
-    },
-    "supply_fan_rpm": {
-        "address": 6305,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "rpm",
-        "device_class": None,
-        "state_class": "measurement",
-        "name": "Supply Fan RPM",
-    },
-    "exhaust_fan_rpm": {
-        "address": 6306,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "rpm",
-        "device_class": None,
-        "state_class": "measurement",
-        "name": "Exhaust Fan RPM",
-    },
-    "effective_temp_setpoint": {
-        "address": 6320,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "°C",
-        "device_class": "temperature",
-        "state_class": "measurement",
-        "name": "Effective Temperature Setpoint",
-    },
-    # --- Automation contributions ---
-    "co2_automation_pct": {
-        "address": 6310,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "%",
-        "device_class": None,
-        "state_class": "measurement",
-        "name": "CO2 Automation Fan Change",
-    },
-    "rh_automation_pct": {
-        "address": 6311,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "%",
-        "device_class": None,
-        "state_class": "measurement",
-        "name": "RH Automation Fan Boost",
-    },
+# === Mittaussensorit (3x input registers, vain luku) ===
+SENSOR_REGISTERS = [
+    # Lampotilat
+    {"key": "outdoor_temp",          "name": "Ulkoilman lampotila (T1)",       "address": 6200, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "supply_before_hx_temp", "name": "Tuloilma ennen lammitinta (T2)", "address": 6201, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "supply_temp",           "name": "Tuloilman lampotila (T4)",       "address": 6202, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "extract_temp",          "name": "Poistoilman lampotila (T3)",     "address": 6203, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "exhaust_temp",          "name": "Jateilman lampotila (T5)",       "address": 6204, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "room_temp",             "name": "Huonelampotila",                 "address": 6205, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "water_radiator_temp",   "name": "Vesipatterin lampotila (T6)",    "address": 6208, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "external_outdoor_temp", "name": "Ulkoinen ulkolampotila (T8)",    "address": 6210, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "io1_temp",              "name": "IO1 lampotila",                  "address": 6286, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "io2_temp",              "name": "IO2 lampotila",                  "address": 6287, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "io3_temp",              "name": "IO3 lampotila",                  "address": 6288, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "io4_temp",              "name": "IO4 lampotila",                  "address": 6289, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    {"key": "io5_temp",              "name": "IO5 lampotila",                  "address": 6290, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "int16"},
+    # Ilmanlaatu
+    {"key": "co2",                   "name": "CO2 (efektiivinen)",             "address": 6212, "type": "input", "scale": 1.0,  "unit": "ppm",  "device_class": "carbon_dioxide", "state_class": "measurement", "data_type": "uint16"},
+    {"key": "co2_internal",          "name": "CO2 sisainen anturi",            "address": 6262, "type": "input", "scale": 1.0,  "unit": "ppm",  "device_class": "carbon_dioxide", "state_class": "measurement", "data_type": "uint16"},
+    {"key": "humidity",              "name": "Huoneilman kosteus (RH)",        "address": 6213, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": "humidity",       "state_class": "measurement", "data_type": "uint16"},
+    {"key": "absolute_humidity",     "name": "Absoluuttinen kosteus",          "address": 6214, "type": "input", "scale": 0.01, "unit": "g/m3", "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "absolute_humidity_sp",  "name": "Absoluuttinen kosteus asetus",   "address": 6215, "type": "input", "scale": 0.01, "unit": "g/m3", "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "voc",                   "name": "VOC (efektiivinen)",             "address": 6216, "type": "input", "scale": 1.0,  "unit": "ppm",  "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "voc_internal",          "name": "VOC sisainen anturi",            "address": 6274, "type": "input", "scale": 1.0,  "unit": "ppm",  "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    # Paineet ja ilmavirrat
+    {"key": "supply_duct_pressure",  "name": "Tuloilmakanavan paine",          "address": 6217, "type": "input", "scale": 1.0,  "unit": "Pa",   "device_class": "pressure",       "state_class": "measurement", "data_type": "uint16"},
+    {"key": "exhaust_duct_pressure", "name": "Poistoilmakanavan paine",        "address": 6218, "type": "input", "scale": 1.0,  "unit": "Pa",   "device_class": "pressure",       "state_class": "measurement", "data_type": "uint16"},
+    {"key": "supply_duct_target",    "name": "Tuloilmakanavan paine tavoite",  "address": 6236, "type": "input", "scale": 1.0,  "unit": "Pa",   "device_class": "pressure",       "state_class": "measurement", "data_type": "uint16"},
+    {"key": "exhaust_duct_target",   "name": "Poistoilmakanavan paine tavoite","address": 6237, "type": "input", "scale": 1.0,  "unit": "Pa",   "device_class": "pressure",       "state_class": "measurement", "data_type": "uint16"},
+    {"key": "supply_airflow",        "name": "Tuloilmavirta",                  "address": 6219, "type": "input", "scale": 0.1,  "unit": "l/s",  "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "exhaust_airflow",       "name": "Poistoilmavirta",                "address": 6220, "type": "input", "scale": 0.1,  "unit": "l/s",  "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "room_pressure",         "name": "Huonepaine",                     "address": 6276, "type": "input", "scale": 0.1,  "unit": "Pa",   "device_class": "pressure",       "state_class": "measurement", "data_type": "int16"},
+    # Puhaltimet
+    {"key": "supply_fan_control",    "name": "Tuloilmapuhallin ohjaus",        "address": 6302, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "exhaust_fan_control",   "name": "Poistoilmapuhallin ohjaus",      "address": 6303, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "supply_fan_rpm",        "name": "Tuloilmapuhallin RPM",           "address": 6304, "type": "input", "scale": 1.0,  "unit": "rpm",  "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "exhaust_fan_rpm",       "name": "Poistoilmapuhallin RPM",         "address": 6305, "type": "input", "scale": 1.0,  "unit": "rpm",  "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    # Automaatiovaikutukset
+    {"key": "automation_control",    "name": "Automaation ohjaus +/-",         "address": 6314, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "int16"},
+    {"key": "co2_automation_effect", "name": "CO2-automaation vaikutus",       "address": 6309, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "int16"},
+    {"key": "rh_automation_effect",  "name": "Kosteusautomaation vaikutus",    "address": 6310, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "voc_automation_effect", "name": "VOC-automaation vaikutus",       "address": 6311, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "temp_boost_effect",     "name": "Lampotilatehostuksen vaikutus",  "address": 6312, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "fan_speed_limit",       "name": "Puhallinnopeuden rajoitus",      "address": 6313, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "int16"},
+    {"key": "building_pressure_bal", "name": "Rakennuksen painetasapaino",     "address": 6381, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "int16"},
+    # Aktiivinen lampotila-asetus ja lammitys/jaahdytys
+    {"key": "temp_setpoint_active",  "name": "Aktiivinen lampotila-asetus",    "address": 6319, "type": "input", "scale": 0.1,  "unit": "C",    "device_class": "temperature",    "state_class": "measurement", "data_type": "uint16"},
+    {"key": "postheat_combined",     "name": "Jalkilammitys yhdistetty",       "address": 6316, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "internal_postheater",   "name": "Sisainen jalkilammitin",         "address": 6317, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "internal_preheater",    "name": "Sisainen esilammitin",           "address": 6343, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "external_postheat_water","name":"Ulkoinen jalkilammitys (vesi)",   "address": 6318, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "external_postheat_elec","name": "Ulkoinen jalkilammitys (sahko)",  "address": 6321, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "external_postcool",     "name": "Ulkoinen jalkijaahdytys",        "address": 6320, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "external_preheater",    "name": "Ulkoinen esilammitin",           "address": 6344, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "bypass_damper",         "name": "Ohituspellin asento",            "address": 6347, "type": "input", "scale": 1.0,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "rotor_control",         "name": "Roottorin ohjaus",               "address": 6331, "type": "input", "scale": 0.1,  "unit": "%",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "rotor_rpm",             "name": "Roottorin pyorimisnopeus",       "address": 6233, "type": "input", "scale": 0.1,  "unit": "rpm",  "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    # Ajastimet ja huolto
+    {"key": "boost_time_left",       "name": "Tehostuksen jaljella oleva aika","address": 6307, "type": "input", "scale": 1.0,  "unit": "min",  "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    {"key": "hours_to_service",      "name": "Tunteja seuraavaan huoltoon",    "address": 6342, "type": "input", "scale": 1.0,  "unit": "h",    "device_class": None,             "state_class": "measurement", "data_type": "uint16"},
+    # GIO analogiatulot (3x6354-3x6358)
+    {"key": "gio1_voltage",          "name": "GIO1 jannitetulo",               "address": 6353, "type": "input", "scale": 1.0,  "unit": "mV",   "device_class": "voltage",        "state_class": "measurement", "data_type": "uint16"},
+    {"key": "gio2_voltage",          "name": "GIO2 jannitetulo",               "address": 6354, "type": "input", "scale": 1.0,  "unit": "mV",   "device_class": "voltage",        "state_class": "measurement", "data_type": "uint16"},
+    {"key": "gio3_voltage",          "name": "GIO3 jannitetulo",               "address": 6355, "type": "input", "scale": 1.0,  "unit": "mV",   "device_class": "voltage",        "state_class": "measurement", "data_type": "uint16"},
+    {"key": "gio4_voltage",          "name": "GIO4 jannitetulo",               "address": 6356, "type": "input", "scale": 1.0,  "unit": "mV",   "device_class": "voltage",        "state_class": "measurement", "data_type": "uint16"},
+    {"key": "gio5_voltage",          "name": "GIO5 jannitetulo",               "address": 6357, "type": "input", "scale": 1.0,  "unit": "mV",   "device_class": "voltage",        "state_class": "measurement", "data_type": "uint16"},
+]
+
+# === Tilarekisterit enum-teksteina (3x input) ===
+ENUM_SENSORS = [
+    {"key": "unit_state",    "name": "Yksikon tila",  "address": 6300, "map": "UNIT_STATES"},
+    {"key": "heating_state", "name": "Lammitystila",  "address": 6369, "map": "HEATING_STATES"},
+    {"key": "ventilation_state_text", "name": "Aktiivinen ventilointitila", "address": 6433, "map": "VENTILATION_STATES"},
+]
+
+# === Tilarekisterit (3x input, raakaluku) ===
+STATUS_REGISTERS = {
+    "unit_state":            {"address": 6300, "type": "input"},
+    "ventilation_state":     {"address": 6433, "type": "input"},
+    "ventilation_state_smart":{"address": 6301, "type": "input"},
+    "week_timer_active":     {"address": 6308, "type": "input"},
+    "travelling_active":     {"address": 6306, "type": "input"},
+    "silent_mode_active":    {"address": 6324, "type": "input"},
+    "fireplace_active":      {"address": 6334, "type": "input"},
+    "cvc_active":            {"address": 6335, "type": "input"},
+    "cooking_active":        {"address": 6336, "type": "input"},
+    "heating_state":         {"address": 6369, "type": "input"},
+    "external_postcool_active":{"address": 6322, "type": "input"},
+    "service_info":          {"address": 6128, "type": "input"},
+    "active_alarms":         {"address": 6131, "type": "input"},
+    "unconfirmed_info":      {"address": 6132, "type": "input"},
+    "critical_alarms":       {"address": 6194, "type": "input"},
+    "alarm_bits_1":          {"address": 6135, "type": "input"},
+    "alarm_bits_2":          {"address": 6190, "type": "input"},
+    "alarm_bits_3":          {"address": 6192, "type": "input"},
+    "gio1_di":               {"address": 6348, "type": "input"},
+    "gio2_di":               {"address": 6349, "type": "input"},
+    "gio3_di":               {"address": 6350, "type": "input"},
+    "gio4_di":               {"address": 6351, "type": "input"},
+    "gio5_di":               {"address": 6352, "type": "input"},
 }
 
-
-ALARM_REGISTERS: dict[str, dict] = {
-    "active_alarms_word1": {
-        "address": 6136,
-        "type": REG_INPUT,
-        "name": "Active Alarms Word 1",
-        # Bit 0 = LSB
+# === Bittimaskihalytykset (kaikki kolme rekisteria) ===
+ALARM_REGISTERS = [
+    {
+        "register": 6135,  # 3x6136 - Active Alarms Bitwise 1
         "bits": {
-            0: ("E011", "Postheater failure"),
-            1: ("E021", "Preheater failure"),
-            2: ("RSVD", "Reserved"),
-            3: ("E041", "Freezing danger"),
-            4: ("E051", "Supply fan failure"),
-            5: ("E061", "Exhaust fan failure"),
-            6: ("E15x", "Temperature sensor failure (T1–T9)"),
-            7: ("E071", "Emergency stop active"),
-            8: ("RSVD", "Reserved"),
-            9: ("INFO", "Service info"),
-            10: ("GENIUS", "New Genius alarm"),
-            11: ("E111", "Supply temperature low alarm"),
-            12: ("E121", "Internal temperature high alarm"),
-            13: ("PREHEAT", "Preheater temperature high alarm"),
-            14: ("E131", "Rotor RPM alarm"),
-            15: ("FANCTRL", "Fan control alarm"),
+            0:  {"key": "alarm_postheater",    "name": "E011 Jalkilammittimen vika"},
+            1:  {"key": "alarm_preheater",     "name": "E021 Esilammittimen vika"},
+            3:  {"key": "alarm_freezing",      "name": "E051 Jaatymisvaara"},
+            4:  {"key": "alarm_supply_fan",    "name": "E061 Tuloilmapuhaltimen vika"},
+            5:  {"key": "alarm_exhaust_fan",   "name": "E071 Poistoilmapuhaltimen vika"},
+            6:  {"key": "alarm_temp_sensor",   "name": "Lampotila-anturivika (T1-T9)"},
+            7:  {"key": "alarm_emergency",     "name": "E082 Hatapysaytys"},
+            9:  {"key": "alarm_service",       "name": "Huoltomuistutus"},
+            10: {"key": "alarm_genius",        "name": "Genius-halytys"},
+            11: {"key": "alarm_supply_low",    "name": "E111 Tuloilman lampotila matala"},
+            12: {"key": "alarm_internal_high", "name": "E121 Sisalampotila korkea"},
+            13: {"key": "alarm_preheat_high",  "name": "Esilammittimen lampotila korkea"},
+            14: {"key": "alarm_rotor_rpm",     "name": "E131 Roottorin RPM-halytys"},
+            15: {"key": "alarm_fan_control",   "name": "Puhallinohjauksen vika"},
         },
     },
-    "active_alarms_word2": {
-        "address": 6191,
-        "type": REG_INPUT,
-        "name": "Active Alarms Word 2",
+    {
+        "register": 6190,  # 3x6191 - Active Alarms Bitwise 2 (Genius)
         "bits": {
-            0: ("E171", "Sensor package failure"),
-            1: ("E172", "RH sensor failure"),
-            2: ("E173", "CO2 sensor failure"),
-            3: ("E174", "VOC sensor failure"),
-            4: ("E031", "External electrical preheater failure"),
-            5: ("E181", "External electrical postheater failure"),
-            6: ("E071b", "Internal PCB temperature high"),
-            7: ("PARAM", "Internal parameter error"),
-            8: ("E091", "External alarm"),
-            9: ("E093", "External device message"),
-            10: ("E092", "External critical alarm"),
-            11: ("E101", "External fire detector alarm"),
-            12: ("E141", "Heat exchanger efficiency low"),
-            13: ("HEXCTRL", "Heat exchanger control failure"),
+            0:  {"key": "alarm_sensor_package", "name": "E401 Anturipaketin vika"},
+            1:  {"key": "alarm_rh_sensor",      "name": "E411 Kosteusanturin vika"},
+            2:  {"key": "alarm_co2_sensor",     "name": "E421 CO2-anturin vika"},
+            3:  {"key": "alarm_voc_sensor",     "name": "E431 VOC-anturin vika"},
+            4:  {"key": "alarm_ext_preheater",  "name": "E031 Ulkoinen sahkoesilammitin"},
+            5:  {"key": "alarm_ext_postheater", "name": "E041 Ulkoinen sahkojalkilammitin"},
+            6:  {"key": "alarm_pcb_temp",       "name": "E202 Sisainen PCB-lampotila korkea"},
+            7:  {"key": "alarm_param_error",    "name": "E211 Sisainen parametrivirhe"},
+            8:  {"key": "alarm_external",       "name": "E091 Ulkoinen halytys"},
+            9:  {"key": "alarm_ext_message",    "name": "Ulkoisen laitteen viesti"},
+            10: {"key": "alarm_ext_critical",   "name": "E092 Ulkoinen kriittinen halytys"},
+            11: {"key": "alarm_fire",           "name": "E102 Palohalytys"},
+            12: {"key": "alarm_hx_efficiency",  "name": "E171 LTO:n hyotysuhde matala"},
+            13: {"key": "alarm_hx_control",     "name": "LTO-ohjauksen vika"},
         },
     },
-    "active_alarms_word3": {
-        "address": 6193,
-        "type": REG_INPUT,
-        "name": "Active Alarms Word 3",
+    {
+        "register": 6192,  # 3x6193 - Active Alarms Bitwise 3 (Genius)
         "bits": {
-            0: ("E191", "Cooling condenser temperature high"),
-            1: ("E192", "Cooling hotgas temperature high"),
-            2: ("E193", "Cooling pressure high"),
-            3: ("E134", "Rotor stall detection"),
-            4: ("E133", "Rotor driver overheat"),
-            5: ("E132", "Rotor connection failure"),
-            6: ("E502", "Indoor humidity alarm"),  # SCB 4.1+
-            7: ("E512", "Cooling coil condense removal critical failure"),  # SCB 4.1+
+            0: {"key": "alarm_cool_condenser", "name": "E451 Jaahdytyskondensaattori korkea"},
+            1: {"key": "alarm_cool_hotgas",    "name": "E461 Jaahdytyksen kuumakaasu korkea"},
+            2: {"key": "alarm_cool_pressure",  "name": "E471 Jaahdytyspaine korkea"},
+            3: {"key": "alarm_rotor_stall",    "name": "E161 Roottori pysahtynyt"},
+            4: {"key": "alarm_rotor_overheat", "name": "E141 Roottorin ohjain ylikuumeni"},
+            5: {"key": "alarm_rotor_connection","name": "E151 Roottoriyhteyden vika"},
+            6: {"key": "alarm_indoor_humidity","name": "E502 Sisailman kosteus"},
+            7: {"key": "alarm_cool_condense",  "name": "E512 Jaahdytyskennon kondenssi"},
         },
     },
-}
+]
 
-# Additional binary status registers (single-bit, not bitmask)
-STATUS_BINARY_REGISTERS: dict[str, dict] = {
-    "active_alarms_flag": {
-        "address": 6132,
-        "type": REG_INPUT,
-        "name": "Active Alarms",
-        "device_class": "problem",
-        "note": "0 = No alarms, 1 = Active alarm",
-    },
-    "critical_alarms_flag": {
-        "address": 6195,
-        "type": REG_INPUT,
-        "name": "Critical Alarms (Ventilation Stopped)",
-        "device_class": "problem",
-        "note": "Only in Genius control system (SW4.0+)",
-    },
-}
+# === Ohjausrekisterit (4x holding, luku + kirjoitus) ===
+CONTROL_REGISTERS = {
+    # Kayttotila - kirjoitus 4x5001, tilan luku 3x6434
+    "operating_mode": {"write_address": 5000, "read_address": 6433, "type": "holding"},
 
-# SELECT registers
-# IMPORTANT: Operating mode write → 4x5001, read active state → 3x6434
-#            3x6434 has MORE states than 4x5001 (adds Fireplace state)
-SELECT_REGISTERS: dict[str, dict] = {
-    "operation_mode": {
-        "write_address": 5001,
-        "write_type": REG_HOLDING,
-        "read_address": 6434,
-        "read_type": REG_INPUT,
-        "name": "Operation Mode",
-        "icon": "mdi:air-filter",
-        "write_options": {
-            0: "Shutdown",
-            1: "Away",
-            2: "Home",
-            3: "Boost",
-            4: "Travelling",
-            5: "Home+",
-        },
-        "read_states": {
-            0: "Stopped",
-            1: "Travelling",
-            2: "Away",
-            3: "Home",
-            4: "Home+",
-            5: "Boost",
-            6: "Fireplace",
-        },
-    },
-    "rh_automation": {
-        "write_address": 5010,
-        "write_type": REG_HOLDING,
-        "read_address": 5010,
-        "read_type": REG_HOLDING,
-        "name": "RH Automation Level",
-        "icon": "mdi:water-percent",
-        "write_options": {
-            0: "Off",
-            1: "Low",
-            2: "Normal",
-            3: "High",
-            4: "Max",
-            5: "Advanced",
-        },
-        "read_states": {
-            0: "Off",
-            1: "Low",
-            2: "Normal",
-            3: "High",
-            4: "Max",
-            5: "Advanced",
-        },
-    },
-    "cooker_hood_mode": {
-        "write_address": 5020,
-        "write_type": REG_HOLDING,
-        "read_address": 5020,
-        "read_type": REG_HOLDING,
-        "name": "Cooker Hood Mode",
-        "icon": "mdi:stove",
-        "write_options": {
-            0: "No Cooker Hood",
-            1: "Hood with Ventilation Unit",
-            2: "Hood with Roof Fan",
-            3: "Hood with Integrated Fan",
-            4: "Recirculating Cooker Hood",
-        },
-        "read_states": {
-            0: "No Cooker Hood",
-            1: "Hood with Ventilation Unit",
-            2: "Hood with Roof Fan",
-            3: "Hood with Integrated Fan",
-            4: "Recirculating Cooker Hood",
-        },
-        "note": "Different from cooking mode activation (4x5005). Sets cooker hood type.",
-    },
-}
+    # Lampotila-asetukset
+    "temp_setpoint":        {"address": 5100, "type": "holding", "scale": 0.1, "unit": "C", "min": 13.0, "max": 25.0, "step": 0.5},
+    "temp_setpoint_summer": {"address": 5167, "type": "holding", "scale": 0.1, "unit": "C", "min": 13.0, "max": 25.0, "step": 0.5},
+    "temp_setpoint_away":   {"address": 5170, "type": "holding", "scale": 0.1, "unit": "C", "min": 13.0, "max": 25.0, "step": 0.5},
+    "temp_setpoint_travel": {"address": 5103, "type": "holding", "scale": 0.1, "unit": "C", "min": 13.0, "max": 25.0, "step": 0.5},
+    "room_temp_setpoint":   {"address": 5186, "type": "holding", "scale": 0.1, "unit": "C", "min": 16.0, "max": 26.0, "step": 0.5},
 
-# NUMBER registers — temperature setpoint, fireplace level
-# 4x5101: Supply temperature setpoint, range 130–250 (×0.1°C = 13.0–25.0°C)
-# Write: send value × 10 (integer). Read: raw × 0.1 → °C.
-NUMBER_REGISTERS: dict[str, dict] = {
-    "temperature_setpoint": {
-        "address": 5101,  # 4x5101
-        "type": REG_HOLDING,
-        "name": "Temperature Setpoint",
-        "unit": "°C",
-        "device_class": "temperature",
-        "min": 13.0,
-        "max": 25.0,
-        "step": 0.5,
-        "scale": 0.1,
-        "write_scale": 10,
-        "raw_min": 130,
-        "raw_max": 250,
-    },
-    "fireplace_level": {
-        "address": 5105,
-        "type": REG_HOLDING,
-        "name": "Fireplace Level",
-        "unit": "",
-        "device_class": None,
-        "min": 0,
-        "max": 2,
-        "step": 1,
-        "scale": 1,
-    },
-}
+    # Automatiikka
+    "co2_automation":  {"address": 5008, "type": "holding"},
+    "rh_automation":   {"address": 5009, "type": "holding"},
+    "voc_automation":  {"address": 5010, "type": "holding"},
+    "summer_boost":    {"address": 5168, "type": "holding"},
+    "emergency_stop":  {"address": 5017, "type": "holding"},
 
-# SWITCH registers — true on/off holding registers
-SWITCH_REGISTERS: dict[str, dict] = {
-    "co2_automation": {
-        "address": 5009,
-        "type": REG_HOLDING,
-        "name": "CO2 Automation",
-        "icon": "mdi:molecule-co2",
-        "note": "0=Auto Home/Away/Boost control disabled, 1=enabled. Available only in units with CO2 sensor.",
-    },
-    "emergency_stop": {
-        "address": 5018,
-        "type": REG_HOLDING,
-        "name": "Emergency Stop",
-        "icon": "mdi:stop-circle-outline",
-        "device_class": "switch",
-    },
-    "cooking_mode": {
-        "address": 5005,
-        "type": REG_HOLDING,
-        "name": "Cooking Mode",
-        "icon": "mdi:pot-mix",
-        "device_class": "switch",
-    },
-    "fireplace_mode": {
-        "address": 5002,
-        "type": REG_HOLDING,
-        "name": "Fireplace Mode",
-        "icon": "mdi:fireplace",
-        "device_class": "switch",
-    },
-}
+    # Toiminnot
+    "fireplace":       {"address": 5001, "type": "holding"},
+    "fireplace_level": {"address": 5104, "type": "holding"},
+    "cooking_mode":    {"address": 5004, "type": "holding"},
+    "cooker_hood_mode":{"address": 5019, "type": "holding"},
+    "boost_timer":     {"address": 5101, "type": "holding"},
 
-# UNIT STATUS registers — read-only
-UNIT_STATUS_REGISTERS: dict[str, dict] = {
-    "unit_state": {
-        "address": 6301,
-        "type": REG_INPUT,
-        "name": "Unit State",
-        "states": {
-            0: "Critical Stop",
-            1: "User Stopped",
-            2: "Starting",
-            3: "Normal",
-            4: "Commissioning",
-        },
-    },
-    "ventilation_speed_state": {
-        "address": 6434,
-        "type": REG_INPUT,
-        "name": "Ventilation Speed State",
-        "states": {
-            0: "Stopped",
-            1: "Travelling",
-            2: "Away",
-            3: "Home",
-            4: "Home+",
-            5: "Boost",
-            6: "Fireplace",
-        },
-    },
-    "boost_time_left": {
-        "address": 6308,
-        "type": REG_INPUT,
-        "scale": 1,
-        "unit": "min",
-        "device_class": None,
-        "name": "Boost Time Left",
-    },
-    "temperature_setpoint_active": {
-        "address": 6320,
-        "type": REG_INPUT,
-        "scale": 0.1,
-        "unit": "°C",
-        "device_class": "temperature",
-        "state_class": "measurement",
-        "name": "Active Temperature Setpoint",
-    },
-    "fireplace_function_active": {
-        "address": 6335,
-        "type": REG_INPUT,
-        "name": "Fireplace Function Active",
-        "icon": "mdi:fireplace",
-        "device_class": "binary_sensor",
-        "states": {
-            0: "Inactive",
-            1: "Active",
-        },
-    },
-    "cooking_mode_active": {
-        "address": 6337,
-        "type": REG_INPUT,
-        "name": "Cooking Mode Active",
-        "icon": "mdi:pot-mix",
-        "device_class": "binary_sensor",
-        "states": {
-            0: "Inactive",
-            1: "Active",
-        },
-    },
+    # CO2-rajat
+    "co2_boost_limit": {"address": 5115, "type": "holding", "unit": "ppm", "min": 0, "max": 2000, "step": 50},
+    "co2_home_limit":  {"address": 5113, "type": "holding", "unit": "ppm", "min": 0, "max": 2000, "step": 50},
+    "co2_away_limit":  {"address": 5114, "type": "holding", "unit": "ppm", "min": 0, "max": 2000, "step": 50},
+
+    # Home+ taso
+    "home_plus_level": {"address": 5107, "type": "holding", "unit": "%", "min": 10, "max": 90, "step": 5},
+
+    # Puhallinnopeusasetukset
+    "away_supply_fan":   {"address": 5301, "type": "holding", "unit": "%", "min": 20, "max": 100, "step": 1},
+    "away_exhaust_fan":  {"address": 5302, "type": "holding", "unit": "%", "min": 20, "max": 100, "step": 1},
+    "home_supply_fan":   {"address": 5303, "type": "holding", "unit": "%", "min": 20, "max": 100, "step": 1},
+    "home_exhaust_fan":  {"address": 5304, "type": "holding", "unit": "%", "min": 20, "max": 100, "step": 1},
+    "boost_supply_fan":  {"address": 5305, "type": "holding", "unit": "%", "min": 20, "max": 100, "step": 1},
+    "boost_exhaust_fan": {"address": 5306, "type": "holding", "unit": "%", "min": 20, "max": 100, "step": 1},
+    "cooking_supply_fan":{"address": 5183, "type": "holding", "unit": "%", "min": 20, "max": 100, "step": 1},
+    "cooking_exhaust_fan":{"address": 5184,"type": "holding", "unit": "%", "min": 20, "max": 100, "step": 1},
 }

@@ -2,43 +2,48 @@
 
 from __future__ import annotations
 
-from datetime import timedelta
 import logging
-from typing import Any, TYPE_CHECKING
+from datetime import timedelta
+from typing import TYPE_CHECKING, Any
 
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import DOMAIN
+from .const import (
+    DEFAULT_SCAN_INTERVAL,
+    HEATING_STATES,
+    OPERATION_MODES_READ,
+    UNIT_STATES,
+)
 from .registers_genius import (
     ALARM_REGISTERS,
-    NUMBER_REGISTERS,
-    SELECT_REGISTERS,
+    CONTROL_REGISTERS,
+    ENUM_SENSORS,
     SENSOR_REGISTERS,
-    SWITCH_REGISTERS,
+    STATUS_REGISTERS,
 )
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
-    from .modbus_client import SwegonGeniusModbusClient
+    from .modbus_client import SwegonModbusClient
 
+
+ENUM_MAPS = {
+    "UNIT_STATES": UNIT_STATES,
+    "HEATING_STATES": HEATING_STATES,
+    "VENTILATION_STATES": OPERATION_MODES_READ,
+}
 _LOGGER = logging.getLogger(__name__)
 
 
-class SwegonGeniusCoordinator(DataUpdateCoordinator[dict[str, Any]]):
-    # Coordinator that polls all Swegon GENIUS registers and scales them
-    def __init__(
-        self,
-        hass: HomeAssistant,
-        client: SwegonGeniusModbusClient,
-        scan_interval: int,
-    ) -> None:
-        self.client = client
+class SwegonCoordinator(DataUpdateCoordinator[dict[str, Any]]):
+    def __init__(self, hass: HomeAssistant, client: SwegonModbusClient, device_info: dict[str, Any]) -> None:
         super().__init__(
-            hass,
-            _LOGGER,
-            name=DOMAIN,
-            update_interval=timedelta(seconds=scan_interval),
+            hass, _LOGGER,
+            name="Swegon CASA Genius",
+            update_interval=timedelta(seconds=DEFAULT_SCAN_INTERVAL),
         )
+        self.client = client
+        self.device_info_data = device_info
 
     async def _async_update_data(self) -> dict[str, Any]:
         # Fetch and scale all registers. Raises UpdateFailed on any error
@@ -50,118 +55,49 @@ class SwegonGeniusCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         data: dict[str, Any] = {}
 
         try:
-            await self._read_sensor_registers(data)
-            await self._read_alarm_registers(data)
-            await self._read_select_registers(data)
-            await self._read_number_registers(data)
-            await self._read_switch_registers(data)
-        except Exception as err:
-            raise UpdateFailed(f"Modbus poll failed: {err}") from err
+            for sensor in SENSOR_REGISTERS:
+                if sensor["type"] == "input":
+                    raw = await self.client.read_input_register(sensor["address"])
+                else:
+                    raw = await self.client.read_holding_register(sensor["address"])
+                if raw is not None:
+                    signed = sensor.get("data_type") == "int16"
+                    data[sensor["key"]] = self.client.apply_scale(raw, sensor["scale"], signed=signed)
+                else:
+                    data[sensor["key"]] = None
+
+            # Tilarekisterit (raaka)
+            for key, reg in STATUS_REGISTERS.items():
+                data[key] = await self.client.read_input_register(reg["address"])
+
+            # Enum-tekstisensorit -> key+"_text"
+            for es in ENUM_SENSORS:
+                raw = await self.client.read_input_register(es["address"])
+                mapping = ENUM_MAPS.get(es["map"], {})
+                data[es["key"] + "_text"] = mapping.get(raw) if raw is not None else None
+
+            # Ohjausrekisterit
+            for key, reg in CONTROL_REGISTERS.items():
+                address = reg.get("address") or reg.get("read_address") or reg.get("write_address")
+                if address is None:
+                    continue
+                if reg.get("type", "holding") == "holding":
+                    raw = await self.client.read_holding_register(address)
+                else:
+                    raw = await self.client.read_input_register(address)
+                scale = reg.get("scale")
+                if raw is not None and scale and scale != 1.0:
+                    data[key] = self.client.apply_scale(raw, scale)
+                else:
+                    data[key] = raw
+
+            # Bittimaskihalytykset
+            for alarm_reg in ALARM_REGISTERS:
+                raw = await self.client.read_input_register(alarm_reg["register"])
+                for bit, info in alarm_reg["bits"].items():
+                    data[info["key"]] = self.client.extract_bit(raw, bit) if raw is not None else None
+
+        except Exception as e:
+            raise UpdateFailed(f"Virhe Modbus-datan haussa: {e}") from e
 
         return data
-
-    async def _read_sensor_registers(self, data: dict[str, Any]) -> None:
-        for key, reg in SENSOR_REGISTERS.items():
-            address = self.modbus_addr(reg["address"])
-            raw = await self.client.read_single_input(address)
-            if raw is None:
-                _LOGGER.warning(
-                    "No data for sensor register %s (%s)", key, reg["address"]
-                )
-                data[key] = None
-                continue
-
-            scale = reg.get("scale", 1)
-            # Signed 16-bit handling (temperatures can be negative)
-            if raw > 32767:
-                raw -= 65536
-            data[key] = round(raw * scale, 1) if scale != 1 else raw
-
-        _LOGGER.debug("Sensor data: %s", {k: data[k] for k in SENSOR_REGISTERS})
-
-    async def _read_alarm_registers(self, data: dict[str, Any]) -> None:
-        for key, reg in ALARM_REGISTERS.items():
-            address = self.modbus_addr(reg["address"])
-            raw = await self.client.read_single_input(address)
-            if raw is None:
-                data[key] = {}
-                continue
-
-            # Expand bitmask into dict of {alarm_name: bool}
-            bits: dict[str, bool] = {}
-            for bit_pos, alarm_name in reg["bits"].items():
-                bits[alarm_name] = bool(raw & (1 << bit_pos))
-            data[key] = bits
-
-        _LOGGER.debug("Alarm data: %s", {k: data[k] for k in ALARM_REGISTERS})
-
-    async def _read_select_registers(self, data: dict[str, Any]) -> None:
-        for key, reg in SELECT_REGISTERS.items():
-            read_type = reg["read_type"]
-            address = self.modbus_addr(reg["read_address"])
-
-            if read_type == "input":
-                raw = await self.client.read_single_input(address)
-            else:
-                raw = await self.client.read_single_holding(address)
-
-            data[key] = raw  # raw int — entity maps via OPERATION_MODES / RH_LEVELS
-
-        _LOGGER.debug("Select data: %s", {k: data[k] for k in SELECT_REGISTERS})
-
-    async def _read_number_registers(self, data: dict[str, Any]) -> None:
-        for key, reg in NUMBER_REGISTERS.items():
-            address = self.modbus_addr(reg["address"])
-            raw = await self.client.read_single_holding(address)
-            if raw is None:
-                data[key] = None
-                continue
-            scale = reg.get("scale", 1)
-            data[key] = round(raw * scale, 1)
-
-        _LOGGER.debug("Number data: %s", {k: data[k] for k in NUMBER_REGISTERS})
-
-    async def _read_switch_registers(self, data: dict[str, Any]) -> None:
-        for key, reg in SWITCH_REGISTERS.items():
-            address = self.modbus_addr(reg["address"])
-            raw = await self.client.read_single_holding(address)
-            data[key] = bool(raw) if raw is not None else None
-
-        _LOGGER.debug("Switch data: %s", {k: data[k] for k in SWITCH_REGISTERS})
-
-    async def async_write_operation_mode(self, mode_int: int) -> None:
-        """Write operation mode to 4x5001."""
-        reg = SELECT_REGISTERS["operation_mode"]
-        address = self.modbus_addr(reg["write_address"])
-        ok = await self.client.write_holding_register(address, mode_int)
-        if ok:
-            await self.async_request_refresh()
-
-    async def async_write_rh_level(self, level_int: int) -> None:
-        """Write RH automation level to 4x5010."""
-        reg = SELECT_REGISTERS["rh_automation"]
-        address = self.modbus_addr(reg["write_address"])
-        ok = await self.client.write_holding_register(address, level_int)
-        if ok:
-            await self.async_request_refresh()
-
-    async def async_write_temp_setpoint(self, temp_celsius: float) -> None:
-        """Write room temp setpoint to 4x5101. Raw value = temp × 10."""
-        reg = NUMBER_REGISTERS["temperature_setpoint"]
-        raw = round(temp_celsius * reg["write_scale"])
-        address = self.modbus_addr(reg["address"])
-        ok = await self.client.write_holding_register(address, raw)
-        if ok:
-            await self.async_request_refresh()
-
-    async def async_write_switch(self, key: str, state: bool) -> None:
-        """Write a switch register (CO2 automation or emergency stop)."""
-        reg = SWITCH_REGISTERS[key]
-        address = self.modbus_addr(reg["address"])
-        ok = await self.client.write_holding_register(address, int(state))
-        if ok:
-            await self.async_request_refresh()
-
-    def modbus_addr(self, register: int) -> int:
-        """Convert address to modbus 0-based address."""
-        return register - 1
