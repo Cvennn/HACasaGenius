@@ -1,18 +1,20 @@
-"""Swegon GENIUS Home Assistant integration."""
+"""Swegon GENIUS Home Assistant integration."""  # noqa: EXE002
 
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import TYPE_CHECKING
 
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_PORT, Platform
-from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.exceptions import ConfigEntryError
 
 from .const import CONF_BAUDRATE, CONF_PARITY, CONF_SLAVE, CONF_STOPBITS, DOMAIN
 from .coordinator import SwegonCoordinator
 from .modbus_client import SwegonModbusClient
+
+if TYPE_CHECKING:
+    from homeassistant.config_entries import ConfigEntry
+    from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -45,9 +47,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     connected = await client.connect()
     if not connected:
-        raise ConfigEntryNotReady(
-            f"Ei saada yhteyttä Swegon CASA Genius -laitteeseen portissa {entry.data[CONF_PORT]}"
-        )
+        port = entry.data[CONF_PORT]
+        msg = f"Laitteeseen ei saada yhteyttä {port}"
+        raise ConfigEntryError(msg)
 
     device_info = await client.read_device_info()
     _LOGGER.info(
