@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from homeassistant.components.select import SelectEntity
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import DeviceInfo
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
@@ -20,26 +20,82 @@ from .const import (
     VOC_AUTOMATION_LEVELS,
 )
 
+if TYPE_CHECKING:
+    from homeassistant.config_entries import ConfigEntry
+    from homeassistant.core import HomeAssistant
+    from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
+    from .coordinator import SwegonCoordinator
 
 SELECT_DEFS = [
-    {"key": "operating_mode",    "name": "Kayttotila",           "address": 5000, "options": OPERATION_MODES_WRITE,     "read_key": "ventilation_state", "read_map": VENTILATION_TO_MODE},
-    {"key": "rh_automation",     "name": "RH-automaatio",        "address": 5009, "options": RH_LEVELS,      "read_key": "rh_automation"},
-    {"key": "voc_automation",    "name": "VOC-automaatio",       "address": 5010, "options": VOC_AUTOMATION_LEVELS,     "read_key": "voc_automation"},
-    {"key": "summer_boost",      "name": "Kesatilan tehostus",   "address": 5168, "options": SUMMER_BOOST_LEVELS,       "read_key": "summer_boost"},
-    {"key": "boost_timer",       "name": "Tehostusajastin",      "address": 5101, "options": BOOST_TIMER_OPTIONS,       "read_key": "boost_timer"},
-    {"key": "emergency_stop",    "name": "Hatapysaytys tila",    "address": 5017, "options": EMERGENCY_STOP_OPTIONS,    "read_key": "emergency_stop"},
-    {"key": "fireplace_level",   "name": "Takan teho",           "address": 5104, "options": FIREPLACE_LEVELS,          "read_key": "fireplace_level"}
+    {
+        "key": "operating_mode",
+        "name": "Kayttotila",
+        "address": 5000,
+        "options": OPERATION_MODES_WRITE,
+        "read_key": "ventilation_state",
+        "read_map": VENTILATION_TO_MODE,
+    },
+    {
+        "key": "rh_automation",
+        "name": "RH-automaatio",
+        "address": 5009,
+        "options": RH_LEVELS,
+        "read_key": "rh_automation",
+    },
+    {
+        "key": "voc_automation",
+        "name": "VOC-automaatio",
+        "address": 5010,
+        "options": VOC_AUTOMATION_LEVELS,
+        "read_key": "voc_automation",
+    },
+    {
+        "key": "summer_boost",
+        "name": "Kesatilan tehostus",
+        "address": 5168,
+        "options": SUMMER_BOOST_LEVELS,
+        "read_key": "summer_boost",
+    },
+    {
+        "key": "boost_timer",
+        "name": "Tehostusajastin",
+        "address": 5101,
+        "options": BOOST_TIMER_OPTIONS,
+        "read_key": "boost_timer",
+    },
+    {
+        "key": "emergency_stop",
+        "name": "Hatapysaytys tila",
+        "address": 5017,
+        "options": EMERGENCY_STOP_OPTIONS,
+        "read_key": "emergency_stop",
+    },
+    {
+        "key": "fireplace_level",
+        "name": "Takan teho",
+        "address": 5104,
+        "options": FIREPLACE_LEVELS,
+        "read_key": "fireplace_level",
+    },
 ]
 
+
 async def async_setup_entry(
-    hass: HomeAssistant, entry: ConfigEntry, async_add_entities
-):
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+) -> None:
+    """Set up Swegon Genius select entities from a config entry."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_entities([SwegonSelect(coordinator, entry, d) for d in SELECT_DEFS])
 
 
 class SwegonSelect(CoordinatorEntity, SelectEntity):
-    def __init__(self, coordinator, entry, sel_def):
+    """Representation of a Swegon Genius select entity."""
+
+    def __init__(
+        self, coordinator: SwegonCoordinator, entry: ConfigEntry, sel_def: dict
+    ) -> None:
+        """Initialize the Swegon Genius select entity."""
         super().__init__(coordinator)
         self._def = sel_def
         self._options_map = sel_def["options"]  # {arvo: teksti}
@@ -80,5 +136,5 @@ class SwegonSelect(CoordinatorEntity, SelectEntity):
         value = self._reverse.get(option)
         if value is None:
             return
-        await self.coordinator.client.write_register(self._def["address"], value)
+        await self.coordinator.client.write_register(self._def["address"], value)  # pyright: ignore[reportAttributeAccessIssue]
         await self.coordinator.async_request_refresh()

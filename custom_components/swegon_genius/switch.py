@@ -12,19 +12,38 @@ which is not exposed by the switch. If value 2 is active, switch is set to ON.
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, Any
+
 from homeassistant.components.switch import SwitchEntity
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 
+if TYPE_CHECKING:
+    from homeassistant.config_entries import ConfigEntry
+    from homeassistant.core import HomeAssistant
+    from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
 SWITCHES = [
-    {"key": "co2_automation",   "name": "CO2-automaatio",    "address": 5008, "read_key": "co2_automation"},
-    {"key": "fireplace",        "name": "Takkatoiminto",     "address": 5001, "read_key": "fireplace_active"},
-    {"key": "cooking_mode",     "name": "Liesikuputoiminto", "address": 5004, "read_key": "cooking_active"}
+    {
+        "key": "co2_automation",
+        "name": "CO2-automaatio",
+        "address": 5008,
+        "read_key": "co2_automation",
+    },
+    {
+        "key": "fireplace",
+        "name": "Takkatoiminto",
+        "address": 5001,
+        "read_key": "fireplace_active",
+    },
+    {
+        "key": "cooking_mode",
+        "name": "Liesikuputoiminto",
+        "address": 5004,
+        "read_key": "cooking_active",
+    },
 ]
 
 
@@ -39,7 +58,22 @@ async def async_setup_entry(
 
 
 class SwegonSwitch(CoordinatorEntity, SwitchEntity):
-    def __init__(self, coordinator, entry, switch_def):
+    """Swegon Genius switch entity."""
+
+    def __init__(self, coordinator: Any, entry: ConfigEntry, switch_def: dict) -> None:
+        """
+        Initialize the switch.
+
+        Parameters
+        ----------
+        coordinator : Any
+            The coordinator for the device.
+        entry : ConfigEntry
+            The config entry for the device.
+        switch_def : dict
+            The switch definition dictionary.
+
+        """
         super().__init__(coordinator)
         self._switch = switch_def
         self._attr_unique_id = f"{entry.entry_id}_{switch_def['key']}"
@@ -53,18 +87,25 @@ class SwegonSwitch(CoordinatorEntity, SwitchEntity):
         )
 
     @property
-    def is_on(self):
+    def is_on(self) -> bool:
+        """
+        Return True if the switch is on.
+
+        Returns
+        -------
+        bool
+            True if the switch is on, False otherwise.
+
+        """
         val = self.coordinator.data.get(self._switch["read_key"])
         return bool(val) if val is not None else False
 
-    async def async_turn_on(self, **kwargs) -> None:
+    async def async_turn_on(self) -> None:
         """Turn on the switch."""
         await self.coordinator.client.write_register(self._switch["address"], 1)
         await self.coordinator.async_request_refresh()
 
-
-    async def async_turn_off(self, **kwargs) -> None:
+    async def async_turn_off(self) -> None:
         """Turn off the switch."""
         await self.coordinator.client.write_register(self._switch["address"], 0)
         await self.coordinator.async_request_refresh()
-
