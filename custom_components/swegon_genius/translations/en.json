@@ -5,11 +5,11 @@
         "title": "Swegon CASA Genius Connection",
         "description": "Enter Modbus RTU connection settings. Factory defaults are pre-filled.",
         "data": {
-          "port":     "Serial port",
-          "slave":    "Slave address",
+          "port": "Serial port",
+          "slave": "Slave address",
           "baudrate": "Baud rate",
           "stopbits": "Stop bits",
-          "parity":   "Parity"
+          "parity": "Parity"
         }
       }
     },
@@ -19,5 +19,186 @@
     "abort": {
       "already_configured": "This device is already configured"
     }
+  },
+  "entity": {
+    "sensor": {
+      "outdoor_temp": {
+        "name": "Outdoor temperature"
+      },
+      "supply_before_hx_temp": {
+        "name": "Supply air temperature before preheater"
+      },
+      "supply_temp": {
+        "name": "Supply air temperature (T4)"
+      },
+      "extract_temp": {
+        "name": "Extract air temperature (T3)"
+      },
+      "exhaust_temp": {
+        "name": "Exhaust air temperature (T5)"
+      },
+      "room_temp": {
+        "name": "Room temperature"
+      },
+      "water_radiator_temp": {
+        "name": "Water radiator temperature (T6)"
+      },
+      "external_outdoor_temp": {
+        "name": "External outdoor temperature (T8)"
+      },
+      "io1_temp": {
+        "name": "IO1 temperature"
+      },
+      "io2_temp": {
+        "name": "IO2 temperature"
+      },
+      "io3_temp": {
+        "name": "IO3 temperature"
+      },
+      "io4_temp": {
+        "name": "IO4 temperature"
+      },
+      "io5_temp": {
+        "name": "IO5 temperature"
+      },
+      "co2": {
+        "name": "CO₂ (effective)"
+      },
+      "co2_internal": {
+        "name": "Internal CO₂ sensor"
+      },
+      "humidity": {
+        "name": "Room humidity (RH)"
+      },
+      "absolute_humidity": {
+        "name": "Absolute humidity"
+      },
+      "absolute_humidity_sp": {
+        "name": "Absolute humidity setpoint"
+      },
+      "voc": {
+        "name": "VOC (effective)"
+      },
+      "voc_internal": {
+        "name": "Internal VOC sensor"
+      },
+      "supply_duct_pressure": {
+        "name": "Supply air duct pressure"
+      },
+      "exhaust_duct_pressure": {
+        "name": "Extract air duct pressure"
+      },
+      "supply_duct_target": {
+        "name": "Supply air duct pressure target"
+      },
+      "exhaust_duct_target": {
+        "name": "Extract air duct pressure target"
+      },
+      "supply_airflow": {
+        "name": "Supply airflow"
+      },
+      "exhaust_airflow": {
+        "name": "Extract airflow"
+      },
+      "room_pressure": {
+        "name": "Room pressure"
+      },
+      "supply_fan_control": {
+        "name": "Supply fan control"
+      },
+      "exhaust_fan_control": {
+        "name": "Extract fan control"
+      },
+      "supply_fan_rpm": {
+        "name": "Supply fan RPM"
+      },
+      "exhaust_fan_rpm": {
+        "name": "Extract fan RPM"
+      },
+      "automation_control": {
+        "name": "Automation control"
+      },
+      "co2_automation_effect": {
+        "name": "CO₂ automation effect"
+      },
+      "rh_automation_effect": {
+        "name": "Humidity automation effect"
+      },
+      "voc_automation_effect": {
+        "name": "VOC automation effect"
+      },
+      "temp_boost_effect": {
+        "name": "Temperature boost effect"
+      },
+      "fan_speed_limit": {
+        "name": "Fan speed limit"
+      },
+      "building_pressure_bal": {
+        "name": "Building pressure balance"
+      },
+      "temp_setpoint_active": {
+        "name": "Active temperature setpoint"
+      },
+      "postheat_combined": {
+        "name": "Combined post-heater"
+      },
+      "internal_postheater": {
+        "name": "Internal post-heater"
+      },
+      "internal_preheater": {
+        "name": "Internal pre-heater"
+      },
+      "external_postheat_water": {
+        "name": "External water post-heater"
+      },
+      "external_postheat_elec": {
+        "name": "External electric post-heater"
+      },
+      "external_postcool": {
+        "name": "External post-cooler"
+      },
+      "external_preheater": {
+        "name": "External pre-heater"
+      },
+      "bypass_damper": {
+        "name": "Bypass damper position"
+      },
+      "rotor_control": {
+        "name": "Rotor control"
+      },
+      "rotor_rpm": {
+        "name": "Rotor speed"
+      },
+      "boost_time_left": {
+        "name": "Boost time remaining"
+      },
+      "hours_to_service": {
+        "name": "Hours until service"
+      },
+      "gio1_voltage": {
+        "name": "GIO1 input voltage"
+      },
+      "gio2_voltage": {
+        "name": "GIO2 input voltage"
+      },
+      "gio3_voltage": {
+        "name": "GIO3 input voltage"
+      },
+      "gio4_voltage": {
+        "name": "GIO4 input voltage"
+      },
+      "gio5_voltage": {
+        "name": "GIO5 input voltage"
+      },
+      "unit_state": {
+        "name": "Unit state"
+      },
+      "heating_state": {
+        "name": "Heating state"
+      },
+      "ventilation_state_text": {
+        "name": "Active ventilation mode"
+      }
+      }
+    }
   }
-}

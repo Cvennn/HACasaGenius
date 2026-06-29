@@ -22,7 +22,8 @@ SENSOR_REGISTERS = [
     # Lampotilat
     {
         "key": "outdoor_temp",
-        "name": "Ulkoilman lampotila (T1)",
+        "translation_key": "outdoor_temp",
+        # "name": "Ulkoilman lampotila (T1)",
         "address": 6200,
         "type": "input",
         "scale": 0.1,
@@ -33,7 +34,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "supply_before_hx_temp",
-        "name": "Tuloilma ennen lammitinta (T2)",
+        "translation_key": "supply_before_hx_temp",
+        # "name": "Tuloilma ennen lammitinta (T2)",
         "address": 6201,
         "type": "input",
         "scale": 0.1,
@@ -44,7 +46,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "supply_temp",
-        "name": "Tuloilman lampotila (T4)",
+        "translation_key": "supply_temp",
+        # "name": "Tuloilman lampotila (T4)",
         "address": 6202,
         "type": "input",
         "scale": 0.1,
@@ -55,7 +58,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "extract_temp",
-        "name": "Poistoilman lampotila (T3)",
+        "translation_key": "extract_temp",
+        # "name": "Poistoilman lampotila (T3)",
         "address": 6203,
         "type": "input",
         "scale": 0.1,
@@ -66,7 +70,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "exhaust_temp",
-        "name": "Jateilman lampotila (T5)",
+        "translation_key": "exhaust_temp",
+        # "name": "Jateilman lampotila (T5)",
         "address": 6204,
         "type": "input",
         "scale": 0.1,
@@ -77,7 +82,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "room_temp",
-        "name": "Huonelampotila",
+        "translation_key": "room_temp",
+        # "name": "Huonelampotila",
         "address": 6205,
         "type": "input",
         "scale": 0.1,
@@ -88,7 +94,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "water_radiator_temp",
-        "name": "Vesipatterin lampotila (T6)",
+        "translation_key": "water_radiator_temp",
+        # "name": "Vesipatterin lampotila (T6)",
         "address": 6208,
         "type": "input",
         "scale": 0.1,
@@ -99,7 +106,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "external_outdoor_temp",
-        "name": "Ulkoinen ulkolampotila (T8)",
+        "translation_key": "external_outdoor_temp",
+        # "name": "Ulkoinen ulkolampotila (T8)",
         "address": 6210,
         "type": "input",
         "scale": 0.1,
@@ -110,7 +118,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "io1_temp",
-        "name": "IO1 lampotila",
+        "translation_key": "io1_temp",
+        # "name": "IO1 lampotila",
         "address": 6286,
         "type": "input",
         "scale": 0.1,
@@ -121,7 +130,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "io2_temp",
-        "name": "IO2 lampotila",
+        "translation_key": "io2_temp",
+        # "name": "IO2 lampotila",
         "address": 6287,
         "type": "input",
         "scale": 0.1,
@@ -132,7 +142,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "io3_temp",
-        "name": "IO3 lampotila",
+        "translation_key": "io3_temp",
+        # "name": "IO3 lampotila",
         "address": 6288,
         "type": "input",
         "scale": 0.1,
@@ -143,7 +154,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "io4_temp",
-        "name": "IO4 lampotila",
+        "translation_key": "io4_temp",
+        # "name": "IO4 lampotila",
         "address": 6289,
         "type": "input",
         "scale": 0.1,
@@ -154,7 +166,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "io5_temp",
-        "name": "IO5 lampotila",
+        "translation_key": "io5_temp",
+        # "name": "IO5 lampotila",
         "address": 6290,
         "type": "input",
         "scale": 0.1,
@@ -166,7 +179,8 @@ SENSOR_REGISTERS = [
     # Ilmanlaatu
     {
         "key": "co2",
-        "name": "CO2 (efektiivinen)",
+        "translation_key": "co2",
+        # "name": "CO2 (efektiivinen)",
         "address": 6212,
         "type": "input",
         "scale": 1.0,
@@ -177,7 +191,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "co2_internal",
-        "name": "CO2 sisainen anturi",
+        "translation_key": "co2_internal",
+        #  "name": "CO2 sisainen anturi",
         "address": 6262,
         "type": "input",
         "scale": 1.0,
@@ -188,7 +203,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "humidity",
-        "name": "Huoneilman kosteus (RH)",
+        "translation_key": "humidity",
+        # "name": "Huoneilman kosteus (RH)",
         "address": 6213,
         "type": "input",
         "scale": 1.0,
@@ -199,7 +215,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "absolute_humidity",
-        "name": "Absoluuttinen kosteus",
+        "translation_key": "absolute_humidity",
+        # "name": "Absoluuttinen kosteus",
         "address": 6214,
         "type": "input",
         "scale": 0.01,
@@ -210,7 +227,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "absolute_humidity_sp",
-        "name": "Absoluuttinen kosteus asetus",
+        "translation_key": "absolute_humidity_sp",
+        # "name": "Absoluuttinen kosteus asetus",
         "address": 6215,
         "type": "input",
         "scale": 0.01,
@@ -221,7 +239,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "voc",
-        "name": "VOC (efektiivinen)",
+        "translation_key": "voc",
+        # "name": "VOC (efektiivinen)",
         "address": 6216,
         "type": "input",
         "scale": 1.0,
@@ -232,7 +251,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "voc_internal",
-        "name": "VOC sisainen anturi",
+        "translation_key": "voc_internal",
+        # "name": "VOC sisainen anturi",
         "address": 6274,
         "type": "input",
         "scale": 1.0,
@@ -244,7 +264,8 @@ SENSOR_REGISTERS = [
     # Paineet ja ilmavirrat
     {
         "key": "supply_duct_pressure",
-        "name": "Tuloilmakanavan paine",
+        "translation_key": "supply_duct_pressure",
+        # "name": "Tuloilmakanavan paine",
         "address": 6217,
         "type": "input",
         "scale": 1.0,
@@ -255,7 +276,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "exhaust_duct_pressure",
-        "name": "Poistoilmakanavan paine",
+        "translation_key": "exhaust_duct_pressure",
+        #  "name": "Poistoilmakanavan paine",
         "address": 6218,
         "type": "input",
         "scale": 1.0,
@@ -266,7 +288,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "supply_duct_target",
-        "name": "Tuloilmakanavan paine tavoite",
+        "translation_key": "supply_duct_target",
+        # "name": "Tuloilmakanavan paine tavoite",
         "address": 6236,
         "type": "input",
         "scale": 1.0,
@@ -277,7 +300,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "exhaust_duct_target",
-        "name": "Poistoilmakanavan paine tavoite",
+        "translation_key": "exhaust_duct_target",
+        # "name": "Poistoilmakanavan paine tavoite",
         "address": 6237,
         "type": "input",
         "scale": 1.0,
@@ -288,7 +312,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "supply_airflow",
-        "name": "Tuloilmavirta",
+        "translation_key": "supply_airflow",
+        # "name": "Tuloilmavirta",
         "address": 6219,
         "type": "input",
         "scale": 0.1,
@@ -299,7 +324,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "exhaust_airflow",
-        "name": "Poistoilmavirta",
+        "translation_key": "exhaust_airflow",
+        #  "name": "Poistoilmavirta",
         "address": 6220,
         "type": "input",
         "scale": 0.1,
@@ -310,7 +336,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "room_pressure",
-        "name": "Huonepaine",
+        "translation_key": "room_pressure",
+        #  "name": "Huonepaine",
         "address": 6276,
         "type": "input",
         "scale": 0.1,
@@ -322,7 +349,8 @@ SENSOR_REGISTERS = [
     # Puhaltimet
     {
         "key": "supply_fan_control",
-        "name": "Tuloilmapuhallin ohjaus",
+        "translation_key": "supply_fan_control",
+        # "name": "Tuloilmapuhallin ohjaus",
         "address": 6302,
         "type": "input",
         "scale": 1.0,
@@ -333,7 +361,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "exhaust_fan_control",
-        "name": "Poistoilmapuhallin ohjaus",
+        "translation_key": "exhaust_fan_control",
+        # "name": "Poistoilmapuhallin ohjaus",
         "address": 6303,
         "type": "input",
         "scale": 1.0,
@@ -344,7 +373,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "supply_fan_rpm",
-        "name": "Tuloilmapuhallin RPM",
+        "translation_key": "supply_fan_rpm",
+        # "name": "Tuloilmapuhallin RPM",
         "address": 6304,
         "type": "input",
         "scale": 1.0,
@@ -355,7 +385,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "exhaust_fan_rpm",
-        "name": "Poistoilmapuhallin RPM",
+        "translation_key": "exhaust_fan_rpm",
+        # "name": "Poistoilmapuhallin RPM",
         "address": 6305,
         "type": "input",
         "scale": 1.0,
@@ -367,7 +398,8 @@ SENSOR_REGISTERS = [
     # Automaatiovaikutukset
     {
         "key": "automation_control",
-        "name": "Automaation ohjaus +/-",
+        "translation_key": "automation_control",
+        # "name": "Automaation ohjaus +/-",
         "address": 6314,
         "type": "input",
         "scale": 1.0,
@@ -378,7 +410,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "co2_automation_effect",
-        "name": "CO2-automaation vaikutus",
+        "translation_key": "co2_automation_effect",
+        # "name": "CO2-automaation vaikutus",
         "address": 6309,
         "type": "input",
         "scale": 1.0,
@@ -389,7 +422,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "rh_automation_effect",
-        "name": "Kosteusautomaation vaikutus",
+        "translation_key": "rh_automation_effect",
+        # "name": "Kosteusautomaation vaikutus",
         "address": 6310,
         "type": "input",
         "scale": 1.0,
@@ -400,7 +434,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "voc_automation_effect",
-        "name": "VOC-automaation vaikutus",
+        "translation_key": "voc_automation_effect",
+        # "name": "VOC-automaation vaikutus",
         "address": 6311,
         "type": "input",
         "scale": 1.0,
@@ -411,7 +446,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "temp_boost_effect",
-        "name": "Lampotilatehostuksen vaikutus",
+        "translation_key": "temp_boost_effect",
+        # "name": "Lampotilatehostuksen vaikutus",
         "address": 6312,
         "type": "input",
         "scale": 1.0,
@@ -422,7 +458,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "fan_speed_limit",
-        "name": "Puhallinnopeuden rajoitus",
+        "translation_key": "fan_speed_limit",
+        # "name": "Puhallinnopeuden rajoitus",
         "address": 6313,
         "type": "input",
         "scale": 1.0,
@@ -433,7 +470,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "building_pressure_bal",
-        "name": "Rakennuksen painetasapaino",
+        "translation_key": "building_pressure_bal",
+        # "name": "Rakennuksen painetasapaino",
         "address": 6381,
         "type": "input",
         "scale": 1.0,
@@ -445,7 +483,8 @@ SENSOR_REGISTERS = [
     # Aktiivinen lampotila-asetus ja lammitys/jaahdytys
     {
         "key": "temp_setpoint_active",
-        "name": "Aktiivinen lampotila-asetus",
+        "translation_key": "temp_setpoint_active",
+        # "name": "Aktiivinen lampotila-asetus",
         "address": 6319,
         "type": "input",
         "scale": 0.1,
@@ -456,7 +495,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "postheat_combined",
-        "name": "Jalkilammitys yhdistetty",
+        "translation_key": "postheat_combined",
+        # "name": "Jalkilammitys yhdistetty",
         "address": 6316,
         "type": "input",
         "scale": 1.0,
@@ -467,7 +507,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "internal_postheater",
-        "name": "Sisainen jalkilammitin",
+        "translation_key": "internal_postheater",
+        # "name": "Sisainen jalkilammitin",
         "address": 6317,
         "type": "input",
         "scale": 1.0,
@@ -478,7 +519,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "internal_preheater",
-        "name": "Sisainen esilammitin",
+        "translation_key": "internal_preheater",
+        # "name": "Sisainen esilammitin",
         "address": 6343,
         "type": "input",
         "scale": 1.0,
@@ -489,7 +531,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "external_postheat_water",
-        "name": "Ulkoinen jalkilammitys (vesi)",
+        "translation_key": "external_postheat_water",
+        # "name": "Ulkoinen jalkilammitys (vesi)",
         "address": 6318,
         "type": "input",
         "scale": 1.0,
@@ -500,7 +543,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "external_postheat_elec",
-        "name": "Ulkoinen jalkilammitys (sahko)",
+        "translation_key": "external_postheat_elec",
+        # "name": "Ulkoinen jalkilammitys (sahko)",
         "address": 6321,
         "type": "input",
         "scale": 1.0,
@@ -511,7 +555,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "external_postcool",
-        "name": "Ulkoinen jalkijaahdytys",
+        "translation_key": "external_postcool",
+        # "name": "Ulkoinen jalkijaahdytys",
         "address": 6320,
         "type": "input",
         "scale": 1.0,
@@ -522,7 +567,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "external_preheater",
-        "name": "Ulkoinen esilammitin",
+        "translation_key": "external_preheater",
+        # "name": "Ulkoinen esilammitin",
         "address": 6344,
         "type": "input",
         "scale": 1.0,
@@ -533,7 +579,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "bypass_damper",
-        "name": "Ohituspellin asento",
+        "translation_key": "bypass_damper",
+        # "name": "Ohituspellin asento",
         "address": 6347,
         "type": "input",
         "scale": 1.0,
@@ -544,7 +591,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "rotor_control",
-        "name": "Roottorin ohjaus",
+        "translation_key": "rotor_control",
+        # "name": "Roottorin ohjaus",
         "address": 6331,
         "type": "input",
         "scale": 0.1,
@@ -555,7 +603,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "rotor_rpm",
-        "name": "Roottorin pyorimisnopeus",
+        "translation_key": "rotor_rpm",
+        # "name": "Roottorin pyorimisnopeus",
         "address": 6233,
         "type": "input",
         "scale": 0.1,
@@ -567,7 +616,8 @@ SENSOR_REGISTERS = [
     # Ajastimet ja huolto
     {
         "key": "boost_time_left",
-        "name": "Tehostuksen jaljella oleva aika",
+        "translation_key": "boost_time_left",
+        # "name": "Tehostuksen jaljella oleva aika",
         "address": 6307,
         "type": "input",
         "scale": 1.0,
@@ -578,7 +628,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "hours_to_service",
-        "name": "Tunteja seuraavaan huoltoon",
+        "translation_key": "hours_to_service",
+        # "name": "Tunteja seuraavaan huoltoon",
         "address": 6342,
         "type": "input",
         "scale": 1.0,
@@ -590,7 +641,8 @@ SENSOR_REGISTERS = [
     # GIO analogiatulot (3x6354-3x6358)
     {
         "key": "gio1_voltage",
-        "name": "GIO1 jannitetulo",
+        "translation_key": "gio1_voltage",
+        # "name": "GIO1 jannitetulo",
         "address": 6353,
         "type": "input",
         "scale": 1.0,
@@ -601,7 +653,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "gio2_voltage",
-        "name": "GIO2 jannitetulo",
+        "translation_key": "gio2_voltage",
+        # "name": "GIO2 jannitetulo",
         "address": 6354,
         "type": "input",
         "scale": 1.0,
@@ -612,7 +665,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "gio3_voltage",
-        "name": "GIO3 jannitetulo",
+        "translation_key": "gio3_voltage",
+        # "name": "GIO3 jannitetulo",
         "address": 6355,
         "type": "input",
         "scale": 1.0,
@@ -623,7 +677,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "gio4_voltage",
-        "name": "GIO4 jannitetulo",
+        "translation_key": "gio4_voltage",
+        # "name": "GIO4 jannitetulo",
         "address": 6356,
         "type": "input",
         "scale": 1.0,
@@ -634,7 +689,8 @@ SENSOR_REGISTERS = [
     },
     {
         "key": "gio5_voltage",
-        "name": "GIO5 jannitetulo",
+        "translation_key": "gio5_voltage",
+        # "name": "GIO5 jannitetulo",
         "address": 6357,
         "type": "input",
         "scale": 1.0,
@@ -649,19 +705,22 @@ SENSOR_REGISTERS = [
 ENUM_SENSORS = [
     {
         "key": "unit_state",
-        "name": "Yksikon tila",
+        "translation_key": "unit_state",
+        # "name": "Yksikon tila",
         "address": 6300,
         "map": "UNIT_STATES",
     },
     {
         "key": "heating_state",
-        "name": "Lammitystila",
+        "translation_key": "heating_state",
+        # "name": "Lammitystila",
         "address": 6369,
         "map": "HEATING_STATES",
     },
     {
         "key": "ventilation_state_text",
-        "name": "Aktiivinen ventilointitila",
+        "translation_key": "ventilation_state_text",
+        # "name": "Aktiivinen ventilointitila",
         "address": 6433,
         "map": "VENTILATION_STATES",
     },
@@ -710,10 +769,8 @@ ALARM_REGISTERS = [
             10: {"key": "alarm_genius", "name": "Genius-halytys"},
             11: {"key": "alarm_supply_low", "name": "E111 Tuloilman lampotila matala"},
             12: {"key": "alarm_internal_high", "name": "E121 Sisalampotila korkea"},
-            13: {
-                "key": "alarm_preheat_high",
-                "name": "Esilammittimen lampotila korkea",
-            },
+            13: {"key": "alarm_preheat_high",
+                 "name": "Esilammittimen lampotila korkea"},
             14: {"key": "alarm_rotor_rpm", "name": "E131 Roottorin RPM-halytys"},
             15: {"key": "alarm_fan_control", "name": "Puhallinohjauksen vika"},
         },

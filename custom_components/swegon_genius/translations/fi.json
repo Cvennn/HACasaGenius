@@ -19,5 +19,186 @@
     "abort": {
       "already_configured": "Tämä laite on jo lisätty"
     }
+  },
+  "entity": {
+    "sensor": {
+      "outdoor_temp": {
+        "name": "Ulkoilman lämpötila"
+      },
+      "supply_before_hx_temp": {
+        "name": "Poistoilman lämpötila"
+      },
+      "supply_temp": {
+        "name": "Tuloilman lämpötila (T4)"
+      },
+      "extract_temp": {
+        "name": "Poistoilman lämpotila (T3)"
+      },
+      "exhaust_temp": {
+        "name": "Jäteilman lämpotila (T5)"
+      },
+      "room_temp": {
+        "name": "Huonelämpotila"
+      },
+      "water_radiator_temp": {
+        "name": "Vesipatterin lämpotila (T6)"
+      },
+      "external_outdoor_temp": {
+        "name": "Ulkoinen ulkolämpotila (T8)"
+      },
+      "io1_temp": {
+        "name": "IO1 lämpotila"
+      },
+      "io2_temp": {
+        "name": "IO2 lämpotila"
+      },
+      "io3_temp": {
+        "name": "IO3 lämpotila"
+      },
+      "io4_temp": {
+        "name": "IO4 lämpotila"
+      },
+      "io5_temp": {
+        "name": "IO5 lämpotila"
+      },
+      "co2": {
+        "name": "CO2 (efektiivinen)"
+      },
+      "co2_internal": {
+        "name": "CO2 sisäinen anturi"
+      },
+      "humidity": {
+        "name": "Huoneilman kosteus (RH)"
+      },
+      "absolute_humidity": {
+        "name": "Absoluuttinen kosteus"
+      },
+      "absolute_humidity_sp": {
+        "name": "Absoluuttinen kosteus asetus"
+      },
+      "voc": {
+        "name": "VOC (efektiivinen)"
+      },
+      "voc_internal": {
+        "name": "VOC sisäinen anturi"
+      },
+      "supply_duct_pressure": {
+        "name": "Tuloilmakanavan paine"
+      },
+      "exhaust_duct_pressure": {
+        "name": "Poistoilmakanavan paine"
+      },
+      "supply_duct_target": {
+        "name": "Tuloilmakanavan paine tavoite"
+      },
+      "exhaust_duct_target": {
+        "name": "Poistoilmakanavan paine tavoite"
+      },
+      "supply_airflow": {
+        "name": "Tuloilmavirta"
+      },
+      "exhaust_airflow": {
+        "name": "Poistoilmavirta"
+      },
+      "room_pressure": {
+        "name": "Huonepaine"
+      },
+      "supply_fan_control": {
+        "name": "Tuloilmapuhallin ohjaus"
+      },
+      "exhaust_fan_control": {
+        "name": "Poistoilmapuhallin ohjaus"
+      },
+      "supply_fan_rpm": {
+        "name": "Tuloilmapuhallin RPM"
+      },
+      "exhaust_fan_rpm": {
+        "name": "Poistoilmapuhallin RPM"
+      },
+      "automation_control": {
+        "name": "Automaation ohjaus"
+      },
+      "co2_automation_effect": {
+        "name": "CO2-automaation vaikutus"
+      },
+      "rh_automation_effect": {
+        "name": "Kosteusautomaation vaikutus"
+      },
+      "voc_automation_effect": {
+        "name": "VOC-automaation vaikutus"
+      },
+      "temp_boost_effect": {
+        "name": "LÄmpotilatehostuksen vaikutus"
+      },
+      "fan_speed_limit": {
+        "name": "Puhallinnopeuden rajoitus"
+      },
+      "building_pressure_bal": {
+        "name": "Rakennuksen painetasapaino"
+      },
+      "temp_setpoint_active": {
+        "name": "Aktiivinen lÄmpotila-asetus"
+      },
+      "postheat_combined": {
+        "name": "Jälkilämmitys yhdistetty"
+      },
+      "internal_postheater": {
+        "name": "Sisäinen jälkilämmitin"
+      },
+      "internal_preheater": {
+        "name": "Sisäinen esilämmitin"
+      },
+      "external_postheat_water": {
+        "name": "Ulkoinen jälkilämmitys (vesi)"
+      },
+      "external_postheat_elec": {
+        "name": "Ulkoinen jälkilämmitys (sähko)"
+      },
+      "external_postcool": {
+        "name": "Ulkoinen jälkijäähdytys"
+      },
+      "external_preheater": {
+        "name": "Ulkoinen esilämmitin"
+      },
+      "bypass_damper": {
+        "name": "Ohituspellin asento"
+      },
+      "rotor_control": {
+        "name": "Roottorin ohjaus"
+      },
+      "rotor_rpm": {
+        "name": "Roottorin pyörimisnopeus"
+      },
+      "boost_time_left": {
+        "name": "Tehostuksen jäljellä oleva aika"
+      },
+      "hours_to_service": {
+        "name": "Tunteja seuraavaan huoltoon"
+      },
+      "gio1_voltage": {
+        "name": "GIO1 jännitetulo"
+      },
+      "gio2_voltage": {
+        "name": "GIO2 jännitetulo"
+      },
+      "gio3_voltage": {
+        "name": "GIO3 jännitetulo"
+      },
+      "gio4_voltage": {
+        "name": "GIO4 jännitetulo"
+      },
+      "gio5_voltage": {
+        "name": "GIO5 jännitetulo"
+      },
+      "unit_state": {
+        "name": "Yksikön tila"
+      },
+      "heating_state": {
+        "name": "Lämmitystila"
+      },
+      "ventilation_state_text": {
+        "name": "Aktiivinen ventilointitila"
+      }
+    }
   }
 }
