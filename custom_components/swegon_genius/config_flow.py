@@ -1,4 +1,4 @@
-"""Config flow for Swegon GENIUS."""  # noqa: EXE002
+"""Config flow for Swegon GENIUS."""
 
 from __future__ import annotations
 

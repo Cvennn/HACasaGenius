@@ -1,4 +1,4 @@
-import sys  # noqa: D100, EXE002, INP001
+import sys  # noqa: D100, INP001
 from pathlib import Path
 
 import pytest

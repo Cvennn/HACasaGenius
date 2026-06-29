@@ -1,4 +1,4 @@
-"""Sensor platform for Swegon CASA Genius."""  # noqa: EXE002
+"""Sensor platform for Swegon CASA Genius."""
 
 from __future__ import annotations
 

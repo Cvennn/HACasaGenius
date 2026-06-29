@@ -6,7 +6,7 @@ Osoitteet 0-indeksoituja pymodbus-osoitteita:
   rekisterinumero - 1 = pymodbus-osoite
   Esim. 3x6201 -> address 6200,  4x5001 -> address 5000
 scale: arvo * scale = naytettava arvo (lampotilat 0.1).
-"""  # noqa: EXE002
+"""
 
 # === Laitetiedot (luetaan kerran alustuksessa) ===
 DEVICE_INFO = {

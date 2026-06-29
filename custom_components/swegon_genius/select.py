@@ -1,4 +1,4 @@
-"""Select platform for Swegon CASA Genius."""  # noqa: EXE002
+"""Select platform for Swegon CASA Genius."""
 
 from __future__ import annotations
 

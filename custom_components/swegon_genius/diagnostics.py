@@ -1,4 +1,4 @@
-"""Swegon CASA Genius - Diagnostics."""  # noqa: EXE002
+"""Swegon CASA Genius - Diagnostics."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""Binary sensor platform for swegon_genius."""  # noqa: EXE002
+"""Binary sensor platform for swegon_genius."""
 
 from __future__ import annotations
 

@@ -8,7 +8,7 @@ Two switch entities:
 Switches are on/off registers, not select entities.
 Emergency stop contains a third state (2 = Emergency Overpressurizing enable),
 which is not exposed by the switch. If value 2 is active, switch is set to ON.
-"""  # noqa: EXE002
+"""
 
 from __future__ import annotations
 

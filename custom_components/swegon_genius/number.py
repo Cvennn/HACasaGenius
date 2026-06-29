@@ -7,7 +7,7 @@ SCB 4.1 register 4x5101:
   Scale:  ÷10 for display  → 13.0-25.0 °C
   Step:   0.5 °C  (raw step = 5)
   Write:  °C value * 10 → integer sent to Modbus
-"""  # noqa: EXE002
+"""
 
 from __future__ import annotations
 

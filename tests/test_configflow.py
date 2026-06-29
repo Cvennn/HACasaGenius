@@ -1,4 +1,4 @@
-"""Tests for the Swegon GENIUS integration."""  # noqa: EXE002, INP001
+"""Tests for the Swegon GENIUS integration."""  # noqa: INP001
 
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, patch

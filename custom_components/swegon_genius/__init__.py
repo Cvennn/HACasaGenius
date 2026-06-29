@@ -1,4 +1,4 @@
-"""Swegon GENIUS Home Assistant integration."""  # noqa: EXE002
+"""Swegon GENIUS Home Assistant integration."""
 
 from __future__ import annotations
 

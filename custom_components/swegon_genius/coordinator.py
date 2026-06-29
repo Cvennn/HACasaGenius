@@ -1,4 +1,4 @@
-"""DataUpdateCoordinator for Swegon GENIUS."""  # noqa: EXE002
+"""DataUpdateCoordinator for Swegon GENIUS."""
 
 from __future__ import annotations
 

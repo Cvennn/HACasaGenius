@@ -1,4 +1,4 @@
-"""Async Modbus RTU client for Swegon GENIUS over RS-485 USB adapter."""  # noqa: EXE002
+"""Async Modbus RTU client for Swegon GENIUS over RS-485 USB adapter."""
 
 from __future__ import annotations
 
