@@ -5,5 +5,5 @@ set -e
 cd "$(dirname "$0")/.."
 
 ruff check --select E501 --add-noqa custom_components/swegon_genius/number.py
-ruff format . --exclude tests
-ruff check . --fix --exclude tests
+ruff format . --exclude tests/*
+ruff check . --fix --exclude tests/*
