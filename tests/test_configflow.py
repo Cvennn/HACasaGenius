@@ -1,6 +1,5 @@
 """Tests for the Swegon GENIUS integration."""  # noqa: INP001
 
-from site import USER_SITE
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, patch
 
@@ -13,11 +12,6 @@ from custom_components.swegon_genius.const import (
     CONF_PARITY,
     CONF_SLAVE,
     CONF_STOPBITS,
-    DEFAULT_BAUDRATE,
-    DEFAULT_PARITY,
-    DEFAULT_PORT,
-    DEFAULT_SLAVE,
-    DEFAULT_STOPBITS,
     DOMAIN,
 )
 
