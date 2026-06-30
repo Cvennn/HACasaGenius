@@ -27,89 +27,67 @@ REG_HOLDING = "holding"  # 4x — read/write (holding registers)
 # Operation mode WRITE values (register 4x5001)
 # NOTE: read state uses 3x6434 which has DIFFERENT numbering — see registers_genius.py
 OPERATION_MODES_WRITE = {
-    0: "Sammutettu",
-    1: "Poissa",
-    2: "Kotona",
-    3: "Tehostus",
-    4: "Matkoilla",
-    5: "Kotona+",
+    0: "off",
+    1: "away",
+    2: "home",
+    3: "boost",
+    4: "travel",
+    5: "home_plus",
 }
 
 # Operation mode READ states (register 3x6434 — Genius)
 OPERATION_MODES_READ = {
-    0: "Pysäytetty",
-    1: "Matkoilla",
-    2: "Poissa",
-    3: "Kotona",
-    4: "Kotona+",
-    5: "Tehostus",
-    6: "Takkatoiminto",
+    0: "off",
+    1: "travel",
+    2: "away",
+    3: "home",
+    4: "home_plus",
+    5: "boost",
+    6: "fireplace",
 }
 
 # Map: aktiivinen ventilointitila (3x6434) -> käyttötilan nimi (select-näyttö)
 VENTILATION_TO_MODE = {
-    0: "Sammutettu",
-    1: "Matkoilla",
-    2: "Poissa",
-    3: "Kotona",
-    4: "Kotona+",
-    5: "Tehostus",
-    6: "Kotona",  # takka päällä — näytetään perustila
+    0: "off",
+    1: "travel",
+    2: "away",
+    3: "home",
+    4: "home_plus",
+    5: "boost",
+    6: "home",  # Fireplace active -> display Home
 }
 
 # RH automation levels (register 4x5010)
-RH_LEVELS = {
-    0: "Pois",
-    1: "Matala",
-    2: "Normaali",
-    3: "Korkea",
-    4: "Maksimi",
-    5: "Edistynyt",
-}
+RH_LEVELS = {0: "off", 1: "low", 2: "normal", 3: "high", 4: "max", 5: "advanced"}
 
 # VOC-automaatiotasot — 4x5011
 VOC_AUTOMATION_LEVELS = {
-    0: "Pois",
-    1: "Matala",
-    2: "Normaali",
-    3: "Korkea",
-    4: "Maksimi",
-    5: "Edistynyt",
+    0: "off",
+    1: "low",
+    2: "normal",
+    3: "high",
+    4: "max",
+    5: "advanced",
 }
 
 # Kesätilan boost — 4x5169
 SUMMER_BOOST_LEVELS = {
-    0: "Pois",
-    1: "Matala",
-    2: "Normaali",
-    3: "Korkea",
-    4: "Maksimi",
-    5: "Edistynyt",
+    0: "off",
+    1: "low",
+    2: "normal",
+    3: "high",
+    4: "max",
+    5: "advanced",
 }
 
 # Boost-ajastin — 4x5102
-BOOST_TIMER_OPTIONS = {
-    0: "Jatkuva",
-    1: "30 min",
-    2: "60 min",
-    3: "90 min",
-    4: "120 min",
-    5: "240 min",
-}
+BOOST_TIMER_OPTIONS = {0: "continuous", 1: "30", 2: "60", 3: "90", 4: "120", 5: "240"}
 
 # Hätäpysäytys — 4x5018
-EMERGENCY_STOP_OPTIONS = {
-    0: "Pois käytöstä",
-    1: "Hätäpysäytys",
-    2: "Ylipaineistus",
-}
+EMERGENCY_STOP_OPTIONS = {0: "offline", 1: "emergency_stop", 2: "overpressure"}
 
 # Takkatoiminnon taso — 4x5105
-FIREPLACE_LEVELS = {
-    0: "Matala",
-    1: "Normaali",
-    2: "Korkea",
-}
+FIREPLACE_LEVELS = {0: "low", 1: "normal", 2: "high"}
 
 # Yksikön tila — 3x6301
 UNIT_STATES = {

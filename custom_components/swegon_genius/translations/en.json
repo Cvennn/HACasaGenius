@@ -19,5 +19,439 @@
     "abort": {
       "already_configured": "This device is already configured"
     }
+  },
+  "entity": {
+    "number": {
+      "temp_setpoint": {
+        "name": "Temperature setpoint"
+      },
+      "temp_setpoint_summer": {
+        "name": "Summer temperature setpoint"
+      },
+      "temp_setpoint_away": {
+        "name": "Away mode temperature setpoint"
+      },
+      "room_temp_setpoint": {
+        "name": "Room temperature setpoint"
+      },
+      "co2_boost_limit": {
+        "name": "CO2 Boost limit"
+      },
+      "co2_home_limit": {
+        "name": "CO2 Home limit"
+      },
+      "co2_away_limit": {
+        "name": "CO2 Away limit"
+      },
+      "home_plus_level": {
+        "name": "Home+ ventilation level"
+      },
+      "away_supply_fan": {
+        "name": "Away mode supply fan"
+      },
+      "away_exhaust_fan": {
+        "name": "Away mode exhaust fan"
+      },
+      "home_supply_fan": {
+        "name": "Home mode supply fan"
+      },
+      "home_exhaust_fan": {
+        "name": "Home mode exhaust fan"
+      },
+      "boost_supply_fan": {
+        "name": "Boost mode supply fan"
+      },
+      "boost_exhaust_fan": {
+        "name": "Boost mode exhaust fan"
+      },
+      "cooking_supply_fan": {
+        "name": "Cooking mode supply fan"
+      },
+      "cooking_exhaust_fan": {
+        "name": "Cooking mode exhaust fan"
+      }
+    },
+    "switch": {
+      "co2_automation": {
+        "name": "CO2-automation"
+      },
+      "fireplace": {
+        "name": "Fireplace"
+      },
+      "cooking_mode": {
+        "name": "Cooking mode"
+      }
+    },
+    "select":{
+      "operating_mode":{
+        "name": "Operating mode",
+        "state": {
+          "off": "Off",
+          "away": "Away",
+          "home": "Home",
+          "boost": "Boost",
+          "travel": "Traveling",
+          "home_plus": "Home+"
+        }
+      },
+      "rh_automation": {
+        "name": "RH-automation",
+        "state": {
+          "off": "Off",
+          "low": "Low",
+          "normal": "Normal",
+          "high": "High",
+          "max": "Max",
+          "advanced": "Advanced"
+        }
+      },
+      "voc_automation": {
+        "name": "VOC-automation",
+        "state": {
+          "off": "Off",
+          "low": "Low",
+          "normal": "Normal",
+          "high": "High",
+          "max": "Max",
+          "advanced": "Advanced"
+        }
+      },
+      "summer_boost": {
+        "name": "Summer boost",
+        "state": {
+          "off": "Off",
+          "low": "Low",
+          "normal": "Normal",
+          "high": "High",
+          "max": "Max",
+          "advanced": "Advanced"
+        }
+      },
+      "boost_timer": {
+        "name": "Boost timer",
+        "state": {
+          "continuous": "Continuous",
+          "30": "30 min",
+          "60": "60 min",
+          "90": "90 min",
+          "120": "120 min",
+          "240": "240 min"
+        }
+      },
+      "emergency_stop": {
+        "name": "Emergency stop",
+        "state": {
+          "offline": "Offline",
+          "emergency_stop": "Emergency stop",
+          "overpressure": "Overpressure"
+        }
+      },
+      "fireplace_level": {
+        "name": "Fireplace level",
+        "state": {
+          "low": "Low",
+          "normal": "Normal",
+          "high": "High"
+        }
+      }
+    },
+    "sensor": {
+      "outdoor_temp": {
+        "name": "Outdoor temperature"
+      },
+      "supply_before_hx_temp": {
+        "name": "Supply air temperature before preheater"
+      },
+      "supply_temp": {
+        "name": "Supply air temperature (T4)"
+      },
+      "extract_temp": {
+        "name": "Extract air temperature (T3)"
+      },
+      "exhaust_temp": {
+        "name": "Exhaust air temperature (T5)"
+      },
+      "room_temp": {
+        "name": "Room temperature"
+      },
+      "water_radiator_temp": {
+        "name": "Water radiator temperature (T6)"
+      },
+      "external_outdoor_temp": {
+        "name": "External outdoor temperature (T8)"
+      },
+      "io1_temp": {
+        "name": "IO1 temperature"
+      },
+      "io2_temp": {
+        "name": "IO2 temperature"
+      },
+      "io3_temp": {
+        "name": "IO3 temperature"
+      },
+      "io4_temp": {
+        "name": "IO4 temperature"
+      },
+      "io5_temp": {
+        "name": "IO5 temperature"
+      },
+      "co2": {
+        "name": "CO₂ (effective)"
+      },
+      "co2_internal": {
+        "name": "Internal CO₂ sensor"
+      },
+      "humidity": {
+        "name": "Room humidity (RH)"
+      },
+      "absolute_humidity": {
+        "name": "Absolute humidity"
+      },
+      "absolute_humidity_sp": {
+        "name": "Absolute humidity setpoint"
+      },
+      "voc": {
+        "name": "VOC (effective)"
+      },
+      "voc_internal": {
+        "name": "Internal VOC sensor"
+      },
+      "supply_duct_pressure": {
+        "name": "Supply air duct pressure"
+      },
+      "exhaust_duct_pressure": {
+        "name": "Extract air duct pressure"
+      },
+      "supply_duct_target": {
+        "name": "Supply air duct pressure target"
+      },
+      "exhaust_duct_target": {
+        "name": "Extract air duct pressure target"
+      },
+      "supply_airflow": {
+        "name": "Supply airflow"
+      },
+      "exhaust_airflow": {
+        "name": "Extract airflow"
+      },
+      "room_pressure": {
+        "name": "Room pressure"
+      },
+      "supply_fan_control": {
+        "name": "Supply fan control"
+      },
+      "exhaust_fan_control": {
+        "name": "Extract fan control"
+      },
+      "supply_fan_rpm": {
+        "name": "Supply fan RPM"
+      },
+      "exhaust_fan_rpm": {
+        "name": "Extract fan RPM"
+      },
+      "automation_control": {
+        "name": "Automation control"
+      },
+      "co2_automation_effect": {
+        "name": "CO₂ automation effect"
+      },
+      "rh_automation_effect": {
+        "name": "Humidity automation effect"
+      },
+      "voc_automation_effect": {
+        "name": "VOC automation effect"
+      },
+      "temp_boost_effect": {
+        "name": "Temperature boost effect"
+      },
+      "fan_speed_limit": {
+        "name": "Fan speed limit"
+      },
+      "building_pressure_bal": {
+        "name": "Building pressure balance"
+      },
+      "temp_setpoint_active": {
+        "name": "Active temperature setpoint"
+      },
+      "postheat_combined": {
+        "name": "Combined post-heater"
+      },
+      "internal_postheater": {
+        "name": "Internal post-heater"
+      },
+      "internal_preheater": {
+        "name": "Internal pre-heater"
+      },
+      "external_postheat_water": {
+        "name": "External water post-heater"
+      },
+      "external_postheat_elec": {
+        "name": "External electric post-heater"
+      },
+      "external_postcool": {
+        "name": "External post-cooler"
+      },
+      "external_preheater": {
+        "name": "External pre-heater"
+      },
+      "bypass_damper": {
+        "name": "Bypass damper position"
+      },
+      "rotor_control": {
+        "name": "Rotor control"
+      },
+      "rotor_rpm": {
+        "name": "Rotor speed"
+      },
+      "boost_time_left": {
+        "name": "Boost time remaining"
+      },
+      "hours_to_service": {
+        "name": "Hours until service"
+      },
+      "gio1_voltage": {
+        "name": "GIO1 input voltage"
+      },
+      "gio2_voltage": {
+        "name": "GIO2 input voltage"
+      },
+      "gio3_voltage": {
+        "name": "GIO3 input voltage"
+      },
+      "gio4_voltage": {
+        "name": "GIO4 input voltage"
+      },
+      "gio5_voltage": {
+        "name": "GIO5 input voltage"
+      },
+      "unit_state": {
+        "name": "Unit state"
+      },
+      "heating_state": {
+        "name": "Heating state"
+      },
+      "ventilation_state_text": {
+        "name": "Active ventilation mode",
+        "state": {
+          "off": "Off",
+          "travel": "Travel",
+          "away": "Away",
+          "home": "Home",
+          "home_plus": "Home+",
+          "boost": "Boost",
+          "fireplace": "Fireplace"
+        }
+      }
+    },
+    "binary_sensor": {
+      "alarm_postheater": {
+        "name": "E011 Post-heater fault"
+      },
+      "alarm_preheater": {
+        "name": "E021 Preheater fault"
+      },
+      "alarm_freezing": {
+        "name": "E051 Freeze protection alarm"
+      },
+      "alarm_supply_fan": {
+        "name": "E061 Supply fan fault"
+      },
+      "alarm_exhaust_fan": {
+        "name": "E071 Exhaust fan fault"
+      },
+      "alarm_temp_sensor": {
+        "name": "Temperature sensor fault (T1-T9)"
+      },
+      "alarm_emergency": {
+        "name": "E082 Emergency stop"
+      },
+      "alarm_service": {
+        "name": "Service reminder"
+      },
+      "alarm_genius": {
+        "name": "Genius alarm"
+      },
+      "alarm_supply_low": {
+        "name": "E111 Low supply air temperature"
+      },
+      "alarm_internal_high": {
+        "name": "E121 High internal temperature"
+      },
+      "alarm_preheat_high": {
+        "name": "High preheater temperature"
+      },
+      "alarm_rotor_rpm": {
+        "name": "E131 Rotor RPM alarm"
+      },
+      "alarm_fan_control": {
+        "name": "Fan control fault"
+      },
+      "alarm_sensor_package": {
+        "name": "E401 Sensor package fault"
+      },
+      "alarm_rh_sensor": {
+        "name": "E411 Humidity sensor fault"
+      },
+      "alarm_co2_sensor": {
+        "name": "E421 CO2 sensor fault"
+      },
+      "alarm_voc_sensor": {
+        "name": "E431 VOC sensor fault"
+      },
+      "alarm_ext_preheater": {
+        "name": "E031 External electric preheater fault"
+      },
+      "alarm_ext_postheater": {
+        "name": "E041 External electric post-heater fault"
+      },
+      "alarm_pcb_temp": {
+        "name": "E202 High internal PCB temperature"
+      },
+      "alarm_param_error": {
+        "name": "E211 Internal parameter error"
+      },
+      "alarm_external": {
+        "name": "E091 External alarm"
+      },
+      "alarm_ext_message": {
+        "name": "External device message"
+      },
+      "alarm_ext_critical": {
+        "name": "E092 External critical alarm"
+      },
+      "alarm_fire": {
+        "name": "E102 Fire alarm"
+      },
+      "alarm_hx_efficiency": {
+        "name": "E171 Low heat exchanger efficiency"
+      },
+      "alarm_hx_control": {
+        "name": "Heat exchanger control fault"
+      },
+      "alarm_cool_condenser": {
+        "name": "E451 High condenser temperature"
+      },
+      "alarm_cool_hotgas": {
+        "name": "E461 High hot gas temperature"
+      },
+      "alarm_cool_pressure": {
+        "name": "E471 High refrigerant pressure"
+      },
+      "alarm_rotor_stall": {
+        "name": "E161 Rotor stalled"
+      },
+      "alarm_rotor_overheat": {
+        "name": "E141 Rotor controller overheating"
+      },
+      "alarm_rotor_connection": {
+        "name": "E151 Rotor communication fault"
+      },
+      "alarm_indoor_humidity": {
+        "name": "E502 High indoor humidity"
+      },
+      "alarm_cool_condense": {
+        "name": "E512 Cooling coil condensation"
+      }
+    }
   }
 }

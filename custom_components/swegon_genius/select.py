@@ -30,7 +30,7 @@ if TYPE_CHECKING:
 SELECT_DEFS = [
     {
         "key": "operating_mode",
-        "name": "Kayttotila",
+        "translation_key": "operating_mode",
         "address": 5000,
         "options": OPERATION_MODES_WRITE,
         "read_key": "ventilation_state",
@@ -38,42 +38,42 @@ SELECT_DEFS = [
     },
     {
         "key": "rh_automation",
-        "name": "RH-automaatio",
+        "translation_key": "rh_automation",
         "address": 5009,
         "options": RH_LEVELS,
         "read_key": "rh_automation",
     },
     {
         "key": "voc_automation",
-        "name": "VOC-automaatio",
+        "translation_key": "voc_automation",
         "address": 5010,
         "options": VOC_AUTOMATION_LEVELS,
         "read_key": "voc_automation",
     },
     {
         "key": "summer_boost",
-        "name": "Kesatilan tehostus",
+        "translation_key": "summer_boost",
         "address": 5168,
         "options": SUMMER_BOOST_LEVELS,
         "read_key": "summer_boost",
     },
     {
         "key": "boost_timer",
-        "name": "Tehostusajastin",
+        "translation_key": "boost_timer",
         "address": 5101,
         "options": BOOST_TIMER_OPTIONS,
         "read_key": "boost_timer",
     },
     {
         "key": "emergency_stop",
-        "name": "Hatapysaytys tila",
+        "translation_key": "emergency_stop",
         "address": 5017,
         "options": EMERGENCY_STOP_OPTIONS,
         "read_key": "emergency_stop",
     },
     {
         "key": "fireplace_level",
-        "name": "Takan teho",
+        "translation_key": "fireplace_level",
         "address": 5104,
         "options": FIREPLACE_LEVELS,
         "read_key": "fireplace_level",
@@ -102,7 +102,8 @@ class SwegonSelect(CoordinatorEntity, SelectEntity):
         self._read_map = sel_def.get("read_map", sel_def["options"])
         self._reverse = {v: k for k, v in self._options_map.items()}  # {teksti: arvo}
         self._attr_unique_id = f"{entry.entry_id}_{sel_def['key']}"
-        self._attr_name = sel_def["name"]
+        self._attr_has_entity_name = True
+        self._attr_translation_key = self._def["translation_key"]
         self._attr_options = list(self._options_map.values())
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.entry_id)},

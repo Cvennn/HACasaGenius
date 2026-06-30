@@ -28,19 +28,19 @@ if TYPE_CHECKING:
 SWITCHES = [
     {
         "key": "co2_automation",
-        "name": "CO2-automaatio",
+        "translation_key": "co2_automation",
         "address": 5008,
         "read_key": "co2_automation",
     },
     {
         "key": "fireplace",
-        "name": "Takkatoiminto",
+        "translation_key": "fireplace",
         "address": 5001,
         "read_key": "fireplace_active",
     },
     {
         "key": "cooking_mode",
-        "name": "Liesikuputoiminto",
+        "translation_key": "cooking_mode",
         "address": 5004,
         "read_key": "cooking_active",
     },
@@ -77,7 +77,8 @@ class SwegonSwitch(CoordinatorEntity, SwitchEntity):
         super().__init__(coordinator)
         self._switch = switch_def
         self._attr_unique_id = f"{entry.entry_id}_{switch_def['key']}"
-        self._attr_name = switch_def["name"]
+        self._attr_has_entity_name = True
+        self._attr_translation_key = self._switch["translation_key"]
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.entry_id)},
             name=entry.title,

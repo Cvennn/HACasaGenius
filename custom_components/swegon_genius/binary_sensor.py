@@ -28,7 +28,7 @@ async def async_setup_entry(
     entities = []
     for alarm_reg in ALARM_REGISTERS:
         entities.extend(
-            SwegonBinarySensor(coordinator, entry, info["key"], info["name"])
+            SwegonBinarySensor(coordinator, entry, info["key"])
             for info in alarm_reg["bits"].values()
         )
     async_add_entities(entities)
@@ -39,14 +39,13 @@ class SwegonBinarySensor(CoordinatorEntity, BinarySensorEntity):
 
     _attr_device_class = BinarySensorDeviceClass.PROBLEM
 
-    def __init__(
-        self, coordinator: Any, entry: ConfigEntry, key: str, name: str
-    ) -> None:
+    def __init__(self, coordinator: Any, entry: ConfigEntry, key: str) -> None:
         """Initialize the Swegon Genius binary sensor."""
         super().__init__(coordinator)
         self._key = key
         self._attr_unique_id = f"{entry.entry_id}_{key}"
-        self._attr_name = name
+        self._attr_has_entity_name = True
+        self._attr_translation_key = self._key
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.entry_id)},
             name=entry.title,

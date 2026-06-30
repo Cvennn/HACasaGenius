@@ -40,14 +40,21 @@ class SwegonSensor(CoordinatorEntity, SensorEntity):
     ) -> None:
         """Initialize a Swegon Genius sensor."""
         super().__init__(coordinator)
+
         self._def = sensor_def
+
         self._attr_unique_id = f"{entry.entry_id}_{sensor_def['key']}"
-        self._attr_name = sensor_def["name"]
+        self._attr_has_entity_name = True
+        self._attr_translation_key = sensor_def["translation_key"]
+
         self._attr_native_unit_of_measurement = sensor_def.get("unit")
+
         if sensor_def.get("device_class"):
             self._attr_device_class = sensor_def["device_class"]
+
         if sensor_def.get("state_class"):
             self._attr_state_class = sensor_def["state_class"]
+
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.entry_id)},
             name=entry.title,
@@ -63,7 +70,7 @@ class SwegonSensor(CoordinatorEntity, SensorEntity):
 
 
 class SwegonEnumSensor(CoordinatorEntity, SensorEntity):
-    """Tekstimuotoinen tilasensori (esim. Yksikon tila, Lammitystila)."""
+    """Text based state sensors."""
 
     def __init__(
         self,
@@ -75,7 +82,8 @@ class SwegonEnumSensor(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self._def = sensor_def
         self._attr_unique_id = f"{entry.entry_id}_{sensor_def['key']}_text"
-        self._attr_name = sensor_def["name"]
+        self._attr_has_entity_name = True
+        self._attr_translation_key = sensor_def["translation_key"]
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.entry_id)},
             name=entry.title,

@@ -7,8 +7,8 @@
         "data": {
           "port":     "Sarjaportti",
           "slave":    "Slave-osoite",
-          "baudrate": "Baud rate",
-          "stopbits": "Stop bits",
+          "baudrate": "Siirtonopeus/Baud rate",
+          "stopbits": "Lopetusbitti/Stop bits",
           "parity":   "Pariteetti"
         }
       }
@@ -19,5 +19,440 @@
     "abort": {
       "already_configured": "Tämä laite on jo lisätty"
     }
+  },
+  "entity": {
+    "number": {
+      "temp_setpoint": {
+        "name": "Lämpotilasetpiste"
+      },
+      "temp_setpoint_summer": {
+        "name": "Kesäkauden lämpotilasetpiste"
+      },
+      "temp_setpoint_away": {
+        "name": "Away-tilan lämpotilasetpiste"
+      },
+      "room_temp_setpoint": {
+        "name": "Huonelämpotilan asetus"
+      },
+      "co2_boost_limit": {
+        "name": "CO2 Boost-raja"
+      },
+      "co2_home_limit": {
+        "name": "CO2 Home-raja"
+      },
+      "co2_away_limit": {
+        "name": "CO2 Away-raja"
+      },
+      "home_plus_level": {
+        "name": "Home+ ventilointitaso"
+      },
+      "away_supply_fan": {
+        "name": "Away-tilan tuloilmapuhallin"
+      },
+      "away_exhaust_fan": {
+        "name": "Away-tilan poistoilmapuhallin"
+      },
+      "home_supply_fan": {
+        "name": "Home-tilan tuloilmapuhallin"
+      },
+      "home_exhaust_fan": {
+        "name": "Home-tilan poistoilmapuhallin"
+      },
+      "boost_supply_fan": {
+        "name": "Boost-tilan tuloilmapuhallin"
+      },
+      "boost_exhaust_fan": {
+        "name": "Boost-tilan poistoilmapuhallin"
+      },
+      "cooking_supply_fan": {
+        "name": "Ruoanlaitto tuloilmapuhallin"
+      },
+      "cooking_exhaust_fan": {
+        "name": "Ruoanlaitto poistoilmapuhallin"
+      }
+    },
+    "switch":{
+      "co2_automation": {
+        "name": "CO2-automaatio"
+      },
+      "fireplace": {
+        "name": "Takkatoiminto"
+      },
+      "cooking_mode": {
+        "name": "Liesikuputoiminto"
+      }
+    },
+    "select": {
+      "operating_mode": {
+        "name": "Käyttötila",
+        "state": {
+          "off": "Sammutettu",
+          "away": "Poissa",
+          "home": "Kotona",
+          "boost": "Tehostus",
+          "travel": "Matkoilla",
+          "home_plus": "Kotona+"
+        }
+      },
+      "rh_automation": {
+        "name": "RH-automaatio",
+        "state": {
+          "off": "Pois",
+          "low": "Matala",
+          "normal": "Normaali",
+          "high": "Korkea",
+          "max": "Maksimi",
+          "advanced": "Edistynyt"
+        }
+      },
+      "voc_automation": {
+        "name": "VOC-automaatio",
+        "state": {
+          "off": "Pois",
+          "low": "Matala",
+          "normal": "Normaali",
+          "high": "Korkea",
+          "max": "Maksimi",
+          "advanced": "Edistynyt"
+        }
+      },
+      "summer_boost": {
+        "name": "Kesätilan tehostus",
+        "state": {
+          "off": "Pois",
+          "low": "Matala",
+          "normal": "Normaali",
+          "high": "Korkea",
+          "max": "Maksimi",
+          "advanced": "Edistynyt"
+        }
+      },
+      "boost_timer": {
+        "name": "Tehostusajastin",
+        "state": {
+          "continuous": "Jatkuva",
+          "30": "30 min",
+          "60": "60 min",
+          "90": "90 min",
+          "120": "120 min",
+          "240": "240 min"
+        }
+      },
+      "emergency_stop": {
+        "name": "Hätäpysäytys tila",
+        "state": {
+          "offline": "Pois käytöstä",
+          "emergency_stop": "Hätäpysäytys",
+          "overpressure": "Ylipaineistus"
+        }
+      },
+      "fireplace_level": {
+        "name": "Takan teho",
+        "state": {
+          "low": "Matala",
+          "normal": "Normaali",
+          "high": "Korkea"
+        }
+      }
+    },
+    "sensor": {
+      "outdoor_temp": {
+        "name": "Ulkoilman lämpötila"
+      },
+      "supply_before_hx_temp": {
+        "name": "Poistoilman lämpötila"
+      },
+      "supply_temp": {
+        "name": "Tuloilman lämpötila (T4)"
+      },
+      "extract_temp": {
+        "name": "Poistoilman lämpotila (T3)"
+      },
+      "exhaust_temp": {
+        "name": "Jäteilman lämpotila (T5)"
+      },
+      "room_temp": {
+        "name": "Huonelämpotila"
+      },
+      "water_radiator_temp": {
+        "name": "Vesipatterin lämpotila (T6)"
+      },
+      "external_outdoor_temp": {
+        "name": "Ulkoinen ulkolämpotila (T8)"
+      },
+      "io1_temp": {
+        "name": "IO1 lämpotila"
+      },
+      "io2_temp": {
+        "name": "IO2 lämpotila"
+      },
+      "io3_temp": {
+        "name": "IO3 lämpotila"
+      },
+      "io4_temp": {
+        "name": "IO4 lämpotila"
+      },
+      "io5_temp": {
+        "name": "IO5 lämpotila"
+      },
+      "co2": {
+        "name": "CO2 (efektiivinen)"
+      },
+      "co2_internal": {
+        "name": "CO2 sisäinen anturi"
+      },
+      "humidity": {
+        "name": "Huoneilman kosteus (RH)"
+      },
+      "absolute_humidity": {
+        "name": "Absoluuttinen kosteus"
+      },
+      "absolute_humidity_sp": {
+        "name": "Absoluuttinen kosteus asetus"
+      },
+      "voc": {
+        "name": "VOC (efektiivinen)"
+      },
+      "voc_internal": {
+        "name": "VOC sisäinen anturi"
+      },
+      "supply_duct_pressure": {
+        "name": "Tuloilmakanavan paine"
+      },
+      "exhaust_duct_pressure": {
+        "name": "Poistoilmakanavan paine"
+      },
+      "supply_duct_target": {
+        "name": "Tuloilmakanavan paine tavoite"
+      },
+      "exhaust_duct_target": {
+        "name": "Poistoilmakanavan paine tavoite"
+      },
+      "supply_airflow": {
+        "name": "Tuloilmavirta"
+      },
+      "exhaust_airflow": {
+        "name": "Poistoilmavirta"
+      },
+      "room_pressure": {
+        "name": "Huonepaine"
+      },
+      "supply_fan_control": {
+        "name": "Tuloilmapuhallin ohjaus"
+      },
+      "exhaust_fan_control": {
+        "name": "Poistoilmapuhallin ohjaus"
+      },
+      "supply_fan_rpm": {
+        "name": "Tuloilmapuhallin RPM"
+      },
+      "exhaust_fan_rpm": {
+        "name": "Poistoilmapuhallin RPM"
+      },
+      "automation_control": {
+        "name": "Automaation ohjaus"
+      },
+      "co2_automation_effect": {
+        "name": "CO2-automaation vaikutus"
+      },
+      "rh_automation_effect": {
+        "name": "Kosteusautomaation vaikutus"
+      },
+      "voc_automation_effect": {
+        "name": "VOC-automaation vaikutus"
+      },
+      "temp_boost_effect": {
+        "name": "LÄmpotilatehostuksen vaikutus"
+      },
+      "fan_speed_limit": {
+        "name": "Puhallinnopeuden rajoitus"
+      },
+      "building_pressure_bal": {
+        "name": "Rakennuksen painetasapaino"
+      },
+      "temp_setpoint_active": {
+        "name": "Aktiivinen lÄmpotila-asetus"
+      },
+      "postheat_combined": {
+        "name": "Jälkilämmitys yhdistetty"
+      },
+      "internal_postheater": {
+        "name": "Sisäinen jälkilämmitin"
+      },
+      "internal_preheater": {
+        "name": "Sisäinen esilämmitin"
+      },
+      "external_postheat_water": {
+        "name": "Ulkoinen jälkilämmitys (vesi)"
+      },
+      "external_postheat_elec": {
+        "name": "Ulkoinen jälkilämmitys (sähko)"
+      },
+      "external_postcool": {
+        "name": "Ulkoinen jälkijäähdytys"
+      },
+      "external_preheater": {
+        "name": "Ulkoinen esilämmitin"
+      },
+      "bypass_damper": {
+        "name": "Ohituspellin asento"
+      },
+      "rotor_control": {
+        "name": "Roottorin ohjaus"
+      },
+      "rotor_rpm": {
+        "name": "Roottorin pyörimisnopeus"
+      },
+      "boost_time_left": {
+        "name": "Tehostuksen jäljellä oleva aika"
+      },
+      "hours_to_service": {
+        "name": "Tunteja seuraavaan huoltoon"
+      },
+      "gio1_voltage": {
+        "name": "GIO1 jännitetulo"
+      },
+      "gio2_voltage": {
+        "name": "GIO2 jännitetulo"
+      },
+      "gio3_voltage": {
+        "name": "GIO3 jännitetulo"
+      },
+      "gio4_voltage": {
+        "name": "GIO4 jännitetulo"
+      },
+      "gio5_voltage": {
+        "name": "GIO5 jännitetulo"
+      },
+      "unit_state": {
+        "name": "Yksikön tila"
+      },
+      "heating_state": {
+        "name": "Lämmitystila"
+      },
+      "ventilation_state_text": {
+        "name": "Aktiivinen ventilointitila",
+        "state": {
+          "off": "Pysäytetty",
+          "travel": "Matkoilla",
+          "away": "Poissa",
+          "home": "Kotona",
+          "home_plus": "Kotona+",
+          "boost": "Tehostus",
+          "fireplace": "Takkatoiminto"
+        }
+      }
+    },
+    "binary_sensor": {
+      "alarm_postheater": {
+        "name": "E011 Jälkilämmittimen vika"
+      },
+      "alarm_preheater": {
+        "name": "E021 Esilämmittimen vika"
+      },
+      "alarm_freezing": {
+        "name": "E051 Jäätymisvaara"
+      },
+      "alarm_supply_fan": {
+        "name": "E061 Tuloilmapuhaltimen vika"
+      },
+      "alarm_exhaust_fan": {
+        "name": "E071 Poistoilmapuhaltimen vika"
+      },
+      "alarm_temp_sensor": {
+        "name": "Lämpotila-anturivika (T1-T9)"
+      },
+      "alarm_emergency": {
+        "name": "E082 Hätäpysäytys"
+      },
+      "alarm_service": {
+        "name": "Huoltomuistutus"
+      },
+      "alarm_genius": {
+        "name": "Genius-hälytys"
+      },
+      "alarm_supply_low": {
+        "name": "E111 Tuloilman lämpotila matala"
+      },
+      "alarm_internal_high": {
+        "name": "E121 Sisälämpotila korkea"
+      },
+      "alarm_preheat_high": {
+        "name": "Esilämmittimen lämpotila korkea"
+      },
+      "alarm_rotor_rpm": {
+        "name": "E131 Roottorin RPM-hälytys"
+      },
+      "alarm_fan_control": {
+        "name": "Puhallinohjauksen vika"
+      },
+      "alarm_sensor_package": {
+        "name": "E401 Anturipaketin vika"
+      },
+      "alarm_rh_sensor": {
+        "name": "E411 Kosteusanturin vika"
+      },
+      "alarm_co2_sensor": {
+        "name": "E421 CO2-anturin vika"
+      },
+      "alarm_voc_sensor": {
+        "name": "E431 VOC-anturin vika"
+      },
+      "alarm_ext_preheater": {
+        "name": "E031 Ulkoinen sähkoesilämmitin"
+      },
+      "alarm_ext_postheater": {
+        "name": "E041 Ulkoinen sähkojälkilämmitin"
+      },
+      "alarm_pcb_temp": {
+        "name": "E202 Sisäinen PCB-lämpotila korkea"
+      },
+      "alarm_param_error": {
+        "name": "E211 Sisäinen parametrivirhe"
+      },
+      "alarm_external": {
+        "name": "E091 Ulkoinen hälytys"
+      },
+      "alarm_ext_message": {
+        "name": "Ulkoisen laitteen viesti"
+      },
+      "alarm_ext_critical": {
+        "name": "E092 Ulkoinen kriittinen hälytys"
+      },
+      "alarm_fire": {
+        "name": "E102 Palohälytys"
+      },
+      "alarm_hx_efficiency": {
+        "name": "E171 LTO:n hyötysuhde matala"
+      },
+      "alarm_hx_control": {
+        "name": "LTO-ohjauksen vika"
+      },
+      "alarm_cool_condenser": {
+        "name": "E451 Jäähdytyskondensaattori korkea"
+      },
+      "alarm_cool_hotgas": {
+        "name": "E461 Jäähdytyksen kuumakaasu korkea"
+      },
+      "alarm_cool_pressure": {
+        "name": "E471 Jäähdytyspaine korkea"
+      },
+      "alarm_rotor_stall": {
+        "name": "E161 Roottori pysähtynyt"
+      },
+      "alarm_rotor_overheat": {
+        "name": "E141 Roottorin ohjain ylikuumeni"
+      },
+      "alarm_rotor_connection": {
+        "name": "E151 Roottoriyhteyden vika"
+      },
+      "alarm_indoor_humidity": {
+        "name": "E502 Sisäilman kosteus"
+      },
+      "alarm_cool_condense": {
+        "name": "E512 Jäähdytyskennon kondenssi"
+      }
+    }
   }
 }
+
