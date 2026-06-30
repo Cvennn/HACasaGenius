@@ -70,7 +70,7 @@ class SwegonSensor(CoordinatorEntity, SensorEntity):
 
 
 class SwegonEnumSensor(CoordinatorEntity, SensorEntity):
-    """Tekstimuotoinen tilasensori (esim. Yksikon tila, Lammitystila)."""
+    """Text based state sensors."""
 
     def __init__(
         self,

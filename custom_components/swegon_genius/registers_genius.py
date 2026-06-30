@@ -706,21 +706,18 @@ ENUM_SENSORS = [
     {
         "key": "unit_state",
         "translation_key": "unit_state",
-        # "name": "Yksikon tila",
         "address": 6300,
         "map": "UNIT_STATES",
     },
     {
         "key": "heating_state",
         "translation_key": "heating_state",
-        # "name": "Lammitystila",
         "address": 6369,
         "map": "HEATING_STATES",
     },
     {
         "key": "ventilation_state_text",
         "translation_key": "ventilation_state_text",
-        # "name": "Aktiivinen ventilointitila",
         "address": 6433,
         "map": "VENTILATION_STATES",
     },

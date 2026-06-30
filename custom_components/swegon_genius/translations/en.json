@@ -84,25 +84,75 @@
     },
     "select":{
       "operating_mode":{
-        "name": "Operating mode"
+        "name": "Operating mode",
+        "state": {
+          "off": "Off",
+          "away": "Away",
+          "home": "Home",
+          "boost": "Boost",
+          "travel": "Traveling",
+          "home_plus": "Home+"
+        }
       },
       "rh_automation": {
-        "name": "RH-automation"
+        "name": "RH-automation",
+        "state": {
+          "off": "Off",
+          "low": "Low",
+          "normal": "Normal",
+          "high": "High",
+          "max": "Max",
+          "advanced": "Advanced"
+        }
       },
       "voc_automation": {
-        "name": "VOC-automation"
+        "name": "VOC-automation",
+        "state": {
+          "off": "Off",
+          "low": "Low",
+          "normal": "Normal",
+          "high": "High",
+          "max": "Max",
+          "advanced": "Advanced"
+        }
       },
       "summer_boost": {
-        "name": "Summer boost"
+        "name": "Summer boost",
+        "state": {
+          "off": "Off",
+          "low": "Low",
+          "normal": "Normal",
+          "high": "High",
+          "max": "Max",
+          "advanced": "Advanced"
+        }
       },
       "boost_timer": {
-        "name": "Boost timer"
+        "name": "Boost timer",
+        "state": {
+          "continuous": "Continuous",
+          "30": "30 min",
+          "60": "60 min",
+          "90": "90 min",
+          "120": "120 min",
+          "240": "240 min"
+        }
       },
       "emergency_stop": {
-        "name": "Emergency stop"
+        "name": "Emergency stop",
+        "state": {
+          "offline": "Offline",
+          "emergency_stop": "Emergency stop",
+          "overpressure": "Overpressure"
+        }
       },
       "fireplace_level": {
-        "name": "Fireplace level"
+        "name": "Fireplace level",
+        "state": {
+          "low": "Low",
+          "normal": "Normal",
+          "high": "High"
+        }
       }
     },
     "sensor": {
@@ -281,8 +331,17 @@
         "name": "Heating state"
       },
       "ventilation_state_text": {
-        "name": "Active ventilation mode"
-      }
+        "name": "Active ventilation mode",
+        "state": {
+          "off": "Off",
+          "travel": "Travel",
+          "away": "Away",
+          "home": "Home",
+          "home_plus": "Home+",
+          "boost": "Boost",
+          "fireplace": "Fireplace"
+        }
       }
     }
   }
+}

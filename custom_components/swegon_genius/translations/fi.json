@@ -84,25 +84,75 @@
     },
     "select": {
       "operating_mode": {
-        "name": "Käyttötila"
+        "name": "Käyttötila",
+        "state": {
+          "off": "Sammutettu",
+          "away": "Poissa",
+          "home": "Kotona",
+          "boost": "Tehostus",
+          "travel": "Matkoilla",
+          "home_plus": "Kotona+"
+        }
       },
       "rh_automation": {
-        "name": "RH-automaatio"
+        "name": "RH-automaatio",
+        "state": {
+          "off": "Pois",
+          "low": "Matala",
+          "normal": "Normaali",
+          "high": "Korkea",
+          "max": "Maksimi",
+          "advanced": "Edistynyt"
+        }
       },
       "voc_automation": {
-        "name": "VOC-automaatio"
+        "name": "VOC-automaatio",
+        "state": {
+          "off": "Pois",
+          "low": "Matala",
+          "normal": "Normaali",
+          "high": "Korkea",
+          "max": "Maksimi",
+          "advanced": "Edistynyt"
+        }
       },
       "summer_boost": {
-        "name": "Kesätilan tehostus"
+        "name": "Kesätilan tehostus",
+        "state": {
+          "off": "Pois",
+          "low": "Matala",
+          "normal": "Normaali",
+          "high": "Korkea",
+          "max": "Maksimi",
+          "advanced": "Edistynyt"
+        }
       },
       "boost_timer": {
-        "name": "Tehostusajastin"
+        "name": "Tehostusajastin",
+        "state": {
+          "continuous": "Jatkuva",
+          "30": "30 min",
+          "60": "60 min",
+          "90": "90 min",
+          "120": "120 min",
+          "240": "240 min"
+        }
       },
       "emergency_stop": {
-        "name": "Hätäpysäytys tila"
+        "name": "Hätäpysäytys tila",
+        "state": {
+          "offline": "Pois käytöstä",
+          "emergency_stop": "Hätäpysäytys",
+          "overpressure": "Ylipaineistus"
+        }
       },
       "fireplace_level": {
-        "name": "Takan teho"
+        "name": "Takan teho",
+        "state": {
+          "low": "Matala",
+          "normal": "Normaali",
+          "high": "Korkea"
+        }
       }
     },
     "sensor": {
@@ -281,8 +331,18 @@
         "name": "Lämmitystila"
       },
       "ventilation_state_text": {
-        "name": "Aktiivinen ventilointitila"
+        "name": "Aktiivinen ventilointitila",
+        "state": {
+          "off": "Pysäytetty",
+          "travel": "Matkoilla",
+          "away": "Poissa",
+          "home": "Kotona",
+          "home_plus": "Kotona+",
+          "boost": "Tehostus",
+          "fireplace": "Takkatoiminto"
+        }
       }
     }
   }
 }
+
