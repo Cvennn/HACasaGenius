@@ -342,6 +342,116 @@
           "fireplace": "Takkatoiminto"
         }
       }
+    },
+    "binary_sensor": {
+      "alarm_postheater": {
+        "name": "E011 Jälkilämmittimen vika"
+      },
+      "alarm_preheater": {
+        "name": "E021 Esilämmittimen vika"
+      },
+      "alarm_freezing": {
+        "name": "E051 Jäätymisvaara"
+      },
+      "alarm_supply_fan": {
+        "name": "E061 Tuloilmapuhaltimen vika"
+      },
+      "alarm_exhaust_fan": {
+        "name": "E071 Poistoilmapuhaltimen vika"
+      },
+      "alarm_temp_sensor": {
+        "name": "Lämpotila-anturivika (T1-T9)"
+      },
+      "alarm_emergency": {
+        "name": "E082 Hätäpysäytys"
+      },
+      "alarm_service": {
+        "name": "Huoltomuistutus"
+      },
+      "alarm_genius": {
+        "name": "Genius-hälytys"
+      },
+      "alarm_supply_low": {
+        "name": "E111 Tuloilman lämpotila matala"
+      },
+      "alarm_internal_high": {
+        "name": "E121 Sisälämpotila korkea"
+      },
+      "alarm_preheat_high": {
+        "name": "Esilämmittimen lämpotila korkea"
+      },
+      "alarm_rotor_rpm": {
+        "name": "E131 Roottorin RPM-hälytys"
+      },
+      "alarm_fan_control": {
+        "name": "Puhallinohjauksen vika"
+      },
+      "alarm_sensor_package": {
+        "name": "E401 Anturipaketin vika"
+      },
+      "alarm_rh_sensor": {
+        "name": "E411 Kosteusanturin vika"
+      },
+      "alarm_co2_sensor": {
+        "name": "E421 CO2-anturin vika"
+      },
+      "alarm_voc_sensor": {
+        "name": "E431 VOC-anturin vika"
+      },
+      "alarm_ext_preheater": {
+        "name": "E031 Ulkoinen sähkoesilämmitin"
+      },
+      "alarm_ext_postheater": {
+        "name": "E041 Ulkoinen sähkojälkilämmitin"
+      },
+      "alarm_pcb_temp": {
+        "name": "E202 Sisäinen PCB-lämpotila korkea"
+      },
+      "alarm_param_error": {
+        "name": "E211 Sisäinen parametrivirhe"
+      },
+      "alarm_external": {
+        "name": "E091 Ulkoinen hälytys"
+      },
+      "alarm_ext_message": {
+        "name": "Ulkoisen laitteen viesti"
+      },
+      "alarm_ext_critical": {
+        "name": "E092 Ulkoinen kriittinen hälytys"
+      },
+      "alarm_fire": {
+        "name": "E102 Palohälytys"
+      },
+      "alarm_hx_efficiency": {
+        "name": "E171 LTO:n hyötysuhde matala"
+      },
+      "alarm_hx_control": {
+        "name": "LTO-ohjauksen vika"
+      },
+      "alarm_cool_condenser": {
+        "name": "E451 Jäähdytyskondensaattori korkea"
+      },
+      "alarm_cool_hotgas": {
+        "name": "E461 Jäähdytyksen kuumakaasu korkea"
+      },
+      "alarm_cool_pressure": {
+        "name": "E471 Jäähdytyspaine korkea"
+      },
+      "alarm_rotor_stall": {
+        "name": "E161 Roottori pysähtynyt"
+      },
+      "alarm_rotor_overheat": {
+        "name": "E141 Roottorin ohjain ylikuumeni"
+      },
+      "alarm_rotor_connection": {
+        "name": "E151 Roottoriyhteyden vika"
+      },
+      "alarm_indoor_humidity": {
+        "name": "E502 Sisäilman kosteus"
+      },
+      "alarm_cool_condense": {
+        "name": "E512 Jäähdytyskennon kondenssi"
+      }
     }
   }
 }

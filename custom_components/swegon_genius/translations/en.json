@@ -342,6 +342,116 @@
           "fireplace": "Fireplace"
         }
       }
+    },
+    "binary_sensor": {
+      "alarm_postheater": {
+        "name": "E011 Post-heater fault"
+      },
+      "alarm_preheater": {
+        "name": "E021 Preheater fault"
+      },
+      "alarm_freezing": {
+        "name": "E051 Freeze protection alarm"
+      },
+      "alarm_supply_fan": {
+        "name": "E061 Supply fan fault"
+      },
+      "alarm_exhaust_fan": {
+        "name": "E071 Exhaust fan fault"
+      },
+      "alarm_temp_sensor": {
+        "name": "Temperature sensor fault (T1-T9)"
+      },
+      "alarm_emergency": {
+        "name": "E082 Emergency stop"
+      },
+      "alarm_service": {
+        "name": "Service reminder"
+      },
+      "alarm_genius": {
+        "name": "Genius alarm"
+      },
+      "alarm_supply_low": {
+        "name": "E111 Low supply air temperature"
+      },
+      "alarm_internal_high": {
+        "name": "E121 High internal temperature"
+      },
+      "alarm_preheat_high": {
+        "name": "High preheater temperature"
+      },
+      "alarm_rotor_rpm": {
+        "name": "E131 Rotor RPM alarm"
+      },
+      "alarm_fan_control": {
+        "name": "Fan control fault"
+      },
+      "alarm_sensor_package": {
+        "name": "E401 Sensor package fault"
+      },
+      "alarm_rh_sensor": {
+        "name": "E411 Humidity sensor fault"
+      },
+      "alarm_co2_sensor": {
+        "name": "E421 CO2 sensor fault"
+      },
+      "alarm_voc_sensor": {
+        "name": "E431 VOC sensor fault"
+      },
+      "alarm_ext_preheater": {
+        "name": "E031 External electric preheater fault"
+      },
+      "alarm_ext_postheater": {
+        "name": "E041 External electric post-heater fault"
+      },
+      "alarm_pcb_temp": {
+        "name": "E202 High internal PCB temperature"
+      },
+      "alarm_param_error": {
+        "name": "E211 Internal parameter error"
+      },
+      "alarm_external": {
+        "name": "E091 External alarm"
+      },
+      "alarm_ext_message": {
+        "name": "External device message"
+      },
+      "alarm_ext_critical": {
+        "name": "E092 External critical alarm"
+      },
+      "alarm_fire": {
+        "name": "E102 Fire alarm"
+      },
+      "alarm_hx_efficiency": {
+        "name": "E171 Low heat exchanger efficiency"
+      },
+      "alarm_hx_control": {
+        "name": "Heat exchanger control fault"
+      },
+      "alarm_cool_condenser": {
+        "name": "E451 High condenser temperature"
+      },
+      "alarm_cool_hotgas": {
+        "name": "E461 High hot gas temperature"
+      },
+      "alarm_cool_pressure": {
+        "name": "E471 High refrigerant pressure"
+      },
+      "alarm_rotor_stall": {
+        "name": "E161 Rotor stalled"
+      },
+      "alarm_rotor_overheat": {
+        "name": "E141 Rotor controller overheating"
+      },
+      "alarm_rotor_connection": {
+        "name": "E151 Rotor communication fault"
+      },
+      "alarm_indoor_humidity": {
+        "name": "E502 High indoor humidity"
+      },
+      "alarm_cool_condense": {
+        "name": "E512 Cooling coil condensation"
+      }
     }
   }
 }
