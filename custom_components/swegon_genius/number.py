@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 NUMBER_DEFS = [
     {
         "key": "temp_setpoint",
-        "name": "Lampotilasetpiste",
+        "translation_key": "temp_setpoint",
         "address": 5100,
         "min": 13.0,
         "max": 25.0,
@@ -39,7 +39,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "temp_setpoint_summer",
-        "name": "Kesakauden lampotilasetpiste",
+        "translation_key": "temp_setpoint_summer",
         "address": 5167,
         "min": 13.0,
         "max": 25.0,
@@ -49,7 +49,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "temp_setpoint_away",
-        "name": "Away-tilan lampotilasetpiste",
+        "translation_key": "temp_setpoint_away",
         "address": 5170,
         "min": 13.0,
         "max": 25.0,
@@ -59,7 +59,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "room_temp_setpoint",
-        "name": "Huonelampotilan asetus",
+        "translation_key": "room_temp_setpoint",
         "address": 5186,
         "min": 16.0,
         "max": 26.0,
@@ -69,7 +69,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "co2_boost_limit",
-        "name": "CO2 Boost-raja",
+        "translation_key": "co2_boost_limit",
         "address": 5115,
         "min": 0,
         "max": 2000,
@@ -79,7 +79,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "co2_home_limit",
-        "name": "CO2 Home-raja",
+        "translation_key": "co2_home_limit",
         "address": 5113,
         "min": 0,
         "max": 2000,
@@ -89,7 +89,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "co2_away_limit",
-        "name": "CO2 Away-raja",
+        "translation_key": "co2_away_limit",
         "address": 5114,
         "min": 0,
         "max": 2000,
@@ -99,7 +99,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "home_plus_level",
-        "name": "Home+ ventilointitaso",
+        "translation_key": "home_plus_level",
         "address": 5107,
         "min": 10,
         "max": 90,
@@ -109,7 +109,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "away_supply_fan",
-        "name": "Away-tilan tuloilmapuhallin",
+        "translation_key": "away_supply_fan",
         "address": 5301,
         "min": 20,
         "max": 100,
@@ -119,7 +119,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "away_exhaust_fan",
-        "name": "Away-tilan poistoilmapuhallin",
+        "translation_key": "away_exhaust_fan",
         "address": 5302,
         "min": 20,
         "max": 100,
@@ -129,7 +129,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "home_supply_fan",
-        "name": "Home-tilan tuloilmapuhallin",
+        "translation_key": "home_supply_fan",
         "address": 5303,
         "min": 20,
         "max": 100,
@@ -139,7 +139,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "home_exhaust_fan",
-        "name": "Home-tilan poistoilmapuhallin",
+        "translation_key": "home_exhaust_fan",
         "address": 5304,
         "min": 20,
         "max": 100,
@@ -149,7 +149,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "boost_supply_fan",
-        "name": "Boost-tilan tuloilmapuhallin",
+        "translation_key": "boost_supply_fan",
         "address": 5305,
         "min": 20,
         "max": 100,
@@ -159,7 +159,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "boost_exhaust_fan",
-        "name": "Boost-tilan poistoilmapuhallin",
+        "translation_key": "boost_exhaust_fan",
         "address": 5306,
         "min": 20,
         "max": 100,
@@ -169,7 +169,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "cooking_supply_fan",
-        "name": "Ruoanlaitto tuloilmapuhallin",
+        "translation_key": "cooking_supply_fan",
         "address": 5183,
         "min": 20,
         "max": 100,
@@ -179,7 +179,7 @@ NUMBER_DEFS = [
     },
     {
         "key": "cooking_exhaust_fan",
-        "name": "Ruoanlaitto poistoilmapuhallin",
+        "translation_key": "cooking_exhaust_fan",
         "address": 5184,
         "min": 20,
         "max": 100,
@@ -208,7 +208,8 @@ class SwegonNumber(CoordinatorEntity, NumberEntity):
         super().__init__(coordinator)
         self._def = number_def
         self._attr_unique_id = f"{entry.entry_id}_{number_def['key']}"
-        self._attr_name = number_def["name"]
+        self._attr_has_entity_name = True
+        self._attr_translation_key = self._def["translation_key"]
         self._attr_native_min_value = number_def["min"]
         self._attr_native_max_value = number_def["max"]
         self._attr_native_step = number_def["step"]

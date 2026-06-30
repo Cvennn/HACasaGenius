@@ -21,6 +21,56 @@
     }
   },
   "entity": {
+    "number": {
+      "temp_setpoint": {
+        "name": "Temperature setpoint"
+      },
+      "temp_setpoint_summer": {
+        "name": "Summer temperature setpoint"
+      },
+      "temp_setpoint_away": {
+        "name": "Away mode temperature setpoint"
+      },
+      "room_temp_setpoint": {
+        "name": "Room temperature setpoint"
+      },
+      "co2_boost_limit": {
+        "name": "CO2 Boost limit"
+      },
+      "co2_home_limit": {
+        "name": "CO2 Home limit"
+      },
+      "co2_away_limit": {
+        "name": "CO2 Away limit"
+      },
+      "home_plus_level": {
+        "name": "Home+ ventilation level"
+      },
+      "away_supply_fan": {
+        "name": "Away mode supply fan"
+      },
+      "away_exhaust_fan": {
+        "name": "Away mode exhaust fan"
+      },
+      "home_supply_fan": {
+        "name": "Home mode supply fan"
+      },
+      "home_exhaust_fan": {
+        "name": "Home mode exhaust fan"
+      },
+      "boost_supply_fan": {
+        "name": "Boost mode supply fan"
+      },
+      "boost_exhaust_fan": {
+        "name": "Boost mode exhaust fan"
+      },
+      "cooking_supply_fan": {
+        "name": "Cooking mode supply fan"
+      },
+      "cooking_exhaust_fan": {
+        "name": "Cooking mode exhaust fan"
+      }
+    },
     "switch": {
       "co2_automation": {
         "name": "CO2-automation"

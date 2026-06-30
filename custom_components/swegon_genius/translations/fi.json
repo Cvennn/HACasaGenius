@@ -21,6 +21,56 @@
     }
   },
   "entity": {
+    "number": {
+      "temp_setpoint": {
+        "name": "Lämpotilasetpiste"
+      },
+      "temp_setpoint_summer": {
+        "name": "Kesäkauden lämpotilasetpiste"
+      },
+      "temp_setpoint_away": {
+        "name": "Away-tilan lämpotilasetpiste"
+      },
+      "room_temp_setpoint": {
+        "name": "Huonelämpotilan asetus"
+      },
+      "co2_boost_limit": {
+        "name": "CO2 Boost-raja"
+      },
+      "co2_home_limit": {
+        "name": "CO2 Home-raja"
+      },
+      "co2_away_limit": {
+        "name": "CO2 Away-raja"
+      },
+      "home_plus_level": {
+        "name": "Home+ ventilointitaso"
+      },
+      "away_supply_fan": {
+        "name": "Away-tilan tuloilmapuhallin"
+      },
+      "away_exhaust_fan": {
+        "name": "Away-tilan poistoilmapuhallin"
+      },
+      "home_supply_fan": {
+        "name": "Home-tilan tuloilmapuhallin"
+      },
+      "home_exhaust_fan": {
+        "name": "Home-tilan poistoilmapuhallin"
+      },
+      "boost_supply_fan": {
+        "name": "Boost-tilan tuloilmapuhallin"
+      },
+      "boost_exhaust_fan": {
+        "name": "Boost-tilan poistoilmapuhallin"
+      },
+      "cooking_supply_fan": {
+        "name": "Ruoanlaitto tuloilmapuhallin"
+      },
+      "cooking_exhaust_fan": {
+        "name": "Ruoanlaitto poistoilmapuhallin"
+      }
+    },
     "switch":{
       "co2_automation": {
         "name": "CO2-automaatio"
