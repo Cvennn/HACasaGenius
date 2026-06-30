@@ -21,29 +21,40 @@
     }
   },
   "entity": {
-      "select": {
-        "operating_mode": {
-          "name": "Käyttötila"
-        },
-        "rh_automation": {
-          "name": "RH-automaatio"
-        },
-        "voc_automation": {
-          "name": "VOC-automaatio"
-        },
-        "summer_boost": {
-          "name": "Kesätilan tehostus"
-        },
-        "boost_timer": {
-          "name": "Tehostusajastin"
-        },
-        "emergency_stop": {
-          "name": "Hätäpysäytys tila"
-        },
-        "fireplace_level": {
-          "name": "Takan teho"
-        }
+    "switch":{
+      "co2_automation": {
+        "name": "CO2-automaatio"
       },
+      "fireplace": {
+        "name": "Takkatoiminto"
+      },
+      "cooking_mode": {
+        "name": "Liesikuputoiminto"
+      }
+    },
+    "select": {
+      "operating_mode": {
+        "name": "Käyttötila"
+      },
+      "rh_automation": {
+        "name": "RH-automaatio"
+      },
+      "voc_automation": {
+        "name": "VOC-automaatio"
+      },
+      "summer_boost": {
+        "name": "Kesätilan tehostus"
+      },
+      "boost_timer": {
+        "name": "Tehostusajastin"
+      },
+      "emergency_stop": {
+        "name": "Hätäpysäytys tila"
+      },
+      "fireplace_level": {
+        "name": "Takan teho"
+      }
+    },
     "sensor": {
       "outdoor_temp": {
         "name": "Ulkoilman lämpötila"

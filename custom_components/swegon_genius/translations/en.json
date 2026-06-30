@@ -21,6 +21,17 @@
     }
   },
   "entity": {
+    "switch": {
+      "co2_automation": {
+        "name": "CO2-automation"
+      },
+      "fireplace": {
+        "name": "Fireplace"
+      },
+      "cooking_mode": {
+        "name": "Cooking mode"
+      }
+    },
     "select":{
       "operating_mode":{
         "name": "Operating mode"
