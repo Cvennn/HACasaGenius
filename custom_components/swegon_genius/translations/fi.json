@@ -7,8 +7,8 @@
         "data": {
           "port":     "Sarjaportti",
           "slave":    "Slave-osoite",
-          "baudrate": "Baud rate",
-          "stopbits": "Stop bits",
+          "baudrate": "Siirtonopeus/Baud rate",
+          "stopbits": "Lopetusbitti/Stop bits",
           "parity":   "Pariteetti"
         }
       }

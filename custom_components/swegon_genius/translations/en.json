@@ -5,11 +5,11 @@
         "title": "Swegon CASA Genius Connection",
         "description": "Enter Modbus RTU connection settings. Factory defaults are pre-filled.",
         "data": {
-          "port": "Serial port",
-          "slave": "Slave address",
+          "port":     "Serial port",
+          "slave":    "Slave address",
           "baudrate": "Baud rate",
           "stopbits": "Stop bits",
-          "parity": "Parity"
+          "parity":   "Parity"
         }
       }
     },
