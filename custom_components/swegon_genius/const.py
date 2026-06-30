@@ -58,14 +58,7 @@ VENTILATION_TO_MODE = {
 }
 
 # RH automation levels (register 4x5010)
-RH_LEVELS = {
-    0: "off",
-    1: "low",
-    2: "normal",
-    3: "high",
-    4: "max",
-    5: "advanced"
-}
+RH_LEVELS = {0: "off", 1: "low", 2: "normal", 3: "high", 4: "max", 5: "advanced"}
 
 # VOC-automaatiotasot — 4x5011
 VOC_AUTOMATION_LEVELS = {
@@ -74,7 +67,7 @@ VOC_AUTOMATION_LEVELS = {
     2: "normal",
     3: "high",
     4: "max",
-    5: "advanced"
+    5: "advanced",
 }
 
 # Kesätilan boost — 4x5169
@@ -84,32 +77,17 @@ SUMMER_BOOST_LEVELS = {
     2: "normal",
     3: "high",
     4: "max",
-    5: "advanced"
+    5: "advanced",
 }
 
 # Boost-ajastin — 4x5102
-BOOST_TIMER_OPTIONS = {
-    0: "continuous",
-    1: "30",
-    2: "60",
-    3: "90",
-    4: "120",
-    5: "240"
-}
+BOOST_TIMER_OPTIONS = {0: "continuous", 1: "30", 2: "60", 3: "90", 4: "120", 5: "240"}
 
 # Hätäpysäytys — 4x5018
-EMERGENCY_STOP_OPTIONS = {
-    0: "offline",
-    1: "emergency_stop",
-    2: "overpressure"
-}
+EMERGENCY_STOP_OPTIONS = {0: "offline", 1: "emergency_stop", 2: "overpressure"}
 
 # Takkatoiminnon taso — 4x5105
-FIREPLACE_LEVELS = {
-    0: "low",
-    1: "normal",
-    2: "high"
-}
+FIREPLACE_LEVELS = {0: "low", 1: "normal", 2: "high"}
 
 # Yksikön tila — 3x6301
 UNIT_STATES = {

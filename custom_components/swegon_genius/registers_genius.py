@@ -712,7 +712,7 @@ ALARM_REGISTERS = [
             12: {"key": "alarm_internal_high"},
             13: {"key": "alarm_preheat_high"},
             14: {"key": "alarm_rotor_rpm"},
-            15: {"key": "alarm_fan_control"}
+            15: {"key": "alarm_fan_control"},
         },
     },
     {
@@ -731,7 +731,7 @@ ALARM_REGISTERS = [
             10: {"key": "alarm_ext_critical"},
             11: {"key": "alarm_fire"},
             12: {"key": "alarm_hx_efficiency"},
-            13: {"key": "alarm_hx_control"}
+            13: {"key": "alarm_hx_control"},
         },
     },
     {
@@ -744,7 +744,7 @@ ALARM_REGISTERS = [
             4: {"key": "alarm_rotor_overheat"},
             5: {"key": "alarm_rotor_connection"},
             6: {"key": "alarm_indoor_humidity"},
-            7: {"key": "alarm_cool_condense"}
+            7: {"key": "alarm_cool_condense"},
         },
     },
 ]
