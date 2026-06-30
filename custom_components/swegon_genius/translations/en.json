@@ -21,6 +21,29 @@
     }
   },
   "entity": {
+    "select":{
+      "operating_mode":{
+        "name": "Operating mode"
+      },
+      "rh_automation": {
+        "name": "RH-automation"
+      },
+      "voc_automation": {
+        "name": "VOC-automation"
+      },
+      "summer_boost": {
+        "name": "Summer boost"
+      },
+      "boost_timer": {
+        "name": "Boost timer"
+      },
+      "emergency_stop": {
+        "name": "Emergency stop"
+      },
+      "fireplace_level": {
+        "name": "Fireplace level"
+      }
+    },
     "sensor": {
       "outdoor_temp": {
         "name": "Outdoor temperature"
