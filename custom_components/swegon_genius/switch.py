@@ -61,7 +61,7 @@ SWITCHES = [
         "key": "rh_control_sorption",
         "translation_key": "rh_control_sorption",
         "address": 5223,
-        "read_key": "rh_control_sorption"
+        "read_key": "rh_control_sorption",
     },
 ]
 
