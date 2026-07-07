@@ -1,4 +1,5 @@
 """Button platform for Swegon Genius."""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any

@@ -10,12 +10,15 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
     BOOST_TIMER_OPTIONS,
+    DEFROST_LEVEL_OPTIONS,
     DOMAIN,
     EMERGENCY_STOP_OPTIONS,
     FIREPLACE_LEVELS,
+    HUMIDITY_RECOVERY_SUMMER_OPTIONS,
     OPERATION_MODES_WRITE,
     RH_LEVELS,
     SUMMER_BOOST_LEVELS,
+    VENTILATION_CONTROL_MODE_OPTIONS,
     VENTILATION_TO_MODE,
     VOC_AUTOMATION_LEVELS,
 )
@@ -77,6 +80,27 @@ SELECT_DEFS = [
         "address": 5104,
         "options": FIREPLACE_LEVELS,
         "read_key": "fireplace_level",
+    },
+    {
+        "key": "humidity_recovery_summer",
+        "translation_key": "humidity_recovery_summer",
+        "address": 5226,
+        "options": HUMIDITY_RECOVERY_SUMMER_OPTIONS,
+        "read_key": "humidity_recovery_summer",
+    },
+    {
+        "key": "defrost_level",
+        "translation_key": "defrost_level",
+        "address": 5198,
+        "options": DEFROST_LEVEL_OPTIONS,
+        "read_key": "defrost_level",
+    },
+    {
+        "key": "ventilation_control_mode",
+        "translation_key": "ventilation_control_mode",
+        "address": 5317,
+        "options": VENTILATION_CONTROL_MODE_OPTIONS,
+        "read_key": "ventilation_control_mode",
     },
 ]
 
