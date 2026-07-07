@@ -237,7 +237,7 @@
         "name": "Ulkoilman lämpötila"
       },
       "supply_before_hx_temp": {
-        "name": "Poistoilman lämpötila"
+        "name": "Tuloilman lämpötila ennen lämmitintä"
       },
       "supply_temp": {
         "name": "Tuloilman lämpötila (T4)"
