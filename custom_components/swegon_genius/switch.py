@@ -1,9 +1,14 @@
 """
 Switch platform for swegon_genius.
 
-Two switch entities:
+Switch entities:
 1. CO2 Automation - register 4x5009 (0=off 1=on)
-2. Emergency stop - register 4x5018 (0=disables 1=enabled)
+2. Fireplace - register 4x5002 (0=off 1=on)
+3. Cooking mode - register 4x5005 (0=off 1=on)
+4. RH Control (Sorption units only) - register 4x5224 (0=off 1=on) — SCB 4.2
+
+    WARNING (per Swegon datasheet, SCB 4.2, register 4x5224):
+    "Do not disable RH Control in Sorption rotor units."
 
 Switches are on/off registers, not select entities.
 Emergency stop contains a third state (2 = Emergency Overpressurizing enable),
@@ -12,6 +17,7 @@ which is not exposed by the switch. If value 2 is active, switch is set to ON.
 
 from __future__ import annotations
 
+import logging
 from typing import TYPE_CHECKING, Any
 
 from homeassistant.components.switch import SwitchEntity
@@ -24,6 +30,13 @@ if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.core import HomeAssistant
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
+_LOGGER = logging.getLogger(__name__)
+
+# Switches where turning OFF is discouraged by the Swegon datasheet.
+# Currently only RH Control on Sorption rotor units (register 4x5224):
+# "Do not disable RH Control in Sorption rotor units."
+_WARN_ON_DISABLE = {"rh_control_sorption"}
 
 SWITCHES = [
     {
@@ -43,6 +56,12 @@ SWITCHES = [
         "translation_key": "cooking_mode",
         "address": 5004,
         "read_key": "cooking_active",
+    },
+    {
+        "key": "rh_control_sorption",
+        "translation_key": "rh_control_sorption",
+        "address": 5223,
+        "read_key": "rh_control_sorption",
     },
 ]
 
@@ -108,5 +127,13 @@ class SwegonSwitch(CoordinatorEntity, SwitchEntity):
 
     async def async_turn_off(self) -> None:
         """Turn off the switch."""
+        if self._switch["key"] in _WARN_ON_DISABLE:
+            _LOGGER.warning(
+                "Disabling '%s' is not recommended by Swegon on Sorption "
+                "rotor units. Only disable it if you are certain your "
+                "unit does not have a Sorption rotor, or during "
+                "commissioning",
+                self._switch["translation_key"],
+            )
         await self.coordinator.client.write_register(self._switch["address"], 0)
         await self.coordinator.async_request_refresh()

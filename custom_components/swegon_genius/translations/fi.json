@@ -5,11 +5,11 @@
         "title": "Swegon CASA Genius -yhteys",
         "description": "Syötä Modbus RTU -yhteysasetukset. Tehdasasetukset on esitäytetty valmiiksi.",
         "data": {
-          "port":     "Sarjaportti",
-          "slave":    "Slave-osoite",
+          "port": "Sarjaportti",
+          "slave": "Slave-osoite",
           "baudrate": "Siirtonopeus/Baud rate",
           "stopbits": "Lopetusbitti/Stop bits",
-          "parity":   "Pariteetti"
+          "parity": "Pariteetti"
         }
       }
     },
@@ -69,9 +69,36 @@
       },
       "cooking_exhaust_fan": {
         "name": "Ruoanlaitto poistoilmapuhallin"
+      },
+      "indoor_humidity_setpoint": {
+        "name": "Sisäilman kosteuden asetus (RH)"
+      },
+      "indoor_humidity_limit_cold": {
+        "name": "Sisäilman kosteusraja kylmällä säällä"
+      },
+      "defrost_min_supply_temp": {
+        "name": "Tuloilman minimilämpötila sulatuksen aikana"
+      },
+      "supply_duct_pressure_setpoint": {
+        "name": "Tuloilmakanavan paineasetus"
+      },
+      "extract_duct_pressure_setpoint": {
+        "name": "Poistoilmakanavan paineasetus"
+      },
+      "supply_duct_pressure_setpoint_adjustable": {
+        "name": "Tuloilmakanavan paineasetus (säädettävä/BMS)"
+      },
+      "extract_duct_pressure_setpoint_adjustable": {
+        "name": "Poistoilmakanavan paineasetus (säädettävä/BMS)"
+      },
+      "cooking_supply_pressure": {
+        "name": "Ruoanlaittotilan tuloilman paineasetus"
+      },
+      "cooking_exhaust_pressure": {
+        "name": "Ruoanlaittotilan poistoilman paineasetus"
       }
     },
-    "switch":{
+    "switch": {
       "co2_automation": {
         "name": "CO2-automaatio"
       },
@@ -80,6 +107,32 @@
       },
       "cooking_mode": {
         "name": "Liesikuputoiminto"
+      },
+      "rh_control_sorption": {
+        "name": "RH-kosteudenhallinta (sorptioroottori)"
+      }
+    },
+    "button": {
+      "confirm_reheater_failure": {
+        "name": "Kuittaa jälkilämmittimen vikahälytys"
+      },
+      "confirm_preheater_failure": {
+        "name": "Kuittaa esilämmittimen vikahälytys"
+      },
+      "confirm_water_radiator_freezing": {
+        "name": "Kuittaa vesipatterin jäätymisvaarahälytys"
+      },
+      "confirm_filter_guard": {
+        "name": "Kuittaa suodattimen vaihtomuistutus"
+      },
+      "confirm_service_timer": {
+        "name": "Kuittaa huoltomuistutus"
+      },
+      "confirm_fan_failure": {
+        "name": "Kuittaa puhaltimen vikahälytys"
+      },
+      "confirm_sensor_failure": {
+        "name": "Kuittaa anturivika"
       }
     },
     "select": {
@@ -153,6 +206,30 @@
           "normal": "Normaali",
           "high": "Korkea"
         }
+      },
+      "humidity_recovery_summer": {
+        "name": "Kesäajan kosteudentalteenotto",
+        "state": {
+          "auto": "Automaattinen",
+          "off": "Pois",
+          "on": "Päällä"
+        }
+      },
+      "defrost_level": {
+        "name": "Sulatustaso",
+        "state": {
+          "low": "Matala",
+          "normal": "Normaali",
+          "high": "Korkea"
+        }
+      },
+      "ventilation_control_mode": {
+        "name": "Ilmanvaihdon ohjaustapa",
+        "state": {
+          "normal": "Normaali",
+          "pa_supply_airflow": "Pa-ohjattu ilmavirta",
+          "pa_control": "Pa-ohjaus"
+        }
       }
     },
     "sensor": {
@@ -160,7 +237,7 @@
         "name": "Ulkoilman lämpötila"
       },
       "supply_before_hx_temp": {
-        "name": "Poistoilman lämpötila"
+        "name": "Tuloilman lämpötila ennen lämmitintä"
       },
       "supply_temp": {
         "name": "Tuloilman lämpötila (T4)"
@@ -201,6 +278,9 @@
       "co2_internal": {
         "name": "CO2 sisäinen anturi"
       },
+      "co2_internal_digital": {
+        "name": "CO2 sisäinen anturi (digitaalinen)"
+      },
       "humidity": {
         "name": "Huoneilman kosteus (RH)"
       },
@@ -215,6 +295,15 @@
       },
       "voc_internal": {
         "name": "VOC sisäinen anturi"
+      },
+      "voc_internal_digital": {
+        "name": "VOC sisäinen anturi (digitaalinen)"
+      },
+      "rh_internal_digital_scd40": {
+        "name": "RH sisäinen anturi (digitaalinen, SCD40)"
+      },
+      "rh_internal_digital_sht3a": {
+        "name": "RH sisäinen anturi (digitaalinen, SHT3a)"
       },
       "supply_duct_pressure": {
         "name": "Tuloilmakanavan paine"
@@ -262,7 +351,7 @@
         "name": "VOC-automaation vaikutus"
       },
       "temp_boost_effect": {
-        "name": "LÄmpotilatehostuksen vaikutus"
+        "name": "Lämpotilatehostuksen vaikutus"
       },
       "fan_speed_limit": {
         "name": "Puhallinnopeuden rajoitus"
@@ -271,7 +360,7 @@
         "name": "Rakennuksen painetasapaino"
       },
       "temp_setpoint_active": {
-        "name": "Aktiivinen lÄmpotila-asetus"
+        "name": "Aktiivinen lämpotila-asetus"
       },
       "postheat_combined": {
         "name": "Jälkilämmitys yhdistetty"
@@ -455,4 +544,3 @@
     }
   }
 }
-

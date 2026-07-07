@@ -117,3 +117,16 @@ HEATING_STATES = {
 TEMP_SETPOINT_MIN = 13.0
 TEMP_SETPOINT_MAX = 25.0
 TEMP_SETPOINT_STEP = 0.5
+
+# Kesäajan kosteudentalteenoton hallinta — 4x5227
+HUMIDITY_RECOVERY_SUMMER_OPTIONS = {0: "auto", 1: "off", 2: "on"}
+
+# Sulatustaso — 4x5199
+DEFROST_LEVEL_OPTIONS = {0: "low", 1: "normal", 2: "high"}
+
+# Ilmanvaihdon ohjaustapa (Genius) — 4x5318
+VENTILATION_CONTROL_MODE_OPTIONS = {
+    0: "normal",
+    1: "pa_supply_airflow",
+    2: "pa_control",
+}

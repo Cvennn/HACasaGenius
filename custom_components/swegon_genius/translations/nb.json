@@ -1,0 +1,546 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Swegon CASA Genius-tilkobling",
+        "description": "Angi Modbus RTU-tilkoblingsinnstillinger. Fabrikkinnstillingene er forhåndsutfylt.",
+        "data": {
+          "port":     "Serieport",
+          "slave":    "Slave-adresse",
+          "baudrate": "Baud rate",
+          "stopbits": "Stoppbits",
+          "parity":   "Paritet"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Tilkoblingen mislyktes — kontroller kabel, slave-adresse og serieport"
+    },
+    "abort": {
+      "already_configured": "Denne enheten er allerede konfigurert"
+    }
+  },
+  "entity": {
+    "number": {
+      "temp_setpoint": {
+        "name": "Temperatur, børverdi"
+      },
+      "temp_setpoint_summer": {
+        "name": "Sommertemperatur, børverdi"
+      },
+      "temp_setpoint_away": {
+        "name": "Borte-modus temperatur, børverdi"
+      },
+      "room_temp_setpoint": {
+        "name": "Romtemperatur, børverdi"
+      },
+      "co2_boost_limit": {
+        "name": "CO2 Boost-grense"
+      },
+      "co2_home_limit": {
+        "name": "CO2 Hjemme-grense"
+      },
+      "co2_away_limit": {
+        "name": "CO2 Borte-grense"
+      },
+      "home_plus_level": {
+        "name": "Hjemme+ ventilasjonsnivå"
+      },
+      "away_supply_fan": {
+        "name": "Borte-modus tilluftsvifte"
+      },
+      "away_exhaust_fan": {
+        "name": "Borte-modus avtrekksvifte"
+      },
+      "home_supply_fan": {
+        "name": "Hjemme-modus tilluftsvifte"
+      },
+      "home_exhaust_fan": {
+        "name": "Hjemme-modus avtrekksvifte"
+      },
+      "boost_supply_fan": {
+        "name": "Boost-modus tilluftsvifte"
+      },
+      "boost_exhaust_fan": {
+        "name": "Boost-modus avtrekksvifte"
+      },
+      "cooking_supply_fan": {
+        "name": "Kokemodus tilluftsvifte"
+      },
+      "cooking_exhaust_fan": {
+        "name": "Kokemodus avtrekksvifte"
+      },
+      "indoor_humidity_setpoint": {
+        "name": "Innendørs luftfuktighet, børverdi (RH)"
+      },
+      "indoor_humidity_limit_cold": {
+        "name": "Innendørs fuktighetsgrense i kaldt klima"
+      },
+      "defrost_min_supply_temp": {
+        "name": "Min. tilluftstemperatur under avriming"
+      },
+      "supply_duct_pressure_setpoint": {
+        "name": "Tilluftskanal trykk, børverdi"
+      },
+      "extract_duct_pressure_setpoint": {
+        "name": "Avtrekkskanal trykk, børverdi"
+      },
+      "supply_duct_pressure_setpoint_adjustable": {
+        "name": "Tilluftskanal trykk, børverdi (justerbar/BMS)"
+      },
+      "extract_duct_pressure_setpoint_adjustable": {
+        "name": "Avtrekkskanal trykk, børverdi (justerbar/BMS)"
+      },
+      "cooking_supply_pressure": {
+        "name": "Kokemodus tilluftstrykk, børverdi"
+      },
+      "cooking_exhaust_pressure": {
+        "name": "Kokemodus avtrekkstrykk, børverdi"
+      }
+    },
+    "switch": {
+      "co2_automation": {
+        "name": "CO2-automatikk"
+      },
+      "fireplace": {
+        "name": "Ildstedfunksjon"
+      },
+      "cooking_mode": {
+        "name": "Kokemodus"
+      },
+      "rh_control_sorption": {
+        "name": "RH-fuktstyring (sorpsjonsrotor)"
+      }
+    },
+    "button": {
+      "confirm_reheater_failure": {
+        "name": "Bekreft alarm for ettervarmer"
+      },
+      "confirm_preheater_failure": {
+        "name": "Bekreft alarm for forvarmer"
+      },
+      "confirm_water_radiator_freezing": {
+        "name": "Bekreft frysrisikoalarm for vannradiator"
+      },
+      "confirm_filter_guard": {
+        "name": "Bekreft filterbytte-påminnelse"
+      },
+      "confirm_service_timer": {
+        "name": "Bekreft service-påminnelse"
+      },
+      "confirm_fan_failure": {
+        "name": "Bekreft viftealarm"
+      },
+      "confirm_sensor_failure": {
+        "name": "Bekreft sensorfeil"
+      }
+    },
+    "select": {
+      "operating_mode": {
+        "name": "Driftsmodus",
+        "state": {
+          "off": "Av",
+          "away": "Borte",
+          "home": "Hjemme",
+          "boost": "Boost",
+          "travel": "Reise",
+          "home_plus": "Hjemme+"
+        }
+      },
+      "rh_automation": {
+        "name": "RH-automatikk",
+        "state": {
+          "off": "Av",
+          "low": "Lav",
+          "normal": "Normal",
+          "high": "Høy",
+          "max": "Maks",
+          "advanced": "Avansert"
+        }
+      },
+      "voc_automation": {
+        "name": "VOC-automatikk",
+        "state": {
+          "off": "Av",
+          "low": "Lav",
+          "normal": "Normal",
+          "high": "Høy",
+          "max": "Maks",
+          "advanced": "Avansert"
+        }
+      },
+      "summer_boost": {
+        "name": "Sommerboost",
+        "state": {
+          "off": "Av",
+          "low": "Lav",
+          "normal": "Normal",
+          "high": "Høy",
+          "max": "Maks",
+          "advanced": "Avansert"
+        }
+      },
+      "boost_timer": {
+        "name": "Boost-timer",
+        "state": {
+          "continuous": "Kontinuerlig",
+          "30": "30 min",
+          "60": "60 min",
+          "90": "90 min",
+          "120": "120 min",
+          "240": "240 min"
+        }
+      },
+      "emergency_stop": {
+        "name": "Nødstopp",
+        "state": {
+          "offline": "Deaktivert",
+          "emergency_stop": "Nødstopp",
+          "overpressure": "Overtrykk"
+        }
+      },
+      "fireplace_level": {
+        "name": "Ildstedsnivå",
+        "state": {
+          "low": "Lav",
+          "normal": "Normal",
+          "high": "Høy"
+        }
+      },
+      "humidity_recovery_summer": {
+        "name": "Sommertidens fuktgjenvinning",
+        "state": {
+          "auto": "Automatisk",
+          "off": "Av",
+          "on": "På"
+        }
+      },
+      "defrost_level": {
+        "name": "Avrimingsnivå",
+        "state": {
+          "low": "Lav",
+          "normal": "Normal",
+          "high": "Høy"
+        }
+      },
+      "ventilation_control_mode": {
+        "name": "Ventilasjonsstyringsmodus",
+        "state": {
+          "normal": "Normal",
+          "pa_supply_airflow": "Pa-styrt luftstrøm",
+          "pa_control": "Pa-styring"
+        }
+      }
+    },
+    "sensor": {
+      "outdoor_temp": {
+        "name": "Utetemperatur"
+      },
+      "supply_before_hx_temp": {
+        "name": "Tilluftstemperatur før forvarmer"
+      },
+      "supply_temp": {
+        "name": "Tilluftstemperatur (T4)"
+      },
+      "extract_temp": {
+        "name": "Avtrekkstemperatur (T3)"
+      },
+      "exhaust_temp": {
+        "name": "Avkastluftstemperatur (T5)"
+      },
+      "room_temp": {
+        "name": "Romtemperatur"
+      },
+      "water_radiator_temp": {
+        "name": "Vannradiatorens temperatur (T6)"
+      },
+      "external_outdoor_temp": {
+        "name": "Ekstern utetemperatur (T8)"
+      },
+      "io1_temp": {
+        "name": "IO1 temperatur"
+      },
+      "io2_temp": {
+        "name": "IO2 temperatur"
+      },
+      "io3_temp": {
+        "name": "IO3 temperatur"
+      },
+      "io4_temp": {
+        "name": "IO4 temperatur"
+      },
+      "io5_temp": {
+        "name": "IO5 temperatur"
+      },
+      "co2": {
+        "name": "CO2 (effektiv)"
+      },
+      "co2_internal": {
+        "name": "Intern CO2-sensor"
+      },
+      "co2_internal_digital": {
+        "name": "Intern CO2-sensor (digital)"
+      },
+      "humidity": {
+        "name": "Romfuktighet (RH)"
+      },
+      "absolute_humidity": {
+        "name": "Absolutt fuktighet"
+      },
+      "absolute_humidity_sp": {
+        "name": "Absolutt fuktighet, børverdi"
+      },
+      "voc": {
+        "name": "VOC (effektiv)"
+      },
+      "voc_internal": {
+        "name": "Intern VOC-sensor"
+      },
+      "voc_internal_digital": {
+        "name": "Intern VOC-sensor (digital)"
+      },
+      "rh_internal_digital_scd40": {
+        "name": "Intern RH-sensor (digital, SCD40)"
+      },
+      "rh_internal_digital_sht3a": {
+        "name": "Intern RH-sensor (digital, SHT3a)"
+      },
+      "supply_duct_pressure": {
+        "name": "Tilluftskanalens trykk"
+      },
+      "exhaust_duct_pressure": {
+        "name": "Avtrekkskanalens trykk"
+      },
+      "supply_duct_target": {
+        "name": "Tilluftskanalens trykkmål"
+      },
+      "exhaust_duct_target": {
+        "name": "Avtrekkskanalens trykkmål"
+      },
+      "supply_airflow": {
+        "name": "Tilluftstrøm"
+      },
+      "exhaust_airflow": {
+        "name": "Avtrekksluftstrøm"
+      },
+      "room_pressure": {
+        "name": "Romtrykk"
+      },
+      "supply_fan_control": {
+        "name": "Tilluftsvifte styring"
+      },
+      "exhaust_fan_control": {
+        "name": "Avtrekksvifte styring"
+      },
+      "supply_fan_rpm": {
+        "name": "Tilluftsvifte turtall"
+      },
+      "exhaust_fan_rpm": {
+        "name": "Avtrekksvifte turtall"
+      },
+      "automation_control": {
+        "name": "Automatikkstyring"
+      },
+      "co2_automation_effect": {
+        "name": "CO2-automatikkens effekt"
+      },
+      "rh_automation_effect": {
+        "name": "Fuktautomatikkens effekt"
+      },
+      "voc_automation_effect": {
+        "name": "VOC-automatikkens effekt"
+      },
+      "temp_boost_effect": {
+        "name": "Temperaturboostens effekt"
+      },
+      "fan_speed_limit": {
+        "name": "Viftehastighetsbegrensning"
+      },
+      "building_pressure_bal": {
+        "name": "Byggets trykkbalanse"
+      },
+      "temp_setpoint_active": {
+        "name": "Aktiv temperatur-børverdi"
+      },
+      "postheat_combined": {
+        "name": "Kombinert ettervarmer"
+      },
+      "internal_postheater": {
+        "name": "Intern ettervarmer"
+      },
+      "internal_preheater": {
+        "name": "Intern forvarmer"
+      },
+      "external_postheat_water": {
+        "name": "Ekstern vann-ettervarmer"
+      },
+      "external_postheat_elec": {
+        "name": "Ekstern elektrisk ettervarmer"
+      },
+      "external_postcool": {
+        "name": "Ekstern etterkjøler"
+      },
+      "external_preheater": {
+        "name": "Ekstern forvarmer"
+      },
+      "bypass_damper": {
+        "name": "Bypasspjeldets posisjon"
+      },
+      "rotor_control": {
+        "name": "Rotorstyring"
+      },
+      "rotor_rpm": {
+        "name": "Rotorhastighet"
+      },
+      "boost_time_left": {
+        "name": "Gjenværende boosttid"
+      },
+      "hours_to_service": {
+        "name": "Timer til service"
+      },
+      "gio1_voltage": {
+        "name": "GIO1 inngangsspenning"
+      },
+      "gio2_voltage": {
+        "name": "GIO2 inngangsspenning"
+      },
+      "gio3_voltage": {
+        "name": "GIO3 inngangsspenning"
+      },
+      "gio4_voltage": {
+        "name": "GIO4 inngangsspenning"
+      },
+      "gio5_voltage": {
+        "name": "GIO5 inngangsspenning"
+      },
+      "unit_state": {
+        "name": "Enhetens tilstand"
+      },
+      "heating_state": {
+        "name": "Oppvarmingstilstand"
+      },
+      "ventilation_state_text": {
+        "name": "Aktiv ventilasjonsmodus",
+        "state": {
+          "off": "Av",
+          "travel": "Reise",
+          "away": "Borte",
+          "home": "Hjemme",
+          "home_plus": "Hjemme+",
+          "boost": "Boost",
+          "fireplace": "Ildsted"
+        }
+      }
+    },
+    "binary_sensor": {
+      "alarm_postheater": {
+        "name": "E011 Feil på ettervarmer"
+      },
+      "alarm_preheater": {
+        "name": "E021 Feil på forvarmer"
+      },
+      "alarm_freezing": {
+        "name": "E051 Frostbeskyttelsesalarm"
+      },
+      "alarm_supply_fan": {
+        "name": "E061 Feil på tilluftsvifte"
+      },
+      "alarm_exhaust_fan": {
+        "name": "E071 Feil på avtrekksvifte"
+      },
+      "alarm_temp_sensor": {
+        "name": "Feil på temperatursensor (T1-T9)"
+      },
+      "alarm_emergency": {
+        "name": "E082 Nødstopp"
+      },
+      "alarm_service": {
+        "name": "Service-påminnelse"
+      },
+      "alarm_genius": {
+        "name": "Genius-alarm"
+      },
+      "alarm_supply_low": {
+        "name": "E111 Lav tilluftstemperatur"
+      },
+      "alarm_internal_high": {
+        "name": "E121 Høy intern temperatur"
+      },
+      "alarm_preheat_high": {
+        "name": "Høy forvarmertemperatur"
+      },
+      "alarm_rotor_rpm": {
+        "name": "E131 Rotor turtallsalarm"
+      },
+      "alarm_fan_control": {
+        "name": "Feil på viftestyring"
+      },
+      "alarm_sensor_package": {
+        "name": "E401 Feil på sensorpakke"
+      },
+      "alarm_rh_sensor": {
+        "name": "E411 Feil på fuktsensor"
+      },
+      "alarm_co2_sensor": {
+        "name": "E421 Feil på CO2-sensor"
+      },
+      "alarm_voc_sensor": {
+        "name": "E431 Feil på VOC-sensor"
+      },
+      "alarm_ext_preheater": {
+        "name": "E031 Feil på ekstern elektrisk forvarmer"
+      },
+      "alarm_ext_postheater": {
+        "name": "E041 Feil på ekstern elektrisk ettervarmer"
+      },
+      "alarm_pcb_temp": {
+        "name": "E202 Høy intern PCB-temperatur"
+      },
+      "alarm_param_error": {
+        "name": "E211 Intern parameterfeil"
+      },
+      "alarm_external": {
+        "name": "E091 Ekstern alarm"
+      },
+      "alarm_ext_message": {
+        "name": "Melding fra ekstern enhet"
+      },
+      "alarm_ext_critical": {
+        "name": "E092 Ekstern kritisk alarm"
+      },
+      "alarm_fire": {
+        "name": "E102 Brannalarm"
+      },
+      "alarm_hx_efficiency": {
+        "name": "E171 Lav virkningsgrad på varmegjenvinner"
+      },
+      "alarm_hx_control": {
+        "name": "Feil på varmegjenvinnerstyring"
+      },
+      "alarm_cool_condenser": {
+        "name": "E451 Høy kondensatortemperatur"
+      },
+      "alarm_cool_hotgas": {
+        "name": "E461 Høy hetgasstemperatur"
+      },
+      "alarm_cool_pressure": {
+        "name": "E471 Høyt kjølemedietrykk"
+      },
+      "alarm_rotor_stall": {
+        "name": "E161 Rotor stanset"
+      },
+      "alarm_rotor_overheat": {
+        "name": "E141 Rotorstyring overopphetet"
+      },
+      "alarm_rotor_connection": {
+        "name": "E151 Feil på rotorkommunikasjon"
+      },
+      "alarm_indoor_humidity": {
+        "name": "E502 Høy innendørs luftfuktighet"
+      },
+      "alarm_cool_condense": {
+        "name": "E512 Kondens på kjølebatteri"
+      }
+    }
+  }
+}
