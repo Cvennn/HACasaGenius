@@ -955,7 +955,7 @@ CONTROL_REGISTERS = {
         "max": 100,
         "step": 1,
     },
-    # Sorptioroottorin kosteudenhallinta (vain Sorption-yksikoissa)
+    # Sorptioroottorin kosteudenhallinta (vain Sorption-yksiköissa)
     "rh_control_sorption": {"address": 5223, "type": "holding"},
     "indoor_humidity_setpoint": {
         "address": 5224,
