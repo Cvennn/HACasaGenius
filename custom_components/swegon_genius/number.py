@@ -208,7 +208,6 @@ NUMBER_DEFS = [
         "unit": "%",
         "scale": 1.0,
     },
-    # Sulatus (defrost)
     {
         "key": "defrost_min_supply_temp",
         "translation_key": "defrost_min_supply_temp",
