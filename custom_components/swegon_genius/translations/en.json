@@ -5,11 +5,11 @@
         "title": "Swegon CASA Genius Connection",
         "description": "Enter Modbus RTU connection settings. Factory defaults are pre-filled.",
         "data": {
-          "port":     "Serial port",
-          "slave":    "Slave address",
+          "port": "Serial port",
+          "slave": "Slave address",
           "baudrate": "Baud rate",
           "stopbits": "Stop bits",
-          "parity":   "Parity"
+          "parity": "Parity"
         }
       }
     },
@@ -69,6 +69,33 @@
       },
       "cooking_exhaust_fan": {
         "name": "Cooking mode exhaust fan"
+      },
+      "indoor_humidity_setpoint": {
+        "name": "Indoor humidity setpoint (RH)"
+      },
+      "indoor_humidity_limit_cold": {
+        "name": "Indoor humidity limit in cold climate"
+      },
+      "defrost_min_supply_temp": {
+        "name": "Minimum supply air temperature during defrost"
+      },
+      "supply_duct_pressure_setpoint": {
+        "name": "Supply duct pressure setpoint"
+      },
+      "extract_duct_pressure_setpoint": {
+        "name": "Extract duct pressure setpoint"
+      },
+      "supply_duct_pressure_setpoint_adjustable": {
+        "name": "Supply duct pressure setpoint (adjustable/BMS)"
+      },
+      "extract_duct_pressure_setpoint_adjustable": {
+        "name": "Extract duct pressure setpoint (adjustable/BMS)"
+      },
+      "cooking_supply_pressure": {
+        "name": "Cooking mode supply pressure setpoint"
+      },
+      "cooking_exhaust_pressure": {
+        "name": "Cooking mode exhaust pressure setpoint"
       }
     },
     "switch": {
@@ -80,10 +107,36 @@
       },
       "cooking_mode": {
         "name": "Cooking mode"
+      },
+      "rh_control_sorption": {
+        "name": "RH humidity control (sorption rotor)"
       }
     },
-    "select":{
-      "operating_mode":{
+    "button": {
+      "confirm_reheater_failure": {
+        "name": "Confirm re-heater failure alarm"
+      },
+      "confirm_preheater_failure": {
+        "name": "Confirm preheater failure alarm"
+      },
+      "confirm_water_radiator_freezing": {
+        "name": "Confirm water radiator freezing alarm"
+      },
+      "confirm_filter_guard": {
+        "name": "Confirm filter guard reminder"
+      },
+      "confirm_service_timer": {
+        "name": "Confirm service reminder"
+      },
+      "confirm_fan_failure": {
+        "name": "Confirm fan failure alarm"
+      },
+      "confirm_sensor_failure": {
+        "name": "Confirm sensor failure"
+      }
+    },
+    "select": {
+      "operating_mode": {
         "name": "Operating mode",
         "state": {
           "off": "Off",
@@ -153,6 +206,30 @@
           "normal": "Normal",
           "high": "High"
         }
+      },
+      "humidity_recovery_summer": {
+        "name": "Summer humidity recovery control",
+        "state": {
+          "auto": "Auto",
+          "off": "Off",
+          "on": "On"
+        }
+      },
+      "defrost_level": {
+        "name": "Defrost level",
+        "state": {
+          "low": "Low",
+          "normal": "Normal",
+          "high": "High"
+        }
+      },
+      "ventilation_control_mode": {
+        "name": "Ventilation control mode",
+        "state": {
+          "normal": "Normal",
+          "pa_supply_airflow": "PA controlled airflow",
+          "pa_control": "PA control"
+        }
       }
     },
     "sensor": {
@@ -201,6 +278,9 @@
       "co2_internal": {
         "name": "Internal CO₂ sensor"
       },
+      "co2_internal_digital": {
+        "name": "Internal CO₂ sensor (digital)"
+      },
       "humidity": {
         "name": "Room humidity (RH)"
       },
@@ -215,6 +295,15 @@
       },
       "voc_internal": {
         "name": "Internal VOC sensor"
+      },
+      "voc_internal_digital": {
+        "name": "Internal VOC sensor (digital)"
+      },
+      "rh_internal_digital_scd40": {
+        "name": "Internal RH sensor (digital, SCD40)"
+      },
+      "rh_internal_digital_sht3a": {
+        "name": "Internal RH sensor (digital, SHT3a)"
       },
       "supply_duct_pressure": {
         "name": "Supply air duct pressure"
