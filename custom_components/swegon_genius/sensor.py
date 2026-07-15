@@ -23,7 +23,7 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Swegon Genius sensors from a config entry."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator = entry.runtime_data
     entities = [SwegonSensor(coordinator, entry, s) for s in SENSOR_REGISTERS]
     entities += [SwegonEnumSensor(coordinator, entry, s) for s in ENUM_SENSORS]
     async_add_entities(entities)
