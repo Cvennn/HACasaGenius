@@ -50,6 +50,26 @@ Ilman fyysistä laitetta ja toimivaa RS485-kytkentää integraatio ei yhdistä m
 
 ---
 
+## Poistaminen
+
+1. Poista integraatio Home Assistantista:
+  - Avaa "Asetukset -> Laitteet & palvelut"
+  - Valitse "Swegon CASA Genius"
+  - Valitse **Poista** (kolmen pisteen valikosta)
+
+2. Poista integraation kansio:
+   ```
+   /config/custom_components/swegon_genius/
+   ```
+
+3. Uudelleenkäynnistä Home Assistant
+
+Integraatio, sen entiteetit ja kaikki tallennetut asetukset poistetaan.
+> **Huom:** Dashboardit, automaatiot, skriptit, helperit ja templaatit, jotka käyttävät integraation entiteettejä, **eivät poistu automaattisesti**.
+> Jos ne viittaavat poistettuihin entiteetteihin, Home Assistant näyttää ne *unavailable*-tilassa, kunnes viittaukset poistetaan tai päivitetään.
+
+---
+
 ## Käyttöönotto
 
 1. **Asetukset → Laitteet ja palvelut → Lisää integraatio**
