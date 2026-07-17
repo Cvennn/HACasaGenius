@@ -67,12 +67,12 @@ SWITCHES = [
 
 
 async def async_setup_entry(
-    hass: HomeAssistant,
+    _hass: HomeAssistant,
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Swegon switch entities from a config entry."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator = entry.runtime_data
     async_add_entities([SwegonSwitch(coordinator, entry, s) for s in SWITCHES])
 
 

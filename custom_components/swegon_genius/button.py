@@ -18,12 +18,12 @@ if TYPE_CHECKING:
 
 
 async def async_setup_entry(
-    hass: HomeAssistant,
+    _hass: HomeAssistant,
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Swegon Genius alarm-confirm button entities from a config entry."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator = entry.runtime_data
     async_add_entities(
         SwegonAlarmConfirmButton(coordinator, entry, key, reg)
         for key, reg in ALARM_CONFIRM_REGISTERS.items()

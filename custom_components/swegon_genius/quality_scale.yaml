@@ -47,8 +47,7 @@ rules:
     status: done
 
   docs-removal-instructions:
-    # README.md removal section: delete integration from HA UI,
-    status: todo
+    status: done
 
   entity-event-setup:
     status: exempt
