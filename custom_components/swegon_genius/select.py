@@ -23,6 +23,8 @@ from .const import (
     VOC_AUTOMATION_LEVELS,
 )
 
+PARALLEL_UPDATES = 1
+
 if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.core import HomeAssistant
