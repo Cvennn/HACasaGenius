@@ -29,6 +29,7 @@ PLATFORMS: list[Platform] = [
 
 type SwegonConfigEntry = ConfigEntry[SwegonCoordinator]
 
+
 async def async_setup_entry(hass: HomeAssistant, entry: SwegonConfigEntry) -> bool:
     """Set up Swegon GENIUS from a config entry."""
     if CONF_PORT not in entry.data or CONF_SLAVE not in entry.data:
