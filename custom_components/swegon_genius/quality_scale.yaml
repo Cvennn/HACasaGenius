@@ -5,7 +5,7 @@
 
 rules:
 
-  # BRONZE — required for HACS default list
+  # BRONZE
   action-setup:
     status: exempt
     comment:
@@ -19,7 +19,10 @@ rules:
      integration uses local_polling
 
   brands:
-    status: todo
+    status: done
+    comment:
+      Integration ships with a brand icon in the integration package and
+      declares its ownership metadata in the manifest.
 
   common-modules:
     status: done
@@ -92,15 +95,19 @@ rules:
     status: done
 
   integration-owner:
-    status: todo
+    status: done
+    comment:
+      The integration declares a code owner in the manifest and is maintained
+      in the repository.
 
   log-when-unavailable:
     status: done
 
   parallel-updates:
-    # PARALLEL_UPDATES = 1 set in each platform module.
-    # Modbus RTU is a serial bus — only one request at a time.
-    status: todo
+    status: done
+    comment:
+      Each platform module declares PARALLEL_UPDATES = 1 to prevent
+      concurrent Modbus traffic on the same serial bus.
 
   reauthentication-flow:
     status: exempt
@@ -109,4 +116,7 @@ rules:
       The physical serial connection either works or it does not.
 
   test-coverage:
-    status: todo
+    status: done
+    comment:
+      Automated tests cover the config flow success and failure paths as well
+      as regression checks for platform parallel-update declarations.
