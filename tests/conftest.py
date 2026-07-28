@@ -1,4 +1,8 @@
-import sys  # noqa: D100, INP001
+# Copyright (c) 2026  Antti Niiranen @Cvennn # noqa: INP001
+
+"""Pytest configuration and fixtures for HACasaGenius tests."""
+
+import sys
 from pathlib import Path
 
 import pytest

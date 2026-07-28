@@ -1,3 +1,5 @@
+# Copyright (c) 2026  Antti Niiranen @Cvennn
+
 """Sensor platform for Swegon CASA Genius."""
 
 from __future__ import annotations

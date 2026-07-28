@@ -1,3 +1,5 @@
+# Copyright (c) 2026  Antti Niiranen @Cvennn
+
 """Swegon CASA Genius - Diagnostics."""
 
 from __future__ import annotations

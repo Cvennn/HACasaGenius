@@ -1,4 +1,6 @@
-"""Quality-scale related regression tests."""  # noqa: INP001
+# Copyright (c) 2026  Antti Niiranen @Cvennn # noqa: INP001
+
+"""Quality-scale related regression tests."""
 
 from importlib import import_module
 
