@@ -1,3 +1,5 @@
+# Copyright (c) 2026  Antti Niiranen @Cvennn
+
 """Binary sensor platform for swegon_genius."""
 
 from __future__ import annotations

@@ -1,3 +1,5 @@
+# Copyright (c) 2026  Antti Niiranen @Cvennn
+
 """Config flow for Swegon GENIUS."""
 
 from __future__ import annotations

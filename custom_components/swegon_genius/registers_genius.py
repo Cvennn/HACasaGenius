@@ -1,7 +1,9 @@
+# Copyright (c) 2026  Antti Niiranen @Cvennn
+
 """
 Swegon CASA Genius — Taydellinen Modbus-rekisterikartta.
 
-Lahde: CASA Genius Modbus Register SCB 4.2, SW 4.0+ (paivitetty 250106).
+Lähde: CASA Genius Modbus Register SCB 4.2, SW 4.0+ (paivitetty 250106).
 Osoitteet 0-indeksoituja pymodbus-osoitteita:
   rekisterinumero - 1 = pymodbus-osoite
   Esim. 3x6201 -> address 6200,  4x5001 -> address 5000

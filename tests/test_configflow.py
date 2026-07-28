@@ -1,4 +1,6 @@
-"""Tests for the Swegon GENIUS integration."""  # noqa: INP001
+# Copyright (c) 2026  Antti Niiranen @Cvennn # noqa: INP001
+
+"""Tests for the Swegon GENIUS integration."""
 
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, patch

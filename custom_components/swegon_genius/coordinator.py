@@ -1,3 +1,5 @@
+# Copyright (c) 2026  Antti Niiranen @Cvennn
+
 """DataUpdateCoordinator for Swegon GENIUS."""
 
 from __future__ import annotations

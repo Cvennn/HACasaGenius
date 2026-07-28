@@ -1,3 +1,5 @@
+# Copyright (c) 2026  Antti Niiranen @Cvennn
+
 """
 Number platform for CASA Genius.
 

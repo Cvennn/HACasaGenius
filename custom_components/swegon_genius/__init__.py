@@ -1,3 +1,5 @@
+# Copyright (c) 2026  Antti Niiranen @Cvennn
+
 """Swegon GENIUS Home Assistant integration."""
 
 from __future__ import annotations

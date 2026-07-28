@@ -1,3 +1,5 @@
+# Copyright (c) 2026  Antti Niiranen @Cvennn
+
 """Constants for Swegon GENIUS integration."""
 
 DOMAIN = "swegon_genius"

@@ -1,3 +1,5 @@
+# Copyright (c) 2026  Antti Niiranen @Cvennn
+
 """Async Modbus RTU client for Swegon GENIUS over RS-485 USB adapter."""
 
 from __future__ import annotations

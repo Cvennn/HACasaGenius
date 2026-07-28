@@ -1,3 +1,5 @@
+# Copyright (c) 2026  Antti Niiranen @Cvennn
+
 """Button platform for Swegon Genius."""
 
 from __future__ import annotations
