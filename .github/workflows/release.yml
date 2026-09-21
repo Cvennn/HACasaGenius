@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set version number in manifest.json
+        run: |
+          jq '.version = "${{ github.event.release.tag_name }}"' \
+            custom_components/swegon_genius/manifest.json > tmp \
+            && mv tmp custom_components/swegon_genius/manifest.json
+
+      - name: Zip the integration
+        run: |
+          cd custom_components/swegon_genius
+          zip -r ../../swegon_genius.zip ./
+
+      - name: Upload zip to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: swegon_genius.zip
