@@ -4,6 +4,9 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -13,15 +16,15 @@ jobs:
       - name: Set version number in manifest.json
         run: |
           jq '.version = "${{ github.event.release.tag_name }}"' \
-            custom_components/swegon_genius/manifest.json > tmp \
-            && mv tmp custom_components/swegon_genius/manifest.json
+            custom_components/YOUR_DOMAIN/manifest.json > tmp \
+            && mv tmp custom_components/YOUR_DOMAIN/manifest.json
 
       - name: Zip the integration
         run: |
-          cd custom_components/swegon_genius
-          zip -r ../../swegon_genius.zip ./
+          cd custom_components/YOUR_DOMAIN
+          zip -r ../../YOUR_DOMAIN.zip ./
 
       - name: Upload zip to release
         uses: softprops/action-gh-release@v2
         with:
-          files: swegon_genius.zip
+          files: YOUR_DOMAIN.zip
