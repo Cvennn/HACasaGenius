@@ -21,8 +21,7 @@ jobs:
 
       - name: Zip the integration
         run: |
-          cd custom_components/swegon_genius
-          zip -r swegon_genius.zip custom_components
+          zip -r swegon_genius.zip custom_components/swegon_genius
 
       - name: Upload zip to release
         uses: softprops/action-gh-release@v2
