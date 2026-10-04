@@ -1,69 +1,72 @@
-# Swegon CASA Genius — Home Assistant -integraatio
+**Languages:** [English](README.md) | [Suomi](README.fi.md) | [Svenska](README.sv.md) | [Norsk](README.no.md)
 
-Home Assistant custom component Swegon CASA Genius -ilmanvaihtokoneelle.
-Lukee ja ohjaa konetta Modbus RTU:n (RS485) yli. ~121 entiteettiä:
-lämpötilat, ilmavirrat, käyttötila, hälytykset, asetukset.
+# Swegon CASA Genius — Home Assistant integration
 
-> **Tämä on testiversio.** Asennus tehdään käsin (ei vielä HACS-kaupasta).
+Home Assistant custom component for the Swegon CASA Genius ventilation unit.
+Reads and controls the unit over Modbus RTU (RS485). ~121 entities:
+temperatures, airflows, operating mode, alarms, settings.
+
+> **This is a test version.** Installation is manual (not yet available via HACS).
 
 ---
 
-## Vaatimukset
+## Requirements
 
-Ennen kuin aloitat, tarvitset:
+Before you start, you'll need:
 
-- **Swegon CASA Genius** -kone, ohjainkortti **SCB 4.2**, ohjelmisto **SW 4.0 tai uudempi**
-  (testattu mallilla W5 500W A, firmware 4.3.800)
-- **RS485-USB-adapteri** kytkettynä koneen Modbus-väylään ja Home Assistant -palvelimeen
-  (esim. CH341-pohjainen adapteri näkyy yleensä nimellä `/dev/ttyUSB0`)
-- Home Assistant, jossa pääsy custom_components-kansioon (esim. Studio Code Server,
-  Samba tai File Editor)
+- A **Swegon CASA Genius** unit with an **SCB 4.2** control board and **SW 4.0 or newer** firmware
+  (tested on a W5 500W A unit, firmware 4.3.800)
+- An **RS485-USB adapter** connected to the unit's Modbus bus and to the Home Assistant server
+  (e.g. a CH341-based adapter, usually shows up as `/dev/ttyUSB0`)
+- Home Assistant with access to the `custom_components` folder (e.g. via Studio Code Server,
+  Samba, or File Editor)
 
-Ilman fyysistä laitetta ja toimivaa RS485-kytkentää integraatio ei yhdistä mihinkään.
+Without the physical unit and a working RS485 connection, the integration won't connect to anything.
 
-Vaihtoehtoisia RS485 muuntimia:
+Alternative RS485 converters:
 - https://raspberrypi.dk/en/product/industrial-usb-to-rs485-bidirectional-converter/
 - https://www.digikey.fi/en/products/detail/olimex-ltd/USB-RS485/21661988
 - https://www.amazon.com/DSD-TECH-SH-U10-Converter-Compatible/dp/B078X5H8H7
 
 ---
 
-## Kytkentä
+## Wiring
 
-CASA Genius -ilmanvaihtokoneessa on sisäänrakennettu Modbus RTU -liitäntä, joka tuodaan ulos SEC- tai SEM-liitäntämoduulin kautta. Moduuli kytketään koneen pääpiirilevyn "SEC/SEM"-liittimeen mukana tulevalla 2 metrin kaapelilla.
+The CASA Genius ventilation unit has a built-in Modbus RTU interface, brought out through an SEC or SEM connection module. The module connects to the "SEC/SEM" connector on the unit's main board using the included 2-metre cable.
 
-SEC/SEM-moduulin liitinrimasta käytetään Modbus-yhteyttä varten kahta pinniä: pinni 1 vastaa Modbus A -signaalia ja pinni 2 Modbus B -signaalia. Nämä kytketään RS485-USB-muuntimeen (esim. Waveshare USB to RS485 (B)) siten, että muuntimen A+-liitin kytketään Modbus A:han ja B- -liitin Modbus B:hen. Kirjainmerkintä A↔A ja B↔B on RS485-väylässä yleisesti noudatettu käytäntö, joten kytkentä on turvallinen tapa aloittaa — jos yhteys ei muodostu suoraan, A- ja B-johtimet voi vaihtaa keskenään ilman vauriovaaraa.
+Two pins on the SEC/SEM module's terminal block are used for the Modbus connection: pin 1 is Modbus A and pin 2 is Modbus B. These connect to an RS485-USB converter (e.g. a Waveshare USB to RS485 (B)) so that the converter's A+ terminal connects to Modbus A, and B- connects to Modbus B. The A↔A, B↔B letter matching is a widely followed convention in RS485, so this is a safe starting point — if the connection doesn't come up, the A and B wires can be swapped with no risk of damage.
 
-RS485-USB-muunnin kytketään Home Assistantin ajavan laitteen USB-porttiin, jolloin se näkyy järjestelmässä yleensä nimellä /dev/ttyUSB0. Tämä on myös integraation oletusasetus sarjaportille.
+The RS485-USB converter plugs into the USB port of the device running Home Assistant, where it typically shows up as `/dev/ttyUSB0`. This also matches the integration's default serial port setting.
 
-1. Ilmanvaihto laitteen kytkentäpaneeli
-2. Swegon SEC kytkentämoduuli
+1. Ventilation unit's connection panel
+2. Swegon SEC connection module
 
 ![screenshot](SEC_cable.png)
 
-
 ![screenshot](SEC_SEM_wiring.png)
 
-## Asennus
+*Note: a GND connection is not used in this wiring. If the bus run gets longer or you experience interference, connecting SEC/SEM pin 8 to the converter's GND terminal for a common ground can improve reliability.*
 
-1. Pura saamasi paketti (`swegon_genius_jako.tar.gz`). Sieltä löytyy kansio `swegon_genius`.
+## Installation
 
-2. Kopioi koko `swegon_genius`-kansio Home Assistantin kansioon:
+1. Extract the package you received (`swegon_genius_jako.tar.gz`). It contains a folder named `swegon_genius`.
+
+2. Copy the whole `swegon_genius` folder into Home Assistant's folder:
 
    ```
    /config/custom_components/swegon_genius/
    ```
 
-   Jos `custom_components`-kansiota ei ole, luo se ensin.
+   If the `custom_components` folder doesn't exist yet, create it first.
 
-   Jos purat paketin suoraan palvelimella terminaalissa:
+   If you're extracting the package directly on the server in a terminal:
 
    ```
    cd /config/custom_components
-   tar -xzf /polku/swegon_genius_jako.tar.gz
+   tar -xzf /path/to/swegon_genius_jako.tar.gz
    ```
 
-3. Käynnistä Home Assistant uudelleen:
+3. Restart Home Assistant:
 
    ```
    ha core restart
@@ -71,88 +74,88 @@ RS485-USB-muunnin kytketään Home Assistantin ajavan laitteen USB-porttiin, jol
 
 ---
 
-## Poistaminen
+## Removal
 
-1. Poista integraatio Home Assistantista:
-  - Avaa "Asetukset -> Laitteet & palvelut"
-  - Valitse "Swegon CASA Genius"
-  - Valitse **Poista** (kolmen pisteen valikosta)
+1. Remove the integration from Home Assistant:
+  - Open "Settings → Devices & services"
+  - Select "Swegon CASA Genius"
+  - Select **Delete** (from the three-dot menu)
 
-2. Poista integraation kansio:
+2. Delete the integration's folder:
    ```
    /config/custom_components/swegon_genius/
    ```
 
-3. Uudelleenkäynnistä Home Assistant
+3. Restart Home Assistant
 
-Integraatio, sen entiteetit ja kaikki tallennetut asetukset poistetaan.
-> **Huom:** Dashboardit, automaatiot, skriptit, helperit ja templaatit, jotka käyttävät integraation entiteettejä, **eivät poistu automaattisesti**.
-> Jos ne viittaavat poistettuihin entiteetteihin, Home Assistant näyttää ne *unavailable*-tilassa, kunnes viittaukset poistetaan tai päivitetään.
+The integration, its entities, and all saved settings are removed.
+> **Note:** Dashboards, automations, scripts, helpers, and templates that reference the integration's entities **are not removed automatically**.
+> If they reference deleted entities, Home Assistant will show them as *unavailable* until the references are removed or updated.
 
 ---
 
-## Käyttöönotto
+## Setup
 
-1. **Asetukset → Laitteet ja palvelut → Lisää integraatio**
-2. Hae **"Swegon CASA Genius"**
-3. Syötä yhteysasetukset. Oletukset sopivat useimmille:
+1. **Settings → Devices & services → Add integration**
+2. Search for **"Swegon CASA Genius"**
+3. Enter the connection settings. The defaults suit most setups:
 
-   | Asetus | Oletus | Huom |
+   | Setting | Default | Note |
    |--------|--------|------|
-   | Sarjaportti | `/dev/ttyUSB0` | adapterin laitepolku |
-   | Slave-osoite | `1` | koneen Modbus-osoite (1–247) |
+   | Serial port | `/dev/ttyUSB0` | adapter's device path |
+   | Slave address | `1` | the unit's Modbus address (1–247) |
    | Baud rate | `38400` | |
    | Stop bits | `1` | |
-   | Pariteetti | `N` | |
+   | Parity | `N` | |
 
-4. Tallenna. Jos yhteys onnistuu, entiteetit ilmestyvät laitteen alle.
-
----
-
-## Mitä paketti sisältää — ja mitä EI
-
-**Mukana:** itse integraatio (entiteetit ja ohjaukset) sekä käännökset
-viidelle kielelle (fi/en/sv/nb/da).
-
-**EI mukana:**
-- Dashboard / käyttöliittymäkortit — rakennat omasi tai et
-- Hyötysuhde-template (LTO-%) — se on erillinen `configuration.yaml`-määrittely
-- Puhallinnopeuksien PIN-suojaus — dashboard-ominaisuus, ei integraation osa
-
-Saat siis pelkät entiteetit. Niiden saaminen näkyväksi dashboardille on oma työnsä.
+4. Save. If the connection succeeds, entities will appear under the device.
 
 ---
 
-## Entiteettien nimet ja kielet
+## What's in the package — and what's not
 
-Entiteettien nimet kääntyvät **järjestelmän kielen** mukaan
-(Asetukset → Kodin tiedot → Kieli), EI käyttäjäprofiilin kielen. Tämä on
-Home Assistantin toimintatapa. Entity ID:t pysyvät kielestä riippumatta samoina.
+**Included:** the integration itself (entities and controls), plus translations
+for five languages (fi/en/sv/nb/da).
 
-Huom: entity ID:t generoituvat sinun laitteesi nimestä, joten ne ovat eri kuin
-muilla. Valmista dashboardia ei voi suoraan kopioida toiselta käyttäjältä.
+**Not included:**
+- Dashboard / UI cards — build your own, or don't
+- Efficiency template (LTO %) — that's a separate `configuration.yaml` definition
+- PIN protection for fan speeds — a dashboard-level feature, not part of the integration
 
----
-
-## Vianetsintä
-
-**"Yhteys epäonnistui — tarkista kaapeli, slave-osoite ja sarjaportti"**
-
-- Tarkista adapteri? Terminaalissa: `ls -l /dev/ttyUSB*`
-  Jos mitään ei näy, adapteri ei ole kytketty tai ajuria ei tunnistettu.
-- Onko sarjaportti oikea? Joillakin se on `/dev/ttyUSB1` tai `/dev/ttyACM0`.
-- Onko slave-osoite oikea? Tarkista koneen ohjauspaneelista Modbus-asetukset.
-- Onko baudrate sama kuin koneessa? Oletus 38400, mutta voi olla 9600 tai 19200.
-- Onko väyläkaapeli A/B oikein päin? Jos epävarma, kokeile vaihtaa A↔B.
-
-**Entiteetit jäävät "unavailable"**
-
-- Tarkista että adapteri ja kaapeli pysyvät kytkettyinä.
-- Katso lokit: Asetukset → Järjestelmä → Lokit, hae "swegon".
+So you get the entities only. Making them visible on a dashboard is your own work.
 
 ---
 
-## Palaute
+## Entity names and languages
 
-Tämä on testiversio. Kerro mikä toimii, mikä ei, ja millä koneella/firmwarella
-testasit — se auttaa viimeistelyssä.
+Entity names translate according to the **system language**
+(Settings → Home info → Language), NOT the user profile's language. This is
+how Home Assistant works. Entity IDs stay the same regardless of language.
+
+Note: entity IDs are generated from your device's name, so they'll differ from
+other users'. A finished dashboard can't be copied directly from someone else.
+
+---
+
+## Troubleshooting
+
+**"Connection failed — check the cable, slave address, and serial port"**
+
+- Check the adapter? In a terminal: `ls -l /dev/ttyUSB*`
+  If nothing shows up, the adapter isn't connected or the driver wasn't recognized.
+- Is the serial port correct? On some systems it's `/dev/ttyUSB1` or `/dev/ttyACM0`.
+- Is the slave address correct? Check the Modbus settings on the unit's control panel.
+- Is the baud rate the same as the unit's? Default is 38400, but it could be 9600 or 19200.
+- Is the bus cable's A/B the right way round? If unsure, try swapping A↔B.
+
+**Entities stay "unavailable"**
+
+- Check that the adapter and cable stay connected.
+- Check the logs: Settings → System → Logs, search for "swegon".
+
+---
+
+## Feedback
+
+This is a test version. Let me know what works, what doesn't, and which unit/firmware
+you tested with — it helps with finalizing it.
