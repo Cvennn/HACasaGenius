@@ -21,7 +21,18 @@ Ennen kuin aloitat, tarvitset:
 
 Ilman fyysistä laitetta ja toimivaa RS485-kytkentää integraatio ei yhdistä mihinkään.
 
+Vaihtoehtoisia RS485 muuntimia:
+- https://raspberrypi.dk/en/product/industrial-usb-to-rs485-bidirectional-converter/
+- https://www.digikey.fi/en/products/detail/olimex-ltd/USB-RS485/21661988
+- https://www.amazon.com/DSD-TECH-SH-U10-Converter-Compatible/dp/B078X5H8H7
+
 ---
+
+## Kytkentä
+
+SEC- moduuli Pin 1 = Modbus A, Pin 2 = Modbus B.
+Kytke RS485 moduulin A+ -> Modbus A ja B- -> Modbus B.
+
 
 ## Asennus
 
