@@ -30,9 +30,9 @@ Vaihtoehtoisia RS485 muuntimia:
 
 ## Kytkentä
 
-SEC- moduuli Pin 1 = Modbus A, Pin 2 = Modbus B.
-Kytke RS485 moduulin A+ -> Modbus A ja B- -> Modbus B.
+SEC/SEM-moduulin pinni 1 vastaa Modbus A -signaalia ja pinni 2 Modbus B -signaalia. Kytke RS485-muuntimen A+ -liitin Modbus A:han ja B- -liitin Modbus B:hen.
 
+![screenshot](SEC_SEM_wiring.png)
 
 ## Asennus
 
