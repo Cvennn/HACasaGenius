@@ -11,7 +11,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set version number in manifest.json
         run: |
@@ -24,6 +24,6 @@ jobs:
           zip -r swegon_genius.zip custom_components/swegon_genius
 
       - name: Upload zip to release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: swegon_genius.zip
