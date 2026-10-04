@@ -30,7 +30,17 @@ Vaihtoehtoisia RS485 muuntimia:
 
 ## Kytkentä
 
-SEC/SEM-moduulin pinni 1 vastaa Modbus A -signaalia ja pinni 2 Modbus B -signaalia. Kytke RS485-muuntimen A+ -liitin Modbus A:han ja B- -liitin Modbus B:hen.
+CASA Genius -ilmanvaihtokoneessa on sisäänrakennettu Modbus RTU -liitäntä, joka tuodaan ulos SEC- tai SEM-liitäntämoduulin kautta. Moduuli kytketään koneen pääpiirilevyn "SEC/SEM"-liittimeen mukana tulevalla 2 metrin kaapelilla.
+
+SEC/SEM-moduulin liitinrimasta käytetään Modbus-yhteyttä varten kahta pinniä: pinni 1 vastaa Modbus A -signaalia ja pinni 2 Modbus B -signaalia. Nämä kytketään RS485-USB-muuntimeen (esim. Waveshare USB to RS485 (B)) siten, että muuntimen A+-liitin kytketään Modbus A:han ja B- -liitin Modbus B:hen. Kirjainmerkintä A↔A ja B↔B on RS485-väylässä yleisesti noudatettu käytäntö, joten kytkentä on turvallinen tapa aloittaa — jos yhteys ei muodostu suoraan, A- ja B-johtimet voi vaihtaa keskenään ilman vauriovaaraa.
+
+RS485-USB-muunnin kytketään Home Assistantin ajavan laitteen USB-porttiin, jolloin se näkyy järjestelmässä yleensä nimellä /dev/ttyUSB0. Tämä on myös integraation oletusasetus sarjaportille.
+
+1. Ilmanvaihto laitteen kytkentäpaneeli
+2. Swegon SEC kytkentämoduuli
+
+![screenshot](SEC_cable.png)
+
 
 ![screenshot](SEC_SEM_wiring.png)
 
