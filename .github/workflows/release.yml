@@ -24,6 +24,6 @@ jobs:
           zip -r swegon_genius.zip custom_components/swegon_genius
 
       - name: Upload zip to release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: swegon_genius.zip
