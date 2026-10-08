@@ -230,6 +230,14 @@
           "pa_supply_airflow": "Pa-styrt luftflöde",
           "pa_control": "Pa-styrning"
         }
+      },
+      "ventilation_control_mode_options": {
+        "name": "Ventilationsstyrningslägesalternativ",
+        "state": {
+          "normal": "Normal",
+          "pa_supply_airflow": "PA-styrt luftflöde",
+          "pa_control": "PA-styrning"
+        }
       }
     },
     "sensor": {

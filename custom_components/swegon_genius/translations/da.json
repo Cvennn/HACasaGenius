@@ -230,6 +230,14 @@
           "pa_supply_airflow": "Pa-styret luftstrøm",
           "pa_control": "Pa-styring"
         }
+      },
+      "ventilation_control_mode_options": {
+        "name": "Ventilationsstyringsmuligheder",
+        "state": {
+          "normal": "Normal",
+          "pa_supply_airflow": "PA-styret luftstrøm",
+          "pa_control": "PA-styring"
+        }
       }
     },
     "sensor": {

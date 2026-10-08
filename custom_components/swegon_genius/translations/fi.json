@@ -230,6 +230,14 @@
           "pa_supply_airflow": "Pa-ohjattu ilmavirta",
           "pa_control": "Pa-ohjaus"
         }
+      },
+      "ventilation_control_mode_options": {
+        "name": "Ventilation control mode options",
+        "state": {
+          "normal": "Normaali",
+          "pa_supply_airflow": "PA-ohjattu ilmavirta",
+          "pa_control": "PA-ohjaus"
+        }
       }
     },
     "sensor": {
