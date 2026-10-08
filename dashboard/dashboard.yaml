@@ -1,0 +1,28 @@
+square: true
+type: grid
+cards:
+  - type: entity
+    entity: sensor.swegon_casa_genius_dev_ttyUSB0_room_temperature
+    name:
+      type: entity
+  - type: entity
+    entity: sensor.swegon_casa_genius_dev_ttyUSB0_room_humidity_rh
+    name:
+      type: entity
+  - type: entity
+    entity: sensor.swegon_casa_genius_dev_ttyUSB0_co2_effective
+    name:
+      type: entity
+  - type: entity
+    entity: sensor.swegon_casa_genius_dev_ttyUSB0_unit_state
+    name:
+      type: entity
+  - type: entity
+    entity: select.swegon_casa_genius_dev_ttyUSB0_rh_automation
+    name:
+      type: entity
+  - type: entity
+    entity: binary_sensor.swegon_casa_genius_dev_ttyUSB0_genius_alarm
+    name:
+      type: entity
+columns: 3
