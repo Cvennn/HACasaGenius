@@ -5,11 +5,11 @@
         "title": "Swegon CASA Genius-tilkobling",
         "description": "Angi Modbus RTU-tilkoblingsinnstillinger. Fabrikkinnstillingene er forhåndsutfylt.",
         "data": {
-          "port":     "Serieport",
-          "slave":    "Slave-adresse",
+          "port": "Serieport",
+          "slave": "Slave-adresse",
           "baudrate": "Baud rate",
           "stopbits": "Stoppbits",
-          "parity":   "Paritet"
+          "parity": "Paritet"
         }
       }
     },
@@ -414,10 +414,30 @@
         "name": "GIO5 inngangsspenning"
       },
       "unit_state": {
-        "name": "Enhetens tilstand"
+        "name": "Enhetens tilstand",
+        "state": {
+          "critical_stop": "Kritisk stopp",
+          "user_stop": "Brukerstopp",
+          "starting": "Starter",
+          "normal": "Normal",
+          "setup": "Oppsett"
+        }
       },
       "heating_state": {
-        "name": "Oppvarmingstilstand"
+        "name": "Oppvarmingstilstand",
+        "state": {
+          "starting": "Starter",
+          "stopped": "Stoppet",
+          "external_cooling": "Ekstern kjøling",
+          "internal_cooling": "Intern kjøling",
+          "internal_cooling_restricted": "Intern kjøling (begrenset)",
+          "summer_mode": "Sommermodus",
+          "LTO_control": "LTO-kontroll",
+          "heating": "Oppvarming",
+          "defrost_1": "Avfrost 1",
+          "defrost_2": "Avfrost 2",
+          "defrost_3": "Avfrost 3"
+        }
       },
       "ventilation_state_text": {
         "name": "Aktiv ventilasjonsmodus",

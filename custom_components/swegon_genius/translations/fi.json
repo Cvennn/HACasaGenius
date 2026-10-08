@@ -414,10 +414,30 @@
         "name": "GIO5 jännitetulo"
       },
       "unit_state": {
-        "name": "Yksikön tila"
+        "name": "Yksikön tila",
+        "state": {
+          "critical_stop": "Kriittinen pysäytys",
+          "user_stop": "Käyttäjä pysäyttänyt",
+          "starting": "Käynnistyy",
+          "normal": "Normaali",
+          "setup": "Käyttöönotto"
+        }
       },
       "heating_state": {
-        "name": "Lämmitystila"
+        "name": "Lämmitystila",
+        "state": {
+          "starting": "Käynnistyy",
+          "stopped": "Pysäytetty",
+          "external_cooling": "Ulkoinen jäähdytys",
+          "internal_cooling": "Sisäinen jäähdytys",
+          "internal_cooling_restricted": "Sisäinen jäähdytys (rajoitettu)",
+          "summer_mode": "Kesätila",
+          "LTO_control": "LTO-ohjaus",
+          "heating": "Lämmitys",
+          "defrost_1": "Sulatus 1",
+          "defrost_2": "Sulatus 2",
+          "defrost_3": "Sulatus 3"
+        }
       },
       "ventilation_state_text": {
         "name": "Aktiivinen ventilointitila",
