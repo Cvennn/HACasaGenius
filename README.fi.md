@@ -126,6 +126,35 @@ Saat siis pelkät entiteetit. Niiden saaminen näkyväksi dashboardille on oma t
 
 ---
 
+## Käyttämättömien entiteettien poistaminen tai piilottaminen
+
+Kun laite ei enää tarjoa tiettyjä entiteettejä, Home Assistant saattaa edelleen näyttää kyseiset entiteetit tilassa Ei käytettävissä. Entiteetit voidaan joko piilottaa Home Assistantin käyttöliittymästä tai, jos niitä ei enää tarvita, poistaa laitteen entiteettirekisteristä.
+
+### Käytöstä poistettujen entiteettien piilottaminen
+
+Entiteetin piilottaminen on turvallisin vaihtoehto, jos et ole varma, tarvitaanko entiteettiä myöhemmin.
+
+  - Avaa Home Assistant.
+  - Siirry kohtaan Asetukset → Laitteet ja palvelut → Entiteetit.
+  - Etsi entiteetti, jonka tilana näkyy Ei käytettävissä.
+  - Valitse entiteetti.
+  - Avaa entiteetin asetukset.
+  - Ota käyttöön Poistettu käytöstä tai poista Ota entiteetti käyttöön käytöstä.
+  - Tallenna muutos.
+
+### Käytöstä poistettujen entiteettien poistaminen
+
+Jos entiteetti on pysyvästi poissa käytöstä, koska nykyinen laite ei enää tarjoa sitä, eikä entiteettiä enää tarvita, sen voi poistaa entiteettirekisteristä.
+
+  - Avaa Home Assistant.
+  - Siirry kohtaan Asetukset → Laitteet ja palvelut → Entiteetit.
+  - Etsi käytöstä poistettu entiteetti.
+  - Valitse entiteetti.
+  - Avaa entiteetin asetukset.
+  - Valitse Poista.
+  - Vahvista poistaminen.
+
+---
 ## Entiteettien nimet ja kielet
 
 Entiteettien nimet kääntyvät **järjestelmän kielen** mukaan
