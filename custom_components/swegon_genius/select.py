@@ -112,7 +112,7 @@ SELECT_DEFS = [
         "address": 5317,
         "options": VENTILATION_CONTROL_MODE_OPTIONS,
         "read_key": "ventilation_control_mode",
-    }
+    },
 ]
 
 

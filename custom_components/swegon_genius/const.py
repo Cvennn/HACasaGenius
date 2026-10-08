@@ -108,7 +108,7 @@ HEATING_STATES = {
     3: "internal_cooling",
     4: "internal_cooling_restricted",
     5: "summer_mode",
-    6: "LTO_control",
+    6: "lto_control",
     7: "heating",
     8: "defrost_1",
     9: "defrost_2",

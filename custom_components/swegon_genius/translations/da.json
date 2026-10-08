@@ -440,7 +440,7 @@
           "internal_cooling": "Intern køling",
           "internal_cooling_restricted": "Intern køling (begrænset)",
           "summer_mode": "Sommertilstand",
-          "LTO_control": "LTO-kontrol",
+          "lto_control": "LTO-kontrol",
           "heating": "Opvarmning",
           "defrost_1": "Afrimning 1",
           "defrost_2": "Afrimning 2",

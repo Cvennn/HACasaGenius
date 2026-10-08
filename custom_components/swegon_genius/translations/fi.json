@@ -440,7 +440,7 @@
           "internal_cooling": "Sisäinen jäähdytys",
           "internal_cooling_restricted": "Sisäinen jäähdytys (rajoitettu)",
           "summer_mode": "Kesätila",
-          "LTO_control": "LTO-ohjaus",
+          "lto_control": "LTO-ohjaus",
           "heating": "Lämmitys",
           "defrost_1": "Sulatus 1",
           "defrost_2": "Sulatus 2",
