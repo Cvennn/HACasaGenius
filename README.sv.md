@@ -126,6 +126,36 @@ Du får alltså bara entiteterna. Att göra dem synliga på en dashboard är dit
 
 ---
 
+## Ta bort eller dölja oanvända entiteter
+
+När en enhet inte längre tillhandahåller vissa entiteter kan Home Assistant fortfarande visa dessa entiteter som Ej tillgänglig. Entiteterna kan antingen döljas från Home Assistants gränssnitt eller, om de inte längre behövs, tas bort från enhetens entitetsregister.
+
+### Dölja otillgängliga entiteter
+
+Att dölja en entitet är det säkraste alternativet om du är osäker på om entiteten kan behövas senare.
+
+  - Öppna Home Assistant.
+  - Gå till Inställningar → Enheter och tjänster → Entiteter.
+  - Sök efter entiteten som visas som Ej tillgänglig.
+  - Välj entiteten.
+  - Öppna entitetens inställningar.
+  - Aktivera Inaktiverad eller stäng av Aktivera entitet.
+  - Spara ändringen.
+
+### Ta bort otillgängliga entiteter
+
+Om en entitet är permanent otillgänglig eftersom den aktuella enheten inte längre tillhandahåller den, och entiteten inte längre behövs, kan den tas bort från entitetsregistret.
+
+  - Öppna Home Assistant.
+  - Gå till Inställningar → Enheter och tjänster → Entiteter.
+  - Sök efter den otillgängliga entiteten.
+  - Välj entiteten.
+  - Öppna entitetens inställningar.
+  - Välj Ta bort.
+  - Bekräfta borttagningen.
+
+---
+
 ## Entitetsnamn och språk
 
 Entitetsnamnen översätts enligt **systemspråket**
