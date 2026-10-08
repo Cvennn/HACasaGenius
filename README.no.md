@@ -123,6 +123,35 @@ for fem språk (fi/en/sv/nb/da).
 - PIN-beskyttelse for viftehastigheter — en dashbord-funksjon, ikke en del av integrasjonen
 
 Du får altså bare entitetene. Å gjøre dem synlige på et dashbord er ditt eget arbeid.
+---
+
+## Fjerne eller skjule ubrukte entiteter
+
+Når en enhet ikke lenger tilbyr bestemte entiteter, kan Home Assistant fortsatt vise disse entitetene som Ikke tilgjengelig. Entitetene kan enten skjules fra Home Assistants grensesnitt eller, hvis de ikke lenger er nødvendige, fjernes fra enhetens entitetsregister.
+
+### Skjule utilgjengelige entiteter
+
+Å skjule en entitet er det tryggeste alternativet hvis du er usikker på om entiteten kan bli nødvendig senere.
+
+  - Åpne Home Assistant.
+  - Gå til Innstillinger → Enheter og tjenester → Entiteter.
+  - Søk etter entiteten som vises som Ikke tilgjengelig.
+  - Velg entiteten.
+  - Åpne innstillingene for entiteten.
+  - Aktiver Deaktivert eller slå av Aktiver entitet.
+  - Lagre endringen.
+
+### Fjerne utilgjengelige entiteter
+
+Hvis en entitet er permanent utilgjengelig fordi den aktuelle enheten ikke lenger tilbyr den, og entiteten ikke lenger er nødvendig, kan den fjernes fra entitetsregisteret.
+
+  - Åpne Home Assistant.
+  - Gå til Innstillinger → Enheter og tjenester → Entiteter.
+  - Søk etter den utilgjengelige entiteten.
+  - Velg entiteten.
+  - Åpne innstillingene for entiteten.
+  - Velg Slett eller Fjern.
+  - Bekreft fjerningen.
 
 ---
 
