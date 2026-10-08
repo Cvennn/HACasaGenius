@@ -109,7 +109,35 @@ The integration, its entities, and all saved settings are removed.
    | Parity | `N` | |
 
 4. Save. If the connection succeeds, entities will appear under the device.
+---
 
+## Removing or hiding unused entities
+
+When a device is no longer providing certain entities, Home Assistant may continue to show those entities as Unavailable. These entities can either be hidden from the Home Assistant interface or, when they are no longer needed, removed from the device's entity registry.
+
+### Hiding Unavailable Entities
+
+Hiding an entity is the safest option when you are unsure whether the entity may be needed later.
+
+  - Open Home Assistant.
+  - Go to Settings → Devices & services → Entities.
+  - Search for the entity that is shown as Unavailable.
+  - Select the entity.
+  - Open the entity's settings.
+  - Enable Disabled or Enable entity off.
+  - Save the change.
+
+### Removing Unavailable Entities
+
+If an entity is permanently unavailable because the current device no longer provides it, and the entity is no longer needed, it can be removed from the entity registry.
+
+  - Open Home Assistant.
+  - Go to Settings → Devices & services → Entities.
+  - Search for the unavailable entity.
+  - Select the entity.
+  - Open the entity's settings.
+  - Select Delete or Remove.
+  - Confirm the removal.
 ---
 
 ## What's in the package — and what's not
