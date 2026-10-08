@@ -5,11 +5,11 @@
         "title": "Swegon CASA Genius-anslutning",
         "description": "Ange Modbus RTU-anslutningsinställningar. Fabriksinställningarna är förifyllda.",
         "data": {
-          "port":     "Serieport",
-          "slave":    "Slavadress",
+          "port": "Serieport",
+          "slave": "Slavadress",
           "baudrate": "Baud rate",
           "stopbits": "Stoppbitar",
-          "parity":   "Paritet"
+          "parity": "Paritet"
         }
       }
     },
@@ -230,6 +230,14 @@
           "pa_supply_airflow": "Pa-styrt luftflöde",
           "pa_control": "Pa-styrning"
         }
+      },
+      "ventilation_control_mode_options": {
+        "name": "Ventilationsstyrningslägesalternativ",
+        "state": {
+          "normal": "Normal",
+          "pa_supply_airflow": "PA-styrt luftflöde",
+          "pa_control": "PA-styrning"
+        }
       }
     },
     "sensor": {
@@ -414,10 +422,30 @@
         "name": "GIO5 ingångsspänning"
       },
       "unit_state": {
-        "name": "Enhetens tillstånd"
+        "name": "Enhetens tillstånd",
+        "state": {
+          "critical_stop": "Kritisk stopp",
+          "user_stop": "Användarstopp",
+          "starting": "Startar",
+          "normal": "Normal",
+          "setup": "Inställning"
+        }
       },
       "heating_state": {
-        "name": "Uppvärmningstillstånd"
+        "name": "Uppvärmningstillstånd",
+        "state": {
+          "starting": "Startar",
+          "stopped": "Stoppad",
+          "external_cooling": "Extern kylning",
+          "internal_cooling": "Intern kylning",
+          "internal_cooling_restricted": "Intern kylning (begränsad)",
+          "summer_mode": "Sommarläge",
+          "lto_control": "LTO-kontroll",
+          "heating": "Uppvärmning",
+          "defrost_1": "Avfrostning 1",
+          "defrost_2": "Avfrostning 2",
+          "defrost_3": "Avfrostning 3"
+        }
       },
       "ventilation_state_text": {
         "name": "Aktivt ventilationsläge",

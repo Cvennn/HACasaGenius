@@ -93,26 +93,26 @@ FIREPLACE_LEVELS = {0: "low", 1: "normal", 2: "high"}
 
 # Yksikön tila — 3x6301
 UNIT_STATES = {
-    0: "Kriittinen pysäytys",
-    1: "Käyttäjä pysäyttänyt",
-    2: "Käynnistyy",
-    3: "Normaali",
-    4: "Käyttöönotto",
+    0: "critical_stop",
+    1: "user_stop",
+    2: "starting",
+    3: "normal",
+    4: "setup",
 }
 
 # Lämmitystila — 3x6370
 HEATING_STATES = {
-    0: "Käynnistyy",
-    1: "Pysäytetty",
-    2: "Ulkoinen jäähdytys",
-    3: "Sisäinen jäähdytys",
-    4: "Sisäinen jäähdytys (rajoitettu)",
-    5: "Kesätila",
-    6: "LTO-ohjaus",
-    7: "Lämmitys",
-    8: "Sulatus 1",
-    9: "Sulatus 2",
-    10: "Sulatus 3",
+    0: "starting",
+    1: "stopped",
+    2: "external_cooling",
+    3: "internal_cooling",
+    4: "internal_cooling_restricted",
+    5: "summer_mode",
+    6: "lto_control",
+    7: "heating",
+    8: "defrost_1",
+    9: "defrost_2",
+    10: "defrost_3",
 }
 
 # Temperature setpoint limits (register 4x5101)

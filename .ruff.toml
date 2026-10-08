@@ -17,6 +17,8 @@ ignore = [
     "S101",
 ]
 
+exclude = ["tests/modbus_sim.py"]
+
 [lint.flake8-pytest-style]
 fixture-parentheses = false
 

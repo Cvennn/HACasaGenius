@@ -230,8 +230,16 @@
           "pa_supply_airflow": "PA controlled airflow",
           "pa_control": "PA control"
         }
-      }
-    },
+      },
+      "ventilation_control_mode_options": {
+        "name": "Ventilation control mode options",
+        "state": {
+          "normal": "Normal",
+          "pa_supply_airflow": "PA controlled airflow",
+          "pa_control": "PA control"
+        }
+    }
+  },
     "sensor": {
       "outdoor_temp": {
         "name": "Outdoor temperature"
@@ -414,10 +422,30 @@
         "name": "GIO5 input voltage"
       },
       "unit_state": {
-        "name": "Unit state"
+        "name": "Unit state",
+        "state": {
+          "critical_stop": "Critical stop",
+          "user_stop": "User stop",
+          "starting": "Starting",
+          "normal": "Normal",
+          "setup": "Setup"
+        }
       },
       "heating_state": {
-        "name": "Heating state"
+        "name": "Heating state",
+        "state": {
+          "starting": "Starting",
+          "stopped": "Stopped",
+          "external_cooling": "External cooling",
+          "internal_cooling": "Internal cooling",
+          "internal_cooling_restricted": "Internal cooling (restricted)",
+          "summer_mode": "Summer mode",
+          "lto_control": "LTO-control",
+          "heating": "Heating",
+          "defrost_1": "Defrost 1",
+          "defrost_2": "Defrost 2",
+          "defrost_3": "Defrost 3"
+        }
       },
       "ventilation_state_text": {
         "name": "Active ventilation mode",

@@ -106,6 +106,13 @@ SELECT_DEFS = [
         "options": VENTILATION_CONTROL_MODE_OPTIONS,
         "read_key": "ventilation_control_mode",
     },
+    {
+        "key": "ventilation_control_mode_options",
+        "translation_key": "ventilation_control_mode_options",
+        "address": 5317,
+        "options": VENTILATION_CONTROL_MODE_OPTIONS,
+        "read_key": "ventilation_control_mode",
+    },
 ]
 
 

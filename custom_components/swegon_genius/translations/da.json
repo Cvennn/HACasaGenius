@@ -5,11 +5,11 @@
         "title": "Swegon CASA Genius-forbindelse",
         "description": "Indtast Modbus RTU-forbindelsesindstillinger. Fabriksindstillinger er forudfyldt.",
         "data": {
-          "port":     "Serielport",
-          "slave":    "Slave-adresse",
+          "port": "Serielport",
+          "slave": "Slave-adresse",
           "baudrate": "Baud rate",
           "stopbits": "Stopbit",
-          "parity":   "Paritet"
+          "parity": "Paritet"
         }
       }
     },
@@ -230,6 +230,14 @@
           "pa_supply_airflow": "Pa-styret luftstrøm",
           "pa_control": "Pa-styring"
         }
+      },
+      "ventilation_control_mode_options": {
+        "name": "Ventilationsstyringsmuligheder",
+        "state": {
+          "normal": "Normal",
+          "pa_supply_airflow": "PA-styret luftstrøm",
+          "pa_control": "PA-styring"
+        }
       }
     },
     "sensor": {
@@ -414,10 +422,30 @@
         "name": "GIO5 indgangsspænding"
       },
       "unit_state": {
-        "name": "Enhedens tilstand"
+        "name": "Enhedens tilstand",
+        "state": {
+          "critical_stop": "Kritisk stop",
+          "user_stop": "Brugerstop",
+          "starting": "Starter",
+          "normal": "Normal",
+          "setup": "Opsætning"
+        }
       },
       "heating_state": {
-        "name": "Opvarmningstilstand"
+        "name": "Opvarmningstilstand",
+        "state": {
+          "starting": "Starter",
+          "stopped": "Stoppet",
+          "external_cooling": "Ekstern køling",
+          "internal_cooling": "Intern køling",
+          "internal_cooling_restricted": "Intern køling (begrænset)",
+          "summer_mode": "Sommertilstand",
+          "lto_control": "LTO-kontrol",
+          "heating": "Opvarmning",
+          "defrost_1": "Afrimning 1",
+          "defrost_2": "Afrimning 2",
+          "defrost_3": "Afrimning 3"
+        }
       },
       "ventilation_state_text": {
         "name": "Aktiv ventilationstilstand",
