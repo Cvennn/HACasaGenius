@@ -6,6 +6,8 @@ Home Assistant custom component Swegon CASA Genius -ilmanvaihtokoneelle.
 Lukee ja ohjaa konetta Modbus RTU:n (RS485) yli. ~121 entiteettiä:
 lämpötilat, ilmavirrat, käyttötila, hälytykset, asetukset.
 
+Integraatio toimii myös uudempien Swegon CASA Smart -laitteiden kanssa, jotka käyttävät samaa Genius-rekisteriä.
+
 > **Tämä on testiversio.** Asennus tehdään käsin (ei vielä HACS-kaupasta).
 
 ---
@@ -23,7 +25,7 @@ Ennen kuin aloitat, tarvitset:
 
 Ilman fyysistä laitetta ja toimivaa RS485-kytkentää integraatio ei yhdistä mihinkään.
 
-Vaihtoehtoisia RS485 muuntimia:
+Vaihtoehtoisia RS485-muuntimia:
 - https://raspberrypi.dk/en/product/industrial-usb-to-rs485-bidirectional-converter/
 - https://www.digikey.fi/en/products/detail/olimex-ltd/USB-RS485/21661988
 - https://www.amazon.com/DSD-TECH-SH-U10-Converter-Compatible/dp/B078X5H8H7
@@ -36,16 +38,73 @@ CASA Genius -ilmanvaihtokoneessa on sisäänrakennettu Modbus RTU -liitäntä, j
 
 SEC/SEM-moduulin liitinrimasta käytetään Modbus-yhteyttä varten kahta pinniä: pinni 1 vastaa Modbus A -signaalia ja pinni 2 Modbus B -signaalia. Nämä kytketään RS485-USB-muuntimeen (esim. Waveshare USB to RS485 (B)) siten, että muuntimen A+-liitin kytketään Modbus A:han ja B- -liitin Modbus B:hen. Kirjainmerkintä A↔A ja B↔B on RS485-väylässä yleisesti noudatettu käytäntö, joten kytkentä on turvallinen tapa aloittaa — jos yhteys ei muodostu suoraan, A- ja B-johtimet voi vaihtaa keskenään ilman vauriovaaraa.
 
+| Mistä | Mihin |
+|---|---|
+| Ilmanvaihtokone, pääpiirilevyn **SEC/SEM**-liitäntä | SEC/SEM-moduulin RJ-liitäntä, mukana tulevalla kaapelilla (2 m) |
+| RS485-USB-muuntimen **A+** | SEC/SEM-moduulin liitin 1 (Modbus A) |
+| RS485-USB-muuntimen **B-** | SEC/SEM-moduulin liitin 2 (Modbus B) |
+| RS485-USB-muuntimen GND (valinnainen) | SEC/SEM-moduulin liitin 8 (GND) |
+| RS485-USB-muuntimen USB-pistoke | Home Assistant -laitteen USB-portti |
+
 RS485-USB-muunnin kytketään Home Assistantin ajavan laitteen USB-porttiin, jolloin se näkyy järjestelmässä yleensä nimellä `/dev/ttyUSB0`. Tämä on myös integraation oletusasetus sarjaportille.
 
 1. Ilmanvaihtolaitteen kytkentäpaneeli
-2. Swegon SEC kytkentämoduuli
+2. Swegon SEC-kytkentämoduuli
 
 ![screenshot](SEC_cable.png)
 
-![screenshot](SEC_SEM_wiring.png)
-
 *Huom: GND-yhteyttä ei tässä kytkennässä käytetä. Jos väyläpituus kasvaa tai yhteydessä esiintyy häiriöitä, yhteinen maadoitus SEC/SEM-moduulin pinnistä 8 muuntimen GND-liittimeen voi parantaa yhteyden luotettavuutta.*
+
+### Käyttöohjeet
+
+CASA SEM -asennusohje: https://www.swegon.com/globalassets/digizuite/10062-en-casasem_installation_en.pdf
+
+CASA SEC -asennusohje: https://www.swegon.com/globalassets/digizuite/10060-en-casasec_installation_en.pdf
+
+## Kytkentä SEMIO-moduulilla
+
+SEMIO on Swegonin koteloitu Modbus-moduuli. Se sisältää saman SEM-piirilevyn kuin DIN-kiskoversio, joten sen tehtävä on sama kuin yllä olevan SEC/SEM-moduulin. Ero on siinä, että liitännät ovat kotelon sisällä nimetyissä ruuviliittimissä, eivät 8-napaisessa pistokkeessa numeroiduilla pinneillä. **Käytä piirilevyyn painettuja A/B-merkintöjä, älä pinninumeroita.**
+
+**Ennen aloittamista:** katkaise ilmanvaihtokoneen virta. Sähköasennukset on tehtävä kansallisten määräysten mukaisesti. IO3-releen liittimissä voi olla jopa 250 V / 6 A, joten pidä Modbus-johdotus erillään niistä.
+
+### Liitännät
+
+| Mistä | Mihin |
+|---|---|
+| Ilmanvaihtokone, pääpiirilevyn **SEC/SEM**-liitäntä | SEMIO:n "CASA unit" -liitäntä, mukana tulevalla kaapelilla (2 m, enintään 3 m) |
+| RS485-USB-muuntimen **A+** | SEMIO:n Modbus **A** ("in"-pari) |
+| RS485-USB-muuntimen **B-** | SEMIO:n Modbus **B** ("in"-pari) |
+| RS485-USB-muuntimen USB-pistoke | Home Assistant -laitteen USB-portti |
+
+Käytä **"in"**-liittimiä. "Out"-paria käytetään vain väylän jatkamiseen toiseen SEM/SEMIO-moduuliin.
+
+![screenshot](SEMIO_wiring.png)
+
+### Jumpperit
+
+- **JP1 (väylän terminointi):** Swegonin ohjeen mukaan tämä asennetaan Modbus-ketjun viimeiseen yksikköön. Kun yksi SEMIO on kytketty suoraan muuntimeen, se on viimeinen yksikkö, joten aseta JP1 asentoon *Bus terminated*. Jos yhteys on epäluotettava pitkällä kaapelilla, tarkista terminointi molemmista päistä.
+- **JP2:** jätä oletusasentoon. Se pitää siirtää asentoon IO3 vain, jos IO3-liitintä käytetään digitaali- tai analogitulona, mitä tämä integraatio ei tarvitse.
+
+### Kaapelin suoja
+
+Jos käytät suojattua kaapelia, maadoita suoja **vain yhdestä pisteestä**, muuntimen/Home Assistantin puolelta ("master"). SEMIO-kortin kaksi suojaliitintä on kytketty keskenään sisäisesti.
+
+### Koneen Modbus-asetukset
+
+SEMIO käyttää koneen Modbus-asetuksia. **Genius**-käyttöpaneelissa avaa valikko *Käyttöönotto / (1234) / Modbus*. Tehdasasetukset vastaavat integraation oletusarvoja:
+
+| Asetus | Arvo |
+|---|---|
+| Osoite | 1 |
+| Baud rate | 38400 |
+| Stop bits | 1 |
+| Pariteetti | ei mitään |
+
+Jos olet muuttanut jotain näistä, syötä samat arvot integraatiota lisätessäsi.
+
+### Käyttöohje
+
+CASA SEMIO -asennusohje: https://www.swegon.com/globalassets/digizuite/10063-en-semio_installation_en.pdf
 
 ## Asennus
 
@@ -77,7 +136,7 @@ RS485-USB-muunnin kytketään Home Assistantin ajavan laitteen USB-porttiin, jol
 ## Poistaminen
 
 1. Poista integraatio Home Assistantista:
-  - Avaa "Asetukset -> Laitteet & palvelut"
+  - Avaa "Asetukset → Laitteet ja palvelut"
   - Valitse "Swegon CASA Genius"
   - Valitse **Poista** (kolmen pisteen valikosta)
 
@@ -86,7 +145,7 @@ RS485-USB-muunnin kytketään Home Assistantin ajavan laitteen USB-porttiin, jol
    /config/custom_components/swegon_genius/
    ```
 
-3. Uudelleenkäynnistä Home Assistant
+3. Käynnistä Home Assistant uudelleen
 
 Integraatio, sen entiteetit ja kaikki tallennetut asetukset poistetaan.
 > **Huom:** Dashboardit, automaatiot, skriptit, helperit ja templaatit, jotka käyttävät integraation entiteettejä, **eivät poistu automaattisesti**.
@@ -114,11 +173,11 @@ Integraatio, sen entiteetit ja kaikki tallennetut asetukset poistetaan.
 
 ## Mitä paketti sisältää — ja mitä EI
 
-**Mukana:** itse integraatio (entiteetit ja ohjaukset) sekä käännökset
-viidelle kielelle (fi/en/sv/nb/da).
+**Mukana:**
+- Itse integraatio (entiteetit ja ohjaukset) sekä käännökset viidelle kielelle (fi/en/sv/nb/da).
+- Yksinkertainen dashboard englanniksi.
 
 **EI mukana:**
-- Dashboard / käyttöliittymäkortit — `dashboards/`-kansiossa on vain yksinkertainen esimerkkidashboard (englanniksi); rakenna oma, jos haluat enemmän
 - Hyötysuhde-template (LTO-%) — se on erillinen `configuration.yaml`-määrittely
 - Puhallinnopeuksien PIN-suojaus — dashboard-ominaisuus, ei integraation osa
 
@@ -141,6 +200,8 @@ Tästä seuraa:
 **Omien ID:iden löytäminen:** Kehittäjätyökalut → Tilat, hae "swegon". Tai Asetukset → Laitteet ja palvelut → Swegon CASA Genius → valitse entiteetti → rataskuvake. ID:n voi vaihtaa samasta näkymästä.
 
 **Esimerkkidashboard:** `dashboards/`-kansion dashboard on tehty englanninkieliselle järjestelmälle ja portille `/dev/ttyUSB0`. Muissa tapauksissa korvaa ID:t omillasi. Jos kielesi on englanti ja vain portti poikkeaa, riittää etsiä ja korvata yhteinen alkuosa `swegon_casa_genius_dev_ttyusb0` omallasi. Muilla kielillä myös ID:iden loppuosat ovat erilaiset, joten tarkista jokainen ID.
+
+![screenshot](SwegonDashboard.png)
 
 ---
 
