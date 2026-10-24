@@ -55,6 +55,12 @@ The RS485-USB converter plugs into the USB port of the device running Home Assis
 
 *Note: a GND connection is not used in this wiring. If the bus run gets longer or you experience interference, connecting SEC/SEM pin 8 to the converter's GND terminal for a common ground can improve reliability.*
 
+### Manuals
+
+CASA SEM installation instructions: https://www.swegon.com/globalassets/digizuite/10062-en-casasem_installation_en.pdf
+
+CASA SEC installation instructions: https://www.swegon.com/globalassets/digizuite/10060-en-casasec_installation_en.pdf
+
 ## Wiring with a SEMIO module
 
 SEMIO is Swegon's boxed Modbus module. It contains the same SEM board as the DIN-rail version, so it serves the same purpose as the SEC/SEM module above. The difference is that the connections are on labelled screw terminals inside the box, not on the 8-pin plug with numbered pins. **Use the A/B labels printed on the board, not pin numbers.**
@@ -71,6 +77,8 @@ SEMIO is Swegon's boxed Modbus module. It contains the same SEM board as the DIN
 | RS485-USB converter USB plug | USB port of the Home Assistant device |
 
 Use the **"in"** terminals. The "out" pair is only for continuing the bus to another SEM/SEMIO module.
+
+![screenshot](SEMIO_wiring.png)
 
 ### Jumpers
 
@@ -93,6 +101,10 @@ The SEMIO uses the unit's Modbus settings. On a **Genius** control panel, open t
 | Parity | none |
 
 If you have changed any of these, enter the same values when you add the integration.
+
+### Manual
+
+CASA SEMIO installation instructions: https://www.swegon.com/globalassets/digizuite/10063-en-semio_installation_en.pdf
 
 ## Installation
 
@@ -161,11 +173,11 @@ The integration, its entities, and all saved settings are removed.
 
 ## What's in the package — and what's not
 
-**Included:** the integration itself (entities and controls), plus translations
-for five languages (fi/en/sv/nb/da).
+**Included:** 
+- The integration itself (entities and controls), plus translations for five languages (fi/en/sv/nb/da).
+- Basic dashboard in english.
 
 **Not included:**
-- Dashboard / UI cards — only a basic example dashboard (English) is provided in `dashboards/`; build your own for anything more
 - Efficiency template (LTO %) — that's a separate `configuration.yaml` definition
 - PIN protection for fan speeds — a dashboard-level feature, not part of the integration
 
@@ -188,6 +200,8 @@ This means:
 **Finding your own IDs:** Developer tools → States, search for "swegon". Or Settings → Devices & services → Swegon CASA Genius → select an entity → gear icon. You can also rename an ID from that view.
 
 **Example dashboard:** the dashboard in the `dashboards/` folder is written for an English system language and the port `/dev/ttyUSB0`. In other setups, replace the IDs with your own. If your language is English and only the port differs, it is enough to find and replace the common prefix `swegon_casa_genius_dev_ttyusb0` with yours. With other languages the end of each ID is different too, so check every ID.
+
+![screenshot](SwegonDashboard.png)
 
 ---
 
