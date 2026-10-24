@@ -1,4 +1,4 @@
-**Språk:** [English](README.md) | [Suomi](README.fi.md) | [Svenska](README.sv.md) | [Norsk](README.no.md)
+**Språk:** [English](README.md) | [Suomi](README.fi.md) | [Svenska](README.sv.md) | [Norsk](README.no.md) | [Dansk](README.da.md)
 
 # Swegon CASA Genius — Home Assistant-integration
 
@@ -118,52 +118,29 @@ Integrationen, dess entiteter och alla sparade inställningar tas bort.
 för fem språk (fi/en/sv/nb/da).
 
 **Ingår INTE:**
-- Dashboard-/gränssnittskort — bygg din egen, eller låt bli
+- Dashboard-/gränssnittskort — endast en enkel exempeldashboard (på engelska) finns i `dashboards/`; bygg din egen för mer
 - Verkningsgrad-mall (LTO %) — det är en separat definition i `configuration.yaml`
 - PIN-skydd för fläkthastigheter — en dashboard-funktion, inte en del av integrationen
 
-Du får alltså bara entiteterna. Att göra dem synliga på en dashboard är ditt eget jobb.
+Du får alltså huvudsakligen entiteterna. Bortsett från den enkla exempeldashboarden är det ditt eget jobb att göra dem synliga.
 
 ---
 
-## Ta bort eller dölja oanvända entiteter
+## Entitetsnamn, ID:n och språk
 
-När en enhet inte längre tillhandahåller vissa entiteter kan Home Assistant fortfarande visa dessa entiteter som Ej tillgänglig. Entiteterna kan antingen döljas från Home Assistants gränssnitt eller, om de inte längre behövs, tas bort från enhetens entitetsregister.
+Entitetsnamnen följer **systemspråket** (Inställningar → System → Allmänt → Språk), INTE användarprofilens språk. Så fungerar Home Assistant.
 
-### Dölja otillgängliga entiteter
+Entitets-**ID:n** skapas en gång, när en entitet läggs till första gången. De byggs av enhetens namn och entitetens namn **på systemspråket vid det tillfället**. Till exempel är driftlägesväljaren `select.swegon_casa_genius_dev_ttyusb0_operating_mode` på engelska och `select.swegon_casa_genius_dev_ttyusb0_kayttotila` på finska.
 
-Att dölja en entitet är det säkraste alternativet om du är osäker på om entiteten kan behövas senare.
+Det innebär att:
+- ID:n skiljer sig mellan system som installerats med olika språk.
+- Om du byter språk i efterhand ändras bara de visade namnen. Befintliga ID:n ändras inte.
+- ID:t innehåller också enhetens namn, som inkluderar den seriella porten (t.ex. `dev_ttyusb0`). Om du använder en annan port är början av ID:t annorlunda.
+- En dashboard, automation eller ett skript från en annan användare kan inte användas som det är. Kontrollera ID:n och ersätt dem med dina egna.
 
-  - Öppna Home Assistant.
-  - Gå till Inställningar → Enheter och tjänster → Entiteter.
-  - Sök efter entiteten som visas som Ej tillgänglig.
-  - Välj entiteten.
-  - Öppna entitetens inställningar.
-  - Aktivera Inaktiverad eller stäng av Aktivera entitet.
-  - Spara ändringen.
+**Hitta dina egna ID:n:** Utvecklarverktyg → Tillstånd, sök efter "swegon". Eller Inställningar → Enheter och tjänster → Swegon CASA Genius → välj en entitet → kugghjulsikonen. Du kan också byta namn på ett ID därifrån.
 
-### Ta bort otillgängliga entiteter
-
-Om en entitet är permanent otillgänglig eftersom den aktuella enheten inte längre tillhandahåller den, och entiteten inte längre behövs, kan den tas bort från entitetsregistret.
-
-  - Öppna Home Assistant.
-  - Gå till Inställningar → Enheter och tjänster → Entiteter.
-  - Sök efter den otillgängliga entiteten.
-  - Välj entiteten.
-  - Öppna entitetens inställningar.
-  - Välj Ta bort.
-  - Bekräfta borttagningen.
-
----
-
-## Entitetsnamn och språk
-
-Entitetsnamnen översätts enligt **systemspråket**
-(Inställningar → Hem-info → Språk), INTE användarprofilens språk. Så fungerar
-Home Assistant. Entitets-ID:n förblir desamma oavsett språk.
-
-Obs: entitets-ID:n genereras utifrån namnet på din enhet, så de skiljer sig från
-andra användares. En färdig dashboard kan inte kopieras direkt från någon annan.
+**Exempeldashboard:** dashboarden i mappen `dashboards/` är gjord för engelskt systemspråk och porten `/dev/ttyUSB0`. I andra fall ersätter du ID:n med dina egna. Om ditt språk är engelska och bara porten skiljer sig räcker det att söka och ersätta det gemensamma prefixet `swegon_casa_genius_dev_ttyusb0` med ditt eget. Med andra språk skiljer sig även slutet av varje ID, så kontrollera varje ID.
 
 ---
 
