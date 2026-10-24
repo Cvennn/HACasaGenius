@@ -6,6 +6,8 @@ Home Assistant custom component for the Swegon CASA Genius ventilation unit.
 Reads and controls the unit over Modbus RTU (RS485). ~121 entities:
 temperatures, airflows, operating mode, alarms, settings.
 
+This integration also works with newer Swegon CASA Smart -devices, which use the same Genius register.
+
 > **This is a test version.** Installation is manual (not yet available via HACS).
 
 ---
@@ -36,6 +38,14 @@ The CASA Genius ventilation unit has a built-in Modbus RTU interface, brought ou
 
 Two pins on the SEC/SEM module's terminal block are used for the Modbus connection: pin 1 is Modbus A and pin 2 is Modbus B. These connect to an RS485-USB converter (e.g. a Waveshare USB to RS485 (B)) so that the converter's A+ terminal connects to Modbus A, and B- connects to Modbus B. The A↔A, B↔B letter matching is a widely followed convention in RS485, so this is a safe starting point — if the connection doesn't come up, the A and B wires can be swapped with no risk of damage.
 
+| From | To |
+|---|---|
+| Ventilation unit, **SEC/SEM** port on the main board | SEC/SEM module’s RJ socket, using the included cable (2 m) |
+| RS485-USB converter **A+** | SEC/SEM terminal 1 (Modbus A) |
+| RS485-USB converter **B-** | SEC/SEM terminal 2 (Modbus B) |
+| RS485-USB converter GND (optional) | SEC/SEM terminal 8 (GND) |
+| RS485-USB converter USB plug | USB port of the Home Assistant device |
+
 The RS485-USB converter plugs into the USB port of the device running Home Assistant, where it typically shows up as `/dev/ttyUSB0`. This also matches the integration's default serial port setting.
 
 1. Ventilation unit's connection panel
@@ -43,9 +53,46 @@ The RS485-USB converter plugs into the USB port of the device running Home Assis
 
 ![screenshot](SEC_cable.png)
 
-![screenshot](SEC_SEM_wiring.png)
-
 *Note: a GND connection is not used in this wiring. If the bus run gets longer or you experience interference, connecting SEC/SEM pin 8 to the converter's GND terminal for a common ground can improve reliability.*
+
+## Wiring with a SEMIO module
+
+SEMIO is Swegon's boxed Modbus module. It contains the same SEM board as the DIN-rail version, so it serves the same purpose as the SEC/SEM module above. The difference is that the connections are on labelled screw terminals inside the box, not on the 8-pin plug with numbered pins. **Use the A/B labels printed on the board, not pin numbers.**
+
+**Before you start:** switch off the ventilation unit. Electrical installation must be done according to national regulations. The IO3 relay terminals can carry up to 250 V / 6 A, so keep the Modbus wiring away from them.
+
+### Connections
+
+| From | To |
+|---|---|
+| Ventilation unit, **SEC/SEM** port on the main board | SEMIO's "CASA unit" socket, using the included cable (2 m, max 3 m) |
+| RS485-USB converter **A+** | SEMIO Modbus **A** (the "in" pair) |
+| RS485-USB converter **B-** | SEMIO Modbus **B** (the "in" pair) |
+| RS485-USB converter USB plug | USB port of the Home Assistant device |
+
+Use the **"in"** terminals. The "out" pair is only for continuing the bus to another SEM/SEMIO module.
+
+### Jumpers
+
+- **JP1 (bus termination):** Swegon's rule is to install this in the last unit of the Modbus chain. With one SEMIO connected directly to the converter, it is the last unit, so set JP1 to *Bus terminated*. If the connection is unreliable on a long cable, check termination at both ends.
+- **JP2:** leave in its default position. It only needs to move to IO3 if you use the IO3 terminal as a digital or analogue input, which this integration does not need.
+
+### Cable shield
+
+If you use shielded cable, ground the shield at **one point only**, on the converter/Home Assistant side (the "master"). The two shield terminals on the SEMIO board are connected to each other internally.
+
+### Modbus settings on the unit
+
+The SEMIO uses the unit's Modbus settings. On a **Genius** control panel, open the menu *Commissioning / (1234) / Modbus*. The factory values match the integration's defaults:
+
+| Setting | Value |
+|---|---|
+| Address | 1 |
+| Baud rate | 38400 |
+| Stop bits | 1 |
+| Parity | none |
+
+If you have changed any of these, enter the same values when you add the integration.
 
 ## Installation
 
