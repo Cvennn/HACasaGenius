@@ -6,6 +6,8 @@ Home Assistant custom component för Swegon CASA Genius-ventilationsaggregatet.
 Läser och styr aggregatet via Modbus RTU (RS485). ~121 entiteter:
 temperaturer, luftflöden, driftläge, larm, inställningar.
 
+Integrationen fungerar även med nyare Swegon CASA Smart-enheter, som använder samma Genius-register.
+
 > **Detta är en testversion.** Installationen görs manuellt (ännu inte tillgänglig via HACS).
 
 ---
@@ -36,6 +38,14 @@ CASA Genius-ventilationsaggregatet har ett inbyggt Modbus RTU-gränssnitt som ta
 
 Två stift på SEC/SEM-modulens kopplingsplint används för Modbus-anslutningen: stift 1 är Modbus A och stift 2 är Modbus B. Dessa ansluts till en RS485-USB-omvandlare (t.ex. en Waveshare USB to RS485 (B)) så att omvandlarens A+ ansluts till Modbus A och B- till Modbus B. Bokstavsmatchningen A↔A, B↔B är en allmänt följd konvention inom RS485, så detta är en säker utgångspunkt — om anslutningen inte fungerar direkt kan A- och B-ledarna bytas utan risk för skada.
 
+| Från | Till |
+|---|---|
+| Ventilationsaggregatet, **SEC/SEM**-porten på huvudkortet | SEC/SEM-modulens RJ-uttag, med den medföljande kabeln (2 m) |
+| RS485-USB-omvandlarens **A+** | SEC/SEM-modulens plint 1 (Modbus A) |
+| RS485-USB-omvandlarens **B-** | SEC/SEM-modulens plint 2 (Modbus B) |
+| RS485-USB-omvandlarens GND (valfritt) | SEC/SEM-modulens plint 8 (GND) |
+| RS485-USB-omvandlarens USB-kontakt | USB-porten på Home Assistant-enheten |
+
 RS485-USB-omvandlaren ansluts till USB-porten på enheten som kör Home Assistant, där den oftast visas som `/dev/ttyUSB0`. Detta motsvarar också integrationens standardinställning för seriell port.
 
 1. Ventilationsaggregatets anslutningspanel
@@ -43,9 +53,58 @@ RS485-USB-omvandlaren ansluts till USB-porten på enheten som kör Home Assistan
 
 ![screenshot](SEC_cable.png)
 
-![screenshot](SEC_SEM_wiring.png)
-
 *Obs: en GND-anslutning används inte i denna inkoppling. Om bussträckan blir längre eller du upplever störningar kan en gemensam jord mellan SEC/SEM-modulens stift 8 och omvandlarens GND-kontakt förbättra tillförlitligheten.*
+
+### Manualer
+
+Installationsanvisning för CASA SEM: https://www.swegon.com/globalassets/digizuite/10062-en-casasem_installation_en.pdf
+
+Installationsanvisning för CASA SEC: https://www.swegon.com/globalassets/digizuite/10060-en-casasec_installation_en.pdf
+
+## Inkoppling med SEMIO-modul
+
+SEMIO är Swegons inkapslade Modbus-modul. Den innehåller samma SEM-kort som DIN-skensversionen, så den fyller samma syfte som SEC/SEM-modulen ovan. Skillnaden är att anslutningarna sitter på märkta skruvplintar inuti lådan, inte på den 8-poliga kontakten med numrerade stift. **Använd A/B-märkningen som är tryckt på kortet, inte stiftnummer.**
+
+**Innan du börjar:** stäng av ventilationsaggregatet. Elinstallationen ska utföras enligt nationella bestämmelser. IO3-reläets plintar kan föra upp till 250 V / 6 A, så håll Modbus-kablaget borta från dem.
+
+### Anslutningar
+
+| Från | Till |
+|---|---|
+| Ventilationsaggregatet, **SEC/SEM**-porten på huvudkortet | SEMIO:s "CASA unit"-uttag, med den medföljande kabeln (2 m, max 3 m) |
+| RS485-USB-omvandlarens **A+** | SEMIO Modbus **A** ("in"-paret) |
+| RS485-USB-omvandlarens **B-** | SEMIO Modbus **B** ("in"-paret) |
+| RS485-USB-omvandlarens USB-kontakt | USB-porten på Home Assistant-enheten |
+
+Använd **"in"**-plintarna. "Out"-paret används bara för att föra bussen vidare till en annan SEM/SEMIO-modul.
+
+![screenshot](SEMIO_wiring.png)
+
+### Bygel
+
+- **JP1 (bussavslutning):** Swegons regel är att installera den i den sista enheten i Modbus-kedjan. När en enda SEMIO är ansluten direkt till omvandlaren är den den sista enheten, så sätt JP1 i läget *Bus terminated*. Om anslutningen är instabil på en lång kabel, kontrollera avslutningen i båda ändar.
+- **JP2:** lämna i standardläget. Den behöver bara flyttas till IO3 om du använder IO3-plinten som digital eller analog ingång, vilket den här integrationen inte behöver.
+
+### Kabelskärm
+
+Om du använder skärmad kabel, jorda skärmen på **endast en punkt**, på omvandlarens/Home Assistants sida ("mastern"). De två skärmplintarna på SEMIO-kortet är internt anslutna till varandra.
+
+### Modbus-inställningar i aggregatet
+
+SEMIO använder aggregatets Modbus-inställningar. På en **Genius**-kontrollpanel öppnar du menyn *Driftsättning / (1234) / Modbus*. Fabriksvärdena motsvarar integrationens standardvärden:
+
+| Inställning | Värde |
+|---|---|
+| Adress | 1 |
+| Baudrate | 38400 |
+| Stoppbitar | 1 |
+| Paritet | ingen |
+
+Om du har ändrat något av detta, ange samma värden när du lägger till integrationen.
+
+### Manual
+
+Installationsanvisning för CASA SEMIO: https://www.swegon.com/globalassets/digizuite/10063-en-semio_installation_en.pdf
 
 ## Installation
 
@@ -114,11 +173,11 @@ Integrationen, dess entiteter och alla sparade inställningar tas bort.
 
 ## Vad paketet innehåller — och vad det INTE innehåller
 
-**Ingår:** själva integrationen (entiteter och styrningar) samt översättningar
-för fem språk (fi/en/sv/nb/da).
+**Ingår:**
+- Själva integrationen (entiteter och styrningar) samt översättningar för fem språk (fi/en/sv/nb/da).
+- Enkel dashboard på engelska.
 
 **Ingår INTE:**
-- Dashboard-/gränssnittskort — endast en enkel exempeldashboard (på engelska) finns i `dashboards/`; bygg din egen för mer
 - Verkningsgrad-mall (LTO %) — det är en separat definition i `configuration.yaml`
 - PIN-skydd för fläkthastigheter — en dashboard-funktion, inte en del av integrationen
 
@@ -141,6 +200,8 @@ Det innebär att:
 **Hitta dina egna ID:n:** Utvecklarverktyg → Tillstånd, sök efter "swegon". Eller Inställningar → Enheter och tjänster → Swegon CASA Genius → välj en entitet → kugghjulsikonen. Du kan också byta namn på ett ID därifrån.
 
 **Exempeldashboard:** dashboarden i mappen `dashboards/` är gjord för engelskt systemspråk och porten `/dev/ttyUSB0`. I andra fall ersätter du ID:n med dina egna. Om ditt språk är engelska och bara porten skiljer sig räcker det att söka och ersätta det gemensamma prefixet `swegon_casa_genius_dev_ttyusb0` med ditt eget. Med andra språk skiljer sig även slutet av varje ID, så kontrollera varje ID.
+
+![screenshot](SwegonDashboard.png)
 
 ---
 
