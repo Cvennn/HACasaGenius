@@ -1,4 +1,4 @@
-**Languages:** [English](README.md) | [Suomi](README.fi.md) | [Svenska](README.sv.md) | [Norsk](README.no.md)
+**Languages:** [English](README.md) | [Suomi](README.fi.md) | [Svenska](README.sv.md) | [Norsk](README.no.md) | [Dansk](README.da.md)
 
 # Swegon CASA Genius — Home Assistant integration
 
@@ -109,35 +109,7 @@ The integration, its entities, and all saved settings are removed.
    | Parity | `N` | |
 
 4. Save. If the connection succeeds, entities will appear under the device.
----
 
-## Removing or hiding unused entities
-
-When a device is no longer providing certain entities, Home Assistant may continue to show those entities as Unavailable. These entities can either be hidden from the Home Assistant interface or, when they are no longer needed, removed from the device's entity registry.
-
-### Hiding Unavailable Entities
-
-Hiding an entity is the safest option when you are unsure whether the entity may be needed later.
-
-  - Open Home Assistant.
-  - Go to Settings → Devices & services → Entities.
-  - Search for the entity that is shown as Unavailable.
-  - Select the entity.
-  - Open the entity's settings.
-  - Enable Disabled or Enable entity off.
-  - Save the change.
-
-### Removing Unavailable Entities
-
-If an entity is permanently unavailable because the current device no longer provides it, and the entity is no longer needed, it can be removed from the entity registry.
-
-  - Open Home Assistant.
-  - Go to Settings → Devices & services → Entities.
-  - Search for the unavailable entity.
-  - Select the entity.
-  - Open the entity's settings.
-  - Select Delete or Remove.
-  - Confirm the removal.
 ---
 
 ## What's in the package — and what's not
@@ -146,22 +118,29 @@ If an entity is permanently unavailable because the current device no longer pro
 for five languages (fi/en/sv/nb/da).
 
 **Not included:**
-- Dashboard / UI cards — build your own, or don't
+- Dashboard / UI cards — only a basic example dashboard (English) is provided in `dashboards/`; build your own for anything more
 - Efficiency template (LTO %) — that's a separate `configuration.yaml` definition
 - PIN protection for fan speeds — a dashboard-level feature, not part of the integration
 
-So you get the entities only. Making them visible on a dashboard is your own work.
+So you mainly get the entities. Apart from the basic example dashboard, making them visible is your own work.
 
 ---
 
-## Entity names and languages
+## Entity names, IDs and languages
 
-Entity names translate according to the **system language**
-(Settings → Home info → Language), NOT the user profile's language. This is
-how Home Assistant works. Entity IDs stay the same regardless of language.
+Entity **names** follow the **system language** (Settings → System → General → Language), NOT the user profile's language. This is how Home Assistant works.
 
-Note: entity IDs are generated from your device's name, so they'll differ from
-other users'. A finished dashboard can't be copied directly from someone else.
+Entity **IDs** are created once, when an entity is first added. They are built from the device name and the entity name **in the system language at that moment**. For example, the operating mode select is `select.swegon_casa_genius_dev_ttyusb0_operating_mode` in English and `select.swegon_casa_genius_dev_ttyusb0_kayttotila` in Finnish.
+
+This means:
+- IDs differ between systems installed with different languages.
+- Changing the language later only changes the displayed names. Existing IDs do not change.
+- The ID also contains the device name, which includes the serial port (e.g. `dev_ttyusb0`). If you use another port, the start of the ID is different.
+- A dashboard, automation or script from another user can't be used as-is. Check the IDs and replace them with your own.
+
+**Finding your own IDs:** Developer tools → States, search for "swegon". Or Settings → Devices & services → Swegon CASA Genius → select an entity → gear icon. You can also rename an ID from that view.
+
+**Example dashboard:** the dashboard in the `dashboards/` folder is written for an English system language and the port `/dev/ttyUSB0`. In other setups, replace the IDs with your own. If your language is English and only the port differs, it is enough to find and replace the common prefix `swegon_casa_genius_dev_ttyusb0` with yours. With other languages the end of each ID is different too, so check every ID.
 
 ---
 

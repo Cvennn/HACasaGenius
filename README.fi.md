@@ -1,4 +1,4 @@
-**Kielet:** [English](README.md) | [Suomi](README.fi.md) | [Svenska](README.sv.md) | [Norsk](README.no.md)
+**Kielet:** [English](README.md) | [Suomi](README.fi.md) | [Svenska](README.sv.md) | [Norsk](README.no.md) | [Dansk](README.da.md)
 
 # Swegon CASA Genius — Home Assistant -integraatio
 
@@ -118,51 +118,29 @@ Integraatio, sen entiteetit ja kaikki tallennetut asetukset poistetaan.
 viidelle kielelle (fi/en/sv/nb/da).
 
 **EI mukana:**
-- Dashboard / käyttöliittymäkortit — rakennat omasi tai et
+- Dashboard / käyttöliittymäkortit — `dashboards/`-kansiossa on vain yksinkertainen esimerkkidashboard (englanniksi); rakenna oma, jos haluat enemmän
 - Hyötysuhde-template (LTO-%) — se on erillinen `configuration.yaml`-määrittely
 - Puhallinnopeuksien PIN-suojaus — dashboard-ominaisuus, ei integraation osa
 
-Saat siis pelkät entiteetit. Niiden saaminen näkyväksi dashboardille on oma työnsä.
+Saat siis pääosin entiteetit. Yksinkertaista esimerkkidashboardia lukuun ottamatta niiden saaminen näkyväksi on oma työnsä.
 
 ---
 
-## Käyttämättömien entiteettien poistaminen tai piilottaminen
+## Entiteettien nimet, ID:t ja kielet
 
-Kun laite ei enää tarjoa tiettyjä entiteettejä, Home Assistant saattaa edelleen näyttää kyseiset entiteetit tilassa Ei käytettävissä. Entiteetit voidaan joko piilottaa Home Assistantin käyttöliittymästä tai, jos niitä ei enää tarvita, poistaa laitteen entiteettirekisteristä.
+Entiteettien **nimet** noudattavat **järjestelmän kieltä** (Asetukset → Järjestelmä → Yleiset → Kieli), EI käyttäjäprofiilin kieltä. Tämä on Home Assistantin toimintatapa.
 
-### Käytöstä poistettujen entiteettien piilottaminen
+Entiteettien **ID:t** muodostuvat kerran, kun entiteetti lisätään ensimmäistä kertaa. Ne rakentuvat laitteen nimestä ja entiteetin nimestä **sillä hetkellä käytössä olevalla järjestelmän kielellä**. Esimerkiksi käyttötilan valinta on englanniksi `select.swegon_casa_genius_dev_ttyusb0_operating_mode` ja suomeksi `select.swegon_casa_genius_dev_ttyusb0_kayttotila`.
 
-Entiteetin piilottaminen on turvallisin vaihtoehto, jos et ole varma, tarvitaanko entiteettiä myöhemmin.
+Tästä seuraa:
+- ID:t ovat erilaiset eri kielillä asennetuissa järjestelmissä.
+- Kielen vaihtaminen jälkikäteen muuttaa vain näkyvät nimet. Olemassa olevat ID:t eivät muutu.
+- ID sisältää myös laitteen nimen, johon kuuluu sarjaportti (esim. `dev_ttyusb0`). Jos käytät toista porttia, ID:n alkuosa on eri.
+- Toiselta käyttäjältä saatua dashboardia, automaatiota tai skriptiä ei voi käyttää sellaisenaan. Tarkista ID:t ja korvaa ne omillasi.
 
-  - Avaa Home Assistant.
-  - Siirry kohtaan Asetukset → Laitteet ja palvelut → Entiteetit.
-  - Etsi entiteetti, jonka tilana näkyy Ei käytettävissä.
-  - Valitse entiteetti.
-  - Avaa entiteetin asetukset.
-  - Ota käyttöön Poistettu käytöstä tai poista Ota entiteetti käyttöön käytöstä.
-  - Tallenna muutos.
+**Omien ID:iden löytäminen:** Kehittäjätyökalut → Tilat, hae "swegon". Tai Asetukset → Laitteet ja palvelut → Swegon CASA Genius → valitse entiteetti → rataskuvake. ID:n voi vaihtaa samasta näkymästä.
 
-### Käytöstä poistettujen entiteettien poistaminen
-
-Jos entiteetti on pysyvästi poissa käytöstä, koska nykyinen laite ei enää tarjoa sitä, eikä entiteettiä enää tarvita, sen voi poistaa entiteettirekisteristä.
-
-  - Avaa Home Assistant.
-  - Siirry kohtaan Asetukset → Laitteet ja palvelut → Entiteetit.
-  - Etsi käytöstä poistettu entiteetti.
-  - Valitse entiteetti.
-  - Avaa entiteetin asetukset.
-  - Valitse Poista.
-  - Vahvista poistaminen.
-
----
-## Entiteettien nimet ja kielet
-
-Entiteettien nimet kääntyvät **järjestelmän kielen** mukaan
-(Asetukset → Kodin tiedot → Kieli), EI käyttäjäprofiilin kielen. Tämä on
-Home Assistantin toimintatapa. Entity ID:t pysyvät kielestä riippumatta samoina.
-
-Huom: entity ID:t generoituvat sinun laitteesi nimestä, joten ne ovat eri kuin
-muilla. Valmista dashboardia ei voi suoraan kopioida toiselta käyttäjältä.
+**Esimerkkidashboard:** `dashboards/`-kansion dashboard on tehty englanninkieliselle järjestelmälle ja portille `/dev/ttyUSB0`. Muissa tapauksissa korvaa ID:t omillasi. Jos kielesi on englanti ja vain portti poikkeaa, riittää etsiä ja korvata yhteinen alkuosa `swegon_casa_genius_dev_ttyusb0` omallasi. Muilla kielillä myös ID:iden loppuosat ovat erilaiset, joten tarkista jokainen ID.
 
 ---
 

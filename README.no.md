@@ -1,4 +1,4 @@
-**Språk:** [English](README.md) | [Suomi](README.fi.md) | [Svenska](README.sv.md) | [Norsk](README.no.md)
+**Språk:** [English](README.md) | [Suomi](README.fi.md) | [Svenska](README.sv.md) | [Norsk](README.no.md) | [Dansk](README.da.md)
 
 # Swegon CASA Genius — Home Assistant-integrasjon
 
@@ -118,51 +118,29 @@ Integrasjonen, dens entiteter og alle lagrede innstillinger fjernes.
 for fem språk (fi/en/sv/nb/da).
 
 **IKKE inkludert:**
-- Dashbord-/grensesnittkort — bygg ditt eget, eller la være
+- Dashbord-/grensesnittkort — kun et enkelt eksempeldashbord (på engelsk) finnes i `dashboards/`; bygg ditt eget for mer
 - Virkningsgrad-mal (LTO %) — det er en egen definisjon i `configuration.yaml`
 - PIN-beskyttelse for viftehastigheter — en dashbord-funksjon, ikke en del av integrasjonen
 
-Du får altså bare entitetene. Å gjøre dem synlige på et dashbord er ditt eget arbeid.
----
-
-## Fjerne eller skjule ubrukte entiteter
-
-Når en enhet ikke lenger tilbyr bestemte entiteter, kan Home Assistant fortsatt vise disse entitetene som Ikke tilgjengelig. Entitetene kan enten skjules fra Home Assistants grensesnitt eller, hvis de ikke lenger er nødvendige, fjernes fra enhetens entitetsregister.
-
-### Skjule utilgjengelige entiteter
-
-Å skjule en entitet er det tryggeste alternativet hvis du er usikker på om entiteten kan bli nødvendig senere.
-
-  - Åpne Home Assistant.
-  - Gå til Innstillinger → Enheter og tjenester → Entiteter.
-  - Søk etter entiteten som vises som Ikke tilgjengelig.
-  - Velg entiteten.
-  - Åpne innstillingene for entiteten.
-  - Aktiver Deaktivert eller slå av Aktiver entitet.
-  - Lagre endringen.
-
-### Fjerne utilgjengelige entiteter
-
-Hvis en entitet er permanent utilgjengelig fordi den aktuelle enheten ikke lenger tilbyr den, og entiteten ikke lenger er nødvendig, kan den fjernes fra entitetsregisteret.
-
-  - Åpne Home Assistant.
-  - Gå til Innstillinger → Enheter og tjenester → Entiteter.
-  - Søk etter den utilgjengelige entiteten.
-  - Velg entiteten.
-  - Åpne innstillingene for entiteten.
-  - Velg Slett eller Fjern.
-  - Bekreft fjerningen.
+Du får altså hovedsakelig entitetene. Bortsett fra det enkle eksempeldashbordet er det ditt eget arbeid å gjøre dem synlige.
 
 ---
 
-## Entitetsnavn og språk
+## Entitetsnavn, ID-er og språk
 
-Entitetsnavn oversettes i henhold til **systemspråket**
-(Innstillinger → Hjem-info → Språk), IKKE brukerprofilens språk. Slik fungerer
-Home Assistant. Entitets-ID-er forblir de samme uavhengig av språk.
+Entitetsnavn følger **systemspråket** (Innstillinger → System → Generelt → Språk), IKKE brukerprofilens språk. Slik fungerer Home Assistant.
 
-Merk: entitets-ID-er genereres fra navnet på din enhet, så de vil være
-forskjellige fra andre brukeres. Et ferdig dashbord kan ikke kopieres direkte fra noen andre.
+Entitets-**ID-er** opprettes én gang, når en entitet legges til første gang. De bygges av enhetens navn og entitetens navn **på systemspråket i det øyeblikket**. For eksempel er driftsmodusvelgeren `select.swegon_casa_genius_dev_ttyusb0_operating_mode` på engelsk og `select.swegon_casa_genius_dev_ttyusb0_kayttotila` på finsk.
+
+Dette betyr at:
+- ID-er er forskjellige mellom systemer installert med ulike språk.
+- Hvis du bytter språk i etterkant, endres bare de viste navnene. Eksisterende ID-er endres ikke.
+- ID-en inneholder også enhetens navn, som inkluderer den serielle porten (f.eks. `dev_ttyusb0`). Hvis du bruker en annen port, er starten av ID-en annerledes.
+- Et dashbord, en automatisering eller et skript fra en annen bruker kan ikke brukes som det er. Kontroller ID-ene og erstatt dem med dine egne.
+
+**Finne dine egne ID-er:** Utviklerverktøy → Tilstander, søk etter "swegon". Eller Innstillinger → Enheter og tjenester → Swegon CASA Genius → velg en entitet → tannhjulikonet. Du kan også endre en ID derfra.
+
+**Eksempeldashbord:** dashbordet i mappen `dashboards/` er laget for engelsk systemspråk og porten `/dev/ttyUSB0`. I andre tilfeller erstatter du ID-ene med dine egne. Hvis språket ditt er engelsk og bare porten er annerledes, er det nok å søke og erstatte det felles prefikset `swegon_casa_genius_dev_ttyusb0` med ditt eget. Med andre språk er også slutten av hver ID annerledes, så kontroller hver ID.
 
 ---
 
