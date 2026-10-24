@@ -1,28 +1,82 @@
-square: true
-type: grid
-cards:
-  - type: entity
-    entity: sensor.swegon_casa_genius_dev_ttyUSB0_room_temperature
-    name:
-      type: entity
-  - type: entity
-    entity: sensor.swegon_casa_genius_dev_ttyUSB0_room_humidity_rh
-    name:
-      type: entity
-  - type: entity
-    entity: sensor.swegon_casa_genius_dev_ttyUSB0_co2_effective
-    name:
-      type: entity
-  - type: entity
-    entity: sensor.swegon_casa_genius_dev_ttyUSB0_unit_state
-    name:
-      type: entity
-  - type: entity
-    entity: select.swegon_casa_genius_dev_ttyUSB0_rh_automation
-    name:
-      type: entity
-  - type: entity
-    entity: binary_sensor.swegon_casa_genius_dev_ttyUSB0_genius_alarm
-    name:
-      type: entity
-columns: 3
+title: Swegon CASA Genius
+views:
+  - title: Overview
+    path: casa-genius
+    icon: mdi:air-filter
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: tile
+            entity: sensor.swegon_casa_genius_dev_ttyusb0_active_ventilation_mode
+            name:
+              type: entity
+            icon: mdi:fan
+            color: orange
+            vertical: true
+            features_position: bottom
+          - graph: line
+            type: sensor
+            entity: sensor.swegon_casa_genius_dev_ttyusb0_room_temperature
+            detail: 1
+            name:
+              type: entity
+            limits: {}
+          - type: tile
+            entity: sensor.swegon_casa_genius_dev_ttyusb0_co2_effective
+            name:
+              type: entity
+            color: orange
+            vertical: true
+            features_position: bottom
+          - type: tile
+            entity: sensor.swegon_casa_genius_dev_ttyusb0_room_humidity_rh
+            name:
+              type: entity
+            color: orange
+            vertical: true
+            features_position: bottom
+          - type: tile
+            entity: binary_sensor.swegon_casa_genius_dev_ttyusb0_genius_alarm
+            name:
+              type: entity
+            icon: mdi:alarm
+            color: red
+            vertical: false
+            features_position: bottom
+      - type: vertical-stack
+        cards:
+          - type: tile
+            entity: select.swegon_casa_genius_dev_ttyusb0_operating_mode
+            name:
+              type: entity
+            color: green
+            vertical: true
+            icon_tap_action:
+              action: more-info
+            features_position: bottom
+          - type: tile
+            entity: number.swegon_casa_genius_dev_ttyusb0_temperature_setpoint
+            name:
+              type: entity
+            icon: mdi:thermometer
+            color: green
+            vertical: true
+            features_position: bottom
+          - type: tile
+            entity: switch.swegon_casa_genius_dev_ttyusb0_co2_automation
+            name:
+              type: entity
+            color: green
+            vertical: true
+            tap_action:
+              action: toggle
+            features_position: bottom
+          - type: tile
+            entity: select.swegon_casa_genius_dev_ttyusb0_rh_automation
+            name:
+              type: entity
+            color: green
+            vertical: true
+            features_position: bottom
+    badges: []
+    type: masonry
