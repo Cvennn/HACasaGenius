@@ -199,7 +199,19 @@ Tästä seuraa:
 
 **Omien ID:iden löytäminen:** Kehittäjätyökalut → Tilat, hae "swegon". Tai Asetukset → Laitteet ja palvelut → Swegon CASA Genius → valitse entiteetti → rataskuvake. ID:n voi vaihtaa samasta näkymästä.
 
-**Esimerkkidashboard:** `dashboards/`-kansion dashboard on tehty englanninkieliselle järjestelmälle ja portille `/dev/ttyUSB0`. Muissa tapauksissa korvaa ID:t omillasi. Jos kielesi on englanti ja vain portti poikkeaa, riittää etsiä ja korvata yhteinen alkuosa `swegon_casa_genius_dev_ttyusb0` omallasi. Muilla kielillä myös ID:iden loppuosat ovat erilaiset, joten tarkista jokainen ID.
+**Esimerkkidashboard:** `dashboard/`-kansion dashboard on tehty englanninkieliselle järjestelmälle ja portille `/dev/ttyUSB0`. Muissa tapauksissa korvaa ID:t omillasi. Jos kielesi on englanti ja vain portti poikkeaa, riittää etsiä ja korvata yhteinen alkuosa `swegon_casa_genius_dev_ttyusb0` omallasi. Muilla kielillä myös ID:iden loppuosat ovat erilaiset, joten tarkista jokainen ID.
+
+### Dashboardin lisääminen
+
+1. Avaa **Asetukset → Kojelaudat → Lisää kojelauta**, valitse **Uusi kojelauta tyhjästä**, anna sille nimi (esim. "Swegon CASA Genius") ja valitse **Luo**.
+2. Avaa uusi kojelauta sivupalkista ja valitse oikeasta yläkulmasta **kynäkuvake** (Muokkaa kojelautaa).
+3. Avaa **kolmen pisteen valikko** ja valitse **Raw configuration editor** (raakamuotoinen konfiguraatioeditori).
+4. Avaa `dashboard/dashboard.yaml` (paketissa tai GitHubissa), kopioi koko sisältö ja liitä se editoriin korvaten kaiken siellä jo olevan.
+5. Korvaa entity ID:t omillasi (ks. yllä), valitse sitten **Tallenna** ja sulje editori.
+
+Kortit, joissa lukee "Entity not available", käyttävät ID:tä, joka ei vastaa järjestelmääsi. Jos koneessasi ei ole CO₂-anturia, poista CO₂-kortti.
+
+**Muokkaaminen:** dashboard käyttää vain Home Assistantin omia kortteja, joten lisäosia ei tarvita ja voit muokata sitä vapaasti. Valitse **Muokkaa kojelautaa** ja käytä visuaalista editoria: napsauta korttia vaihtaaksesi entiteettiä, nimeä, kuvaketta tai väriä, vedä kortteja järjestääksesi ne uudelleen tai lisää ja poista kortteja **+**-painikkeella. Voit palata raw-konfiguraatioeditoriin milloin tahansa.
 
 ![screenshot](SwegonDashboard.png)
 

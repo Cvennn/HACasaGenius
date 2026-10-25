@@ -199,7 +199,19 @@ Dette betyr at:
 
 **Finne dine egne ID-er:** Utviklerverktøy → Tilstander, søk etter "swegon". Eller Innstillinger → Enheter og tjenester → Swegon CASA Genius → velg en entitet → tannhjulikonet. Du kan også endre en ID derfra.
 
-**Eksempeldashbord:** dashbordet i mappen `dashboards/` er laget for engelsk systemspråk og porten `/dev/ttyUSB0`. I andre tilfeller erstatter du ID-ene med dine egne. Hvis språket ditt er engelsk og bare porten er annerledes, er det nok å søke og erstatte det felles prefikset `swegon_casa_genius_dev_ttyusb0` med ditt eget. Med andre språk er også slutten av hver ID annerledes, så kontroller hver ID.
+**Eksempeldashbord:** dashbordet i mappen `dashboard/` er laget for engelsk systemspråk og porten `/dev/ttyUSB0`. I andre tilfeller erstatter du ID-ene med dine egne. Hvis språket ditt er engelsk og bare porten er annerledes, er det nok å søke og erstatte det felles prefikset `swegon_casa_genius_dev_ttyusb0` med ditt eget. Med andre språk er også slutten av hver ID annerledes, så kontroller hver ID.
+
+### Legge til dashbordet
+
+1. Gå til **Innstillinger → Dashbord → Legg til dashbord**, velg **Nytt dashbord fra bunnen av**, gi det et navn (f.eks. "Swegon CASA Genius") og velg **Opprett**.
+2. Åpne det nye dashbordet fra sidefeltet og velg **blyantikonet** (Rediger dashbord) øverst til høyre.
+3. Åpne **trepunktsmenyen** og velg **Raw configuration editor** (rå konfigurasjonsredigerer).
+4. Åpne `dashboard/dashboard.yaml` (i pakken eller på GitHub), kopier hele innholdet og lim det inn i redigereren, slik at alt som allerede står der erstattes.
+5. Erstatt entitets-ID-ene med dine egne (se ovenfor), velg deretter **Lagre** og lukk redigereren.
+
+Kort som viser "Entity not available" har en ID som ikke stemmer med systemet ditt. Hvis aggregatet ditt ikke har CO₂-sensor, slett CO₂-kortet.
+
+**Tilpasning:** dashbordet bruker bare Home Assistants innebygde kort, så ingen tillegg trengs, og du kan redigere det fritt. Velg **Rediger dashbord** og bruk den visuelle redigereren: klikk på et kort for å endre entitet, navn, ikon eller farge, dra kortene for å ordne dem på nytt, eller legg til og slett kort med **+**-knappen. Du kan bytte tilbake til den rå konfigurasjonsredigereren når som helst.
 
 ![screenshot](SwegonDashboard.png)
 

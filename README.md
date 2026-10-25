@@ -173,7 +173,7 @@ The integration, its entities, and all saved settings are removed.
 
 ## What's in the package — and what's not
 
-**Included:** 
+**Included:**
 - The integration itself (entities and controls), plus translations for five languages (fi/en/sv/nb/da).
 - Basic dashboard in english.
 
@@ -199,7 +199,19 @@ This means:
 
 **Finding your own IDs:** Developer tools → States, search for "swegon". Or Settings → Devices & services → Swegon CASA Genius → select an entity → gear icon. You can also rename an ID from that view.
 
-**Example dashboard:** the dashboard in the `dashboards/` folder is written for an English system language and the port `/dev/ttyUSB0`. In other setups, replace the IDs with your own. If your language is English and only the port differs, it is enough to find and replace the common prefix `swegon_casa_genius_dev_ttyusb0` with yours. With other languages the end of each ID is different too, so check every ID.
+**Example dashboard:** the dashboard in the `dashboard/` folder is written for an English system language and the port `/dev/ttyUSB0`. In other setups, replace the IDs with your own. If your language is English and only the port differs, it is enough to find and replace the common prefix `swegon_casa_genius_dev_ttyusb0` with yours. With other languages the end of each ID is different too, so check every ID.
+
+### Adding the dashboard
+
+1. Go to **Settings → Dashboards → Add dashboard**, choose **New dashboard from scratch**, give it a name (e.g. "Swegon CASA Genius") and select **Create**.
+2. Open the new dashboard from the sidebar and select the **pencil icon** (Edit dashboard) in the top right.
+3. Open the **three-dot menu** and select **Raw configuration editor**.
+4. Open `dashboard/dashboard.yaml` (in the package, or on GitHub), copy its entire contents and paste them into the editor, replacing everything that is already there.
+5. Replace the entity IDs with your own (see above), then select **Save** and close the editor.
+
+Cards that show "Entity not available" have an ID that doesn't match your system. If your unit has no CO₂ sensor, delete the CO₂ card.
+
+**Customizing:** the dashboard uses only Home Assistant's built-in cards, so no add-ons are needed and you can edit it freely. Select **Edit dashboard** and use the visual editor: click a card to change its entity, name, icon or colour, drag cards to rearrange them, or add and delete cards with the **+** button. You can switch back to the raw configuration editor at any time.
 
 ![screenshot](SwegonDashboard.png)
 
