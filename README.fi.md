@@ -51,7 +51,7 @@ RS485-USB-muunnin kytketään Home Assistantin ajavan laitteen USB-porttiin, jol
 1. Ilmanvaihtolaitteen kytkentäpaneeli
 2. Swegon SEC-kytkentämoduuli
 
-![screenshot](SEC_cable.png)
+![screenshot](images/SEC_cable.png)
 
 *Huom: GND-yhteyttä ei tässä kytkennässä käytetä. Jos väyläpituus kasvaa tai yhteydessä esiintyy häiriöitä, yhteinen maadoitus SEC/SEM-moduulin pinnistä 8 muuntimen GND-liittimeen voi parantaa yhteyden luotettavuutta.*
 
@@ -78,7 +78,7 @@ SEMIO on Swegonin koteloitu Modbus-moduuli. Se sisältää saman SEM-piirilevyn 
 
 Käytä **"in"**-liittimiä. "Out"-paria käytetään vain väylän jatkamiseen toiseen SEM/SEMIO-moduuliin.
 
-![screenshot](SEMIO_wiring.png)
+![screenshot](images/SEMIO_wiring.png)
 
 ### Jumpperit
 
@@ -213,7 +213,7 @@ Kortit, joissa lukee "Entity not available", käyttävät ID:tä, joka ei vastaa
 
 **Muokkaaminen:** dashboard käyttää vain Home Assistantin omia kortteja, joten lisäosia ei tarvita ja voit muokata sitä vapaasti. Valitse **Muokkaa kojelautaa** ja käytä visuaalista editoria: napsauta korttia vaihtaaksesi entiteettiä, nimeä, kuvaketta tai väriä, vedä kortteja järjestääksesi ne uudelleen tai lisää ja poista kortteja **+**-painikkeella. Voit palata raw-konfiguraatioeditoriin milloin tahansa.
 
-![screenshot](SwegonDashboard.png)
+![screenshot](images/SwegonDashboard.png)
 
 ---
 

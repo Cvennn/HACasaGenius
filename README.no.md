@@ -51,7 +51,7 @@ RS485-USB-omformeren kobles til USB-porten på enheten som kjører Home Assistan
 1. Ventilasjonsaggregatets tilkoblingspanel
 2. Swegon SEC-tilkoblingsmodul
 
-![screenshot](SEC_cable.png)
+![screenshot](images/SEC_cable.png)
 
 *Merk: en GND-tilkobling brukes ikke i denne koblingen. Hvis busstrekket blir lengre eller du opplever forstyrrelser, kan en felles jording mellom SEC/SEM-modulens pinne 8 og omformerens GND-kontakt forbedre påliteligheten.*
 
@@ -78,7 +78,7 @@ SEMIO er Swegons innkapslede Modbus-modul. Den inneholder samme SEM-kort som DIN
 
 Bruk **"in"**-klemmene. "Out"-paret brukes bare for å føre bussen videre til en annen SEM/SEMIO-modul.
 
-![screenshot](SEMIO_wiring.png)
+![screenshot](images/SEMIO_wiring.png)
 
 ### Jumpere
 
@@ -213,7 +213,7 @@ Kort som viser "Entity not available" har en ID som ikke stemmer med systemet di
 
 **Tilpasning:** dashbordet bruker bare Home Assistants innebygde kort, så ingen tillegg trengs, og du kan redigere det fritt. Velg **Rediger dashbord** og bruk den visuelle redigereren: klikk på et kort for å endre entitet, navn, ikon eller farge, dra kortene for å ordne dem på nytt, eller legg til og slett kort med **+**-knappen. Du kan bytte tilbake til den rå konfigurasjonsredigereren når som helst.
 
-![screenshot](SwegonDashboard.png)
+![screenshot](images/SwegonDashboard.png)
 
 ---
 

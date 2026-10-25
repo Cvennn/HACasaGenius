@@ -51,7 +51,7 @@ The RS485-USB converter plugs into the USB port of the device running Home Assis
 1. Ventilation unit's connection panel
 2. Swegon SEC connection module
 
-![screenshot](SEC_cable.png)
+![screenshot](images/SEC_cable.png)
 
 *Note: a GND connection is not used in this wiring. If the bus run gets longer or you experience interference, connecting SEC/SEM pin 8 to the converter's GND terminal for a common ground can improve reliability.*
 
@@ -78,7 +78,7 @@ SEMIO is Swegon's boxed Modbus module. It contains the same SEM board as the DIN
 
 Use the **"in"** terminals. The "out" pair is only for continuing the bus to another SEM/SEMIO module.
 
-![screenshot](SEMIO_wiring.png)
+![screenshot](images/SEMIO_wiring.png)
 
 ### Jumpers
 
@@ -213,7 +213,7 @@ Cards that show "Entity not available" have an ID that doesn't match your system
 
 **Customizing:** the dashboard uses only Home Assistant's built-in cards, so no add-ons are needed and you can edit it freely. Select **Edit dashboard** and use the visual editor: click a card to change its entity, name, icon or colour, drag cards to rearrange them, or add and delete cards with the **+** button. You can switch back to the raw configuration editor at any time.
 
-![screenshot](SwegonDashboard.png)
+![screenshot](images/SwegonDashboard.png)
 
 ---
 
